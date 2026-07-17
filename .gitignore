@@ -31,3 +31,9 @@ lerna-debug.log*
 
 # misc
 .DS_Store
+
+# pipeline
+output/
+__pycache__/
+*.pyc
+.pm2/

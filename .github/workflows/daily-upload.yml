@@ -1,0 +1,58 @@
+name: Daily Video Factory
+
+on:
+  schedule:
+    # 05:30 UTC daily — morning devotional time for US East (~1:30am) is too early,
+    # so this targets 06:30-08:30 morning across Africa/Europe and evening US is covered
+    # by YouTube's own distribution. Adjust if analytics suggest better.
+    - cron: "30 5 * * *"
+  workflow_dispatch:
+    inputs:
+      day:
+        description: "Force a specific day number (1-31), empty = auto by date"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-upload
+  cancel-in-progress: false
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-dejavu
+          pip install -q edge-tts pillow google-api-python-client google-auth google-auth-httplib2
+
+      - name: Build and upload today's videos
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          DAY="${{ github.event.inputs.day }}"
+          python3 pipeline/daily.py "${DAY:--}"
+
+      - name: Upload artifacts (videos kept 3 days for inspection)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: videos-${{ github.run_number }}
+          path: |
+            output/**/*.mp4
+            output/**/*.jpg
+            output/**/*.json
+          retention-days: 3
+          if-no-files-found: ignore

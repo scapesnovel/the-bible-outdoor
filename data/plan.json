@@ -1,0 +1,476 @@
+{
+  "channel": {
+    "name": "Rooted Daily",
+    "tagline": "Daily Scripture to Grow Your Faith",
+    "translation": "web",
+    "translation_name": "World English Bible (Public Domain)",
+    "start_date": "2026-07-20"
+  },
+  "days": [
+    {
+      "day": 1,
+      "theme": "Peace in the Storm",
+      "keywords": ["peace", "anxiety", "worry", "calm", "storm"],
+      "intro": "When life feels overwhelming and the waves keep rising, God offers a peace that does not depend on calm circumstances.",
+      "passages": [
+        {"ref": "Psalms 46:1-3", "reflection": "Notice that this psalm does not promise the earth will never shake. It promises that when everything trembles, God remains your refuge, present and near in the very moment of trouble."},
+        {"ref": "Isaiah 26:3-4", "reflection": "Perfect peace is not found by controlling your situation, but by fixing your mind on the One who controls all things. Where your attention rests, your heart follows."},
+        {"ref": "John 14:27", "reflection": "Jesus gives peace as a gift, not a reward. The world's peace depends on good news; His peace holds steady even when the news is bad."},
+        {"ref": "Philippians 4:6-7", "reflection": "God invites you to trade every anxiety for prayer. The result is a peace beyond explanation, standing guard over your heart like a soldier at the gate."},
+        {"ref": "Mark 4:37-40", "reflection": "The storm was real, but so was the Savior asleep in the boat. His question remains for us today: why are you so afraid? He is in the boat with you."}
+      ],
+      "prayer": "Father, I bring You every storm in my life right now. Quiet my anxious thoughts as You quieted the sea. Teach me to fix my mind on You and to receive the peace Jesus promised, a peace the world cannot give and cannot take away. In Jesus' name, amen.",
+      "short": {"ref": "John 14:27", "hook": "Feeling anxious today? Jesus left you something.", "reflection": "His peace is not the absence of storms. It is His presence inside them. Breathe, and receive it."}
+    },
+    {
+      "day": 2,
+      "theme": "Trusting God's Plan",
+      "keywords": ["trust", "gods plan", "direction", "guidance", "future"],
+      "intro": "You do not need to see the whole road to take the next step. God asks for trust, and He supplies the direction.",
+      "passages": [
+        {"ref": "Proverbs 3:5-6", "reflection": "Trusting with all your heart means releasing the demand to understand everything first. Acknowledge Him in every decision, and He promises to straighten the path ahead of you."},
+        {"ref": "Jeremiah 29:11-13", "reflection": "These words were spoken to people in exile, in the hardest season of their lives. Even there, God's thoughts toward them were peace, hope, and a future."},
+        {"ref": "Romans 8:28", "reflection": "God does not call all things good, but He works all things together for good. Nothing in your story is wasted in His hands."},
+        {"ref": "Psalms 37:3-5", "reflection": "Commit your way to the Lord means rolling the weight of it onto Him. Delight in Him first, and watch how He reshapes the desires of your heart."},
+        {"ref": "Isaiah 55:8-9", "reflection": "When God's plan looks nothing like yours, remember His ways are higher, not colder. The distance between His thoughts and ours is filled with wisdom and love."}
+      ],
+      "prayer": "Lord, I confess I often want the map more than I want the Guide. Today I choose to trust You with all my heart, even where I do not understand. Direct my steps, work all things for good, and help me rest in Your higher ways. In Jesus' name, amen.",
+      "short": {"ref": "Proverbs 3:5-6", "hook": "Can't see the way forward? Read this slowly.", "reflection": "You don't need the full map. Trust Him with the next step, and He will make the path straight."}
+    },
+    {
+      "day": 3,
+      "theme": "Overcoming Fear",
+      "keywords": ["fear", "courage", "afraid", "brave", "strength"],
+      "intro": "Fear shouts that you are alone and outmatched. Scripture answers with a stronger voice: God is with you, holding your hand.",
+      "passages": [
+        {"ref": "Isaiah 41:10", "reflection": "Notice the reason God gives for not fearing: not that trouble is absent, but that He is present. I am with you is heaven's answer to every fear."},
+        {"ref": "Psalms 27:1-3", "reflection": "David faced real armies, not imaginary ones. Yet he asked, whom shall I fear? When the Lord is your light and salvation, fear loses its authority."},
+        {"ref": "2 Timothy 1:7", "reflection": "Fear is not your assignment from God. He has given you a different spirit: power to act, love to give, and a sound, steady mind."},
+        {"ref": "Deuteronomy 31:6", "reflection": "Be strong and courageous is a command built on a promise: He will not fail you nor forsake you. Courage is simply faith standing up."},
+        {"ref": "Psalms 91:1-6", "reflection": "The secret place of the Most High is open to you right now. Under His wings, the terrors of night and the arrows of day lose their grip."}
+      ],
+      "prayer": "Father, You know the fears I carry, the ones I speak and the ones I hide. Today I take You at Your word: You are with me, You strengthen me, You uphold me. Replace my fear with power, love, and a sound mind. In Jesus' name, amen.",
+      "short": {"ref": "Isaiah 41:10", "hook": "God said 'fear not' — and gave the reason why.", "reflection": "Not because trouble is gone, but because He is here. He is holding your hand right now."}
+    },
+    {
+      "day": 4,
+      "theme": "Strength When You Are Weary",
+      "keywords": ["strength", "tired", "weary", "burnout", "rest"],
+      "intro": "Exhaustion is not a sign that God has left you. It is often the doorway where His strength finally replaces your own.",
+      "passages": [
+        {"ref": "Isaiah 40:28-31", "reflection": "The everlasting God never grows tired, and He gives power to the faint. Waiting on Him is not wasted time; it is where eagles' wings are grown."},
+        {"ref": "Matthew 11:28-30", "reflection": "Jesus does not say, try harder. He says, come to Me. His yoke fits perfectly, and His promise to the burdened is rest for the soul."},
+        {"ref": "Psalms 73:26", "reflection": "Flesh and heart can fail, and some days they do. But God remains the strength of your heart, a portion that never runs out."},
+        {"ref": "2 Corinthians 12:9-10", "reflection": "Paul learned to welcome weakness because it made room for grace. God's power is not hindered by your limits; it is displayed in them."},
+        {"ref": "Philippians 4:13", "reflection": "This verse was written from prison by a man who had learned contentment. The secret was never self-strength; it was Christ within, strengthening him for everything."}
+      ],
+      "prayer": "Lord, I am tired, and I stop pretending otherwise before You. Renew my strength as I wait on You. Let me carry Your easy yoke instead of my heavy one, and let Your power be made perfect in my weakness. In Jesus' name, amen.",
+      "short": {"ref": "Matthew 11:28", "hook": "Running on empty? Jesus has an invitation for you.", "reflection": "He doesn't say try harder. He says come to Me. Rest is a Person, and He is calling you."}
+    },
+    {
+      "day": 5,
+      "theme": "God's Unfailing Love",
+      "keywords": ["gods love", "loved", "unconditional love", "grace"],
+      "intro": "Before you did anything right or wrong today, you were already loved. God's love is the most solid fact in your life.",
+      "passages": [
+        {"ref": "Psalms 136:1-9", "reflection": "Twenty-six times this psalm repeats one truth: His loving kindness endures forever. Creation itself is a love letter, and every sunrise renews the signature."},
+        {"ref": "Romans 8:38-39", "reflection": "Paul lists every force imaginable, death, life, angels, powers, past, future, and declares none of them can separate you from the love of God in Christ."},
+        {"ref": "1 John 4:9-11", "reflection": "Love is not first something we do for God. It is something God did for us, sending His Son. We love because He loved first."},
+        {"ref": "Zephaniah 3:17", "reflection": "Read this slowly: the mighty God rejoices over you with singing. You are not barely tolerated by heaven; you are delighted in."},
+        {"ref": "Psalms 103:8-13", "reflection": "As far as the east is from the west, that is the distance God has removed your sins. His compassion toward you is a father's tenderness, multiplied beyond measure."}
+      ],
+      "prayer": "Father, open my eyes to how wide and deep Your love truly is. When I feel unworthy, remind me that nothing can separate me from Your love in Christ Jesus. Teach me to live today as someone You rejoice over. In Jesus' name, amen.",
+      "short": {"ref": "Zephaniah 3:17", "hook": "Did you know God sings over you?", "reflection": "Not tolerated. Not overlooked. Delighted in. The Mighty One rejoices over you with singing."}
+    },
+    {
+      "day": 6,
+      "theme": "Hope in Hard Times",
+      "keywords": ["hope", "hard times", "despair", "encouragement"],
+      "intro": "Hope is not pretending things are fine. It is anchoring your soul to a God who is faithful even in the valley.",
+      "passages": [
+        {"ref": "Lamentations 3:21-26", "reflection": "These words rise out of the ashes of Jerusalem. Even there, the writer calls to mind one truth that restores hope: His mercies are new every morning."},
+        {"ref": "Psalms 42:5-8", "reflection": "The psalmist talks to his own soul: why are you in despair? Hope in God. Sometimes faith means preaching to yourself until the song returns."},
+        {"ref": "Romans 5:3-5", "reflection": "Suffering is never the end of the sentence. In God's grammar it produces perseverance, then character, then a hope that does not disappoint."},
+        {"ref": "Hebrews 6:19", "reflection": "Hope is called an anchor of the soul, sure and steadfast. Anchors are not for calm harbors; they are made for storms."},
+        {"ref": "Romans 15:13", "reflection": "He is the God of hope, and He does not ration it. His desire is to fill you with all joy and peace, until hope overflows."}
+      ],
+      "prayer": "God of hope, my circumstances have been loud, but Your faithfulness is louder. Remind me every morning of Your new mercies. Anchor my soul in You, and fill me with joy and peace as I trust You today. In Jesus' name, amen.",
+      "short": {"ref": "Lamentations 3:22-23", "hook": "Yesterday was heavy. Here's what's true this morning.", "reflection": "His mercies are brand new today. Not recycled, not leftover. New. Great is His faithfulness."}
+    },
+    {
+      "day": 7,
+      "theme": "Forgiveness and Grace",
+      "keywords": ["forgiveness", "grace", "guilt", "mercy", "forgiven"],
+      "intro": "Guilt says you must carry it forever. Grace says it was carried to the cross. Today, walk in the freedom of forgiveness.",
+      "passages": [
+        {"ref": "1 John 1:9", "reflection": "Confession is not informing God of something He missed. It is agreeing with Him so He can do what He promised: forgive and cleanse completely."},
+        {"ref": "Psalms 103:10-12", "reflection": "God has not dealt with us according to our sins. East and west never meet, and that is exactly how far He has removed your transgressions."},
+        {"ref": "Micah 7:18-19", "reflection": "Who is a God like You? He does not merely file our sins away; He hurls them into the depths of the sea and delights in showing mercy."},
+        {"ref": "Ephesians 4:31-32", "reflection": "Forgiven people forgive. The measure Paul gives is staggering: forgive one another, even as God in Christ forgave you."},
+        {"ref": "Colossians 3:12-14", "reflection": "Forgiveness is part of the wardrobe of the redeemed, worn daily with kindness, humility, and patience, and bound together by love."}
+      ],
+      "prayer": "Merciful Father, thank You that my sins are removed as far as the east is from the west. Cleanse me afresh today. And where I am holding a debt against someone, give me the grace to forgive as You forgave me. In Jesus' name, amen.",
+      "short": {"ref": "1 John 1:9", "hook": "That thing you keep replaying? God dealt with it.", "reflection": "Confess it, and He is faithful and just to forgive and cleanse. Stop carrying what He already buried."}
+    },
+    {
+      "day": 8,
+      "theme": "Walking in Faith",
+      "keywords": ["faith", "believe", "trust god", "mustard seed"],
+      "intro": "Faith is not a feeling you wait for. It is a step you take, trusting the character of the God who called you.",
+      "passages": [
+        {"ref": "Hebrews 11:1", "reflection": "Faith gives substance to things hoped for and evidence to things unseen. It treats God's promise as more solid than what your eyes report."},
+        {"ref": "Hebrews 11:6", "reflection": "Faith pleases God because it takes Him seriously, believing that He exists and that He rewards those who earnestly seek Him."},
+        {"ref": "2 Corinthians 5:7", "reflection": "We walk by faith, not by sight. Sight sees obstacles; faith sees the God who is greater than every one of them."},
+        {"ref": "Mark 11:22-24", "reflection": "Have faith in God, Jesus said, and speak to your mountains. Prayer offered in believing trust moves what human strength never could."},
+        {"ref": "Matthew 17:20", "reflection": "The power is not in the size of your faith but in the size of your God. Even mustard-seed faith, planted in Him, moves mountains."}
+      ],
+      "prayer": "Lord, increase my faith. Help me walk by what You have said, not only by what I can see. I bring my mountains to You today, believing You are able, and trusting You to reward those who seek You. In Jesus' name, amen.",
+      "short": {"ref": "Hebrews 11:1", "hook": "Faith isn't a feeling. It's this.", "reflection": "Assurance of what you hope for, conviction of what you can't yet see. Take God at His word today."}
+    },
+    {
+      "day": 9,
+      "theme": "The Power of Prayer",
+      "keywords": ["prayer", "pray", "how to pray", "answered prayer"],
+      "intro": "Prayer is not a last resort. It is the front door to the throne room of God, and it is always open to you.",
+      "passages": [
+        {"ref": "Philippians 4:6-7", "reflection": "In everything, by prayer with thanksgiving, let your requests be known. Anxiety walks in the door, and prayer walks it right back out."},
+        {"ref": "Matthew 6:9-13", "reflection": "Jesus Himself taught us to pray: honoring the Father, seeking His kingdom, asking for daily bread, forgiveness, and protection. Simple words, infinite depth."},
+        {"ref": "1 Thessalonians 5:16-18", "reflection": "Pray without ceasing means keeping the conversation open all day. Rejoicing, praying, and giving thanks are God's will for you in Christ."},
+        {"ref": "James 5:13-16", "reflection": "Suffering? Pray. Cheerful? Sing. Sick? Call for prayer. James leaves no season of life outside the reach of prayer, and the effective prayer of the righteous accomplishes much."},
+        {"ref": "Psalms 145:18-19", "reflection": "The Lord is near to all who call on Him in truth. He hears the cry of those who fear Him. Your voice reaches heaven."}
+      ],
+      "prayer": "Father, teach me to pray, not as a duty, but as a lifeline. Thank You that You are near to all who call on You. I bring You my requests today with thanksgiving, and I trust Your peace to guard my heart. In Jesus' name, amen.",
+      "short": {"ref": "1 Thessalonians 5:16-18", "hook": "God's will for your life, in 3 short lines.", "reflection": "Rejoice always. Pray without ceasing. Give thanks in everything. Start there today."}
+    },
+    {
+      "day": 10,
+      "theme": "Gratitude and Thanksgiving",
+      "keywords": ["gratitude", "thankful", "thanksgiving", "praise"],
+      "intro": "Gratitude changes the lens on your whole day. Enter His gates with thanksgiving, and watch your perspective transform.",
+      "passages": [
+        {"ref": "Psalms 100:1-5", "reflection": "This psalm is a doorway: thanksgiving is how we enter God's presence. He made us, He shepherds us, and His loving kindness endures forever."},
+        {"ref": "1 Thessalonians 5:18", "reflection": "In everything give thanks, not for everything, but in everything. Gratitude is possible in every room of your life because God is in every room."},
+        {"ref": "Colossians 3:15-17", "reflection": "Three times in three verses: be thankful, sing with grace, give thanks. A grateful heart is the soil where peace rules."},
+        {"ref": "Psalms 118:24", "reflection": "This is the day the Lord has made. Not yesterday's regrets, not tomorrow's worries. Today is His gift, and rejoicing is our reply."},
+        {"ref": "Philippians 4:11-13", "reflection": "Paul learned contentment in plenty and in hunger. The secret is not circumstances but Christ, who strengthens us in every season."}
+      ],
+      "prayer": "Lord, forgive me for the days I count everything except my blessings. Today I enter Your gates with thanksgiving. Thank You for life, for mercy, for Jesus. Teach me contentment in every season through Christ who strengthens me. Amen.",
+      "short": {"ref": "Psalms 118:24", "hook": "Before you check your phone, read this.", "reflection": "This day was made by God and handed to you. Rejoice in it. Gratitude turns ordinary days into worship."}
+    },
+    {
+      "day": 11,
+      "theme": "The Lord Is My Shepherd",
+      "keywords": ["psalm 23", "shepherd", "guidance", "comfort"],
+      "intro": "The most beloved psalm ever written is not about a distant God, but a Shepherd who walks every valley beside you.",
+      "passages": [
+        {"ref": "Psalms 23:1-6", "reflection": "Every line of this psalm answers a fear: lack, restlessness, wrong paths, dark valleys, enemies, and the future. The Shepherd covers them all, and goodness follows you home."},
+        {"ref": "John 10:11", "reflection": "Jesus claims the title personally: I am the good shepherd. His credential is the cross, where the Shepherd laid down His life for the sheep."},
+        {"ref": "John 10:27-28", "reflection": "His sheep hear His voice, and He knows them by name. Eternal life is held in His hand, and no one can snatch you out."},
+        {"ref": "Isaiah 40:11", "reflection": "He gathers the lambs in His arms and carries them close to His heart. God's strength is matched only by His gentleness."},
+        {"ref": "Psalms 121:1-8", "reflection": "The Keeper of Israel never sleeps. He watches your going out and coming in, from this time forward and forever more."}
+      ],
+      "prayer": "Good Shepherd, thank You that I lack nothing in Your care. Lead me beside still waters today, restore my soul, and walk with me through every valley. I trust Your goodness and mercy to follow me all the days of my life. Amen.",
+      "short": {"ref": "Psalms 23:1", "hook": "Six words that can carry your whole week.", "reflection": "The Lord is my shepherd. If that is true, you will not lack what you truly need today."}
+    },
+    {
+      "day": 12,
+      "theme": "Wisdom for Daily Decisions",
+      "keywords": ["wisdom", "decisions", "choices", "discernment"],
+      "intro": "Every day is a series of decisions. God does not leave you to guess; He gives wisdom generously to all who ask.",
+      "passages": [
+        {"ref": "James 1:5-6", "reflection": "If anyone lacks wisdom, ask God, who gives to all liberally and without reproach. He is not annoyed by your asking; He is honored by it."},
+        {"ref": "Proverbs 2:1-6", "reflection": "Wisdom is treasure, and treasure requires seeking. Cry out for discernment, search for it like silver, and you will find the knowledge of God."},
+        {"ref": "Proverbs 9:10", "reflection": "The fear of the Lord is the beginning of wisdom. Right living starts with right reverence: God first, everything else in order."},
+        {"ref": "Psalms 119:105", "reflection": "God's word is a lamp to your feet, not a floodlight over the whole journey. He gives enough light for the next step, and that is enough."},
+        {"ref": "Colossians 1:9-10", "reflection": "Paul prayed for believers to be filled with the knowledge of God's will in all spiritual wisdom, so their walk would be worthy and fruitful. Pray that for yourself today."}
+      ],
+      "prayer": "Father, You promised wisdom to those who ask, so I am asking. Fill me with the knowledge of Your will. Light my next step with Your word, and let reverence for You order every decision I make today. In Jesus' name, amen.",
+      "short": {"ref": "James 1:5", "hook": "Facing a decision? God made you a promise.", "reflection": "Ask Him for wisdom. He gives generously, to everyone who asks, without making you feel small for asking."}
+    },
+    {
+      "day": 13,
+      "theme": "Identity in Christ",
+      "keywords": ["identity", "who i am", "new creation", "child of god"],
+      "intro": "The world hands you labels; the cross hands you a name. Today, remember who God says you are.",
+      "passages": [
+        {"ref": "2 Corinthians 5:17", "reflection": "In Christ you are a new creation. The old passed away; the new has come. Your past is a testimony, not an identity."},
+        {"ref": "John 1:12", "reflection": "To all who received Him, He gave the right to become children of God. Child of God is not a metaphor; it is your legal standing in heaven."},
+        {"ref": "Ephesians 2:10", "reflection": "You are God's workmanship, created in Christ Jesus for good works prepared in advance. You are not an accident; you are a masterpiece with a mission."},
+        {"ref": "1 Peter 2:9-10", "reflection": "Chosen, royal, holy, God's own possession, called out of darkness into marvelous light. Read those words again; they are addressed to you."},
+        {"ref": "Galatians 2:20", "reflection": "Crucified with Christ, yet alive, because Christ lives in you. The life you now live, you live by faith in the Son of God who loved you and gave Himself for you."}
+      ],
+      "prayer": "Father, silence every label that contradicts Your word. I am Your child, Your workmanship, a new creation in Christ. Help me live today out of that identity, walking in the good works You prepared for me. In Jesus' name, amen.",
+      "short": {"ref": "2 Corinthians 5:17", "hook": "You are not who you were. Read this.", "reflection": "In Christ, you are a new creation. The old is gone. Your past is a testimony, not your identity."}
+    },
+    {
+      "day": 14,
+      "theme": "Patience and God's Timing",
+      "keywords": ["patience", "waiting", "gods timing", "season"],
+      "intro": "Waiting rooms are where God does some of His deepest work. His timing is never late, and never wasted.",
+      "passages": [
+        {"ref": "Ecclesiastes 3:1-8", "reflection": "There is a time for every purpose under heaven. Seasons change by design, and the God who set them holds yours in His hands."},
+        {"ref": "Psalms 27:13-14", "reflection": "Wait for the Lord; be strong and let your heart take courage. Waiting on God is not passive; it is courageous trust in motion."},
+        {"ref": "Habakkuk 2:3", "reflection": "The vision is for an appointed time. Though it takes time, wait for it, because it will surely come. God's delays are not God's denials."},
+        {"ref": "Galatians 6:9", "reflection": "Do not grow weary in doing good, for in due season you will reap if you do not give up. The harvest is scheduled; keep sowing."},
+        {"ref": "2 Peter 3:8-9", "reflection": "One day with the Lord is as a thousand years. What feels like slowness is patience, God making room for more grace."}
+      ],
+      "prayer": "Lord, You know how hard waiting is for me. Strengthen my heart in this season. Keep me sowing good even when I cannot see the harvest, and help me trust that Your appointed time will surely come. In Jesus' name, amen.",
+      "short": {"ref": "Galatians 6:9", "hook": "Tired of waiting for your breakthrough?", "reflection": "Don't quit. The harvest has a due season, and it belongs to those who don't give up."}
+    },
+    {
+      "day": 15,
+      "theme": "Joy That Doesn't Depend on Circumstances",
+      "keywords": ["joy", "happiness", "rejoice", "contentment"],
+      "intro": "Happiness leans on what happens. Joy stands on who God is. That is why it can survive any weather.",
+      "passages": [
+        {"ref": "Nehemiah 8:10", "reflection": "The joy of the Lord is your strength. Not your mood, not your luck, His joy, given to you, carrying you."},
+        {"ref": "Psalms 16:11", "reflection": "In His presence is fullness of joy. Joy is not found at the end of better circumstances but in the middle of His presence."},
+        {"ref": "John 15:9-11", "reflection": "Jesus spoke so that His joy would remain in you, and your joy would be made full. Abiding in His love is the secret spring."},
+        {"ref": "Philippians 4:4", "reflection": "Rejoice in the Lord always, written from a prison cell. If joy could live there, it can live in your situation too."},
+        {"ref": "Psalms 30:5", "reflection": "Weeping may stay for the night, but joy comes in the morning. Night seasons are real, but they are not permanent."}
+      ],
+      "prayer": "Father, teach me the difference between happiness and joy. Fill me with the joy of Your presence that no circumstance can steal. Let Your joy be my strength today, and let it overflow to the people around me. In Jesus' name, amen.",
+      "short": {"ref": "Nehemiah 8:10", "hook": "Your strength today isn't willpower. It's this.", "reflection": "The joy of the LORD is your strength. His joy, not your circumstances, carries you."}
+    },
+    {
+      "day": 16,
+      "theme": "Healing for the Brokenhearted",
+      "keywords": ["healing", "brokenhearted", "grief", "comfort", "loss"],
+      "intro": "God does not stand far from your pain. He draws closest exactly where the heart is most broken.",
+      "passages": [
+        {"ref": "Psalms 34:18", "reflection": "The Lord is near to those who have a broken heart. Your lowest moment is not your loneliest; it is where He comes nearest."},
+        {"ref": "Psalms 147:3", "reflection": "He heals the broken in heart and binds up their wounds. The God who names every star also bandages every wound, gently, personally."},
+        {"ref": "Isaiah 61:1-3", "reflection": "Beauty for ashes, oil of joy for mourning, a garment of praise for a spirit of heaviness. This is the exchange Jesus came to make."},
+        {"ref": "Matthew 5:4", "reflection": "Blessed are those who mourn, for they shall be comforted. Jesus does not shame grief; He promises it will be met with comfort."},
+        {"ref": "Revelation 21:3-4", "reflection": "A day is coming when God wipes away every tear, and death, sorrow, and pain will be no more. Your healing has a guaranteed finish line."}
+      ],
+      "prayer": "Father, You see the places in my heart that are still broken. Come near, as You promised. Bind up my wounds, trade my ashes for beauty, and hold me until the morning when every tear is wiped away. In Jesus' name, amen.",
+      "short": {"ref": "Psalms 34:18", "hook": "If your heart is heavy tonight, this is for you.", "reflection": "The Lord is NEAR to the brokenhearted. You are not alone in this. He is closest right now."}
+    },
+    {
+      "day": 17,
+      "theme": "Loving Others Well",
+      "keywords": ["love others", "kindness", "relationships", "love one another"],
+      "intro": "Love is the family resemblance of God's children. Today, let His love flow through you to someone who needs it.",
+      "passages": [
+        {"ref": "1 Corinthians 13:4-8", "reflection": "Love is patient and kind, keeps no record of wrongs, bears, believes, hopes, and endures all things. Replace the word love with your name, and let it become a prayer."},
+        {"ref": "John 13:34-35", "reflection": "Jesus gave one new commandment: love one another as I have loved you. The watching world identifies His disciples by this one mark."},
+        {"ref": "1 John 4:19-21", "reflection": "We love because He first loved us. Love for God that skips over people is not the love John describes."},
+        {"ref": "Romans 12:9-13", "reflection": "Let love be without hypocrisy. Prefer one another in honor, be patient in trouble, given to hospitality. Love here is intensely practical."},
+        {"ref": "Galatians 5:13-14", "reflection": "Through love, serve one another, for the whole law is fulfilled in one word: love your neighbor as yourself. Freedom finds its purpose in serving."}
+      ],
+      "prayer": "Father, Your love reached me first; now let it move through me. Show me one person today who needs patience, kindness, or honor, and give me the grace to love them the way Jesus loves me. Amen.",
+      "short": {"ref": "John 13:34", "hook": "Jesus gave one command that changes every relationship.", "reflection": "Love one another as I have loved you. Not as they deserve. As He loved. That's the standard."}
+    },
+    {
+      "day": 18,
+      "theme": "Standing Firm in Temptation",
+      "keywords": ["temptation", "sin", "self control", "victory"],
+      "intro": "Temptation is common to everyone, but so is God's way of escape. You are not fighting for victory; you fight from it.",
+      "passages": [
+        {"ref": "1 Corinthians 10:13", "reflection": "No temptation has overtaken you but such as is common to man. God is faithful, and with every temptation He also makes the way of escape."},
+        {"ref": "James 4:7-8", "reflection": "Submit to God, resist the devil, and he will flee from you. Resistance begins with surrender, and nearness to God is your strongest defense."},
+        {"ref": "Psalms 119:9-11", "reflection": "I have hidden Your word in my heart, that I might not sin against You. Scripture stored in the heart becomes strength in the moment."},
+        {"ref": "Matthew 26:41", "reflection": "Watch and pray, that you do not enter into temptation. Jesus links vigilance with prayer; the spirit is willing, but the flesh needs help."},
+        {"ref": "Hebrews 4:15-16", "reflection": "Jesus was tempted in every way as we are, yet without sin. That means He understands, and His throne offers mercy and grace exactly when you need it."}
+      ],
+      "prayer": "Lord, You know where I am weakest. Thank You for always providing a way of escape. Hide Your word in my heart, keep me watchful and prayerful, and when I stumble, draw me straight to Your throne of grace. In Jesus' name, amen.",
+      "short": {"ref": "1 Corinthians 10:13", "hook": "That temptation you're fighting? There's a door.", "reflection": "God is faithful. With every temptation He makes a way of escape. Look for the door, and take it."}
+    },
+    {
+      "day": 19,
+      "theme": "The Word of God: Your Daily Bread",
+      "keywords": ["bible", "word of god", "scripture", "daily bread"],
+      "intro": "Your soul gets hungry just like your body. Scripture is the daily bread God baked for you before the day began.",
+      "passages": [
+        {"ref": "Matthew 4:4", "reflection": "Man shall not live by bread alone, but by every word that proceeds out of the mouth of God. Jesus answered hunger and temptation with Scripture."},
+        {"ref": "Psalms 1:1-3", "reflection": "The one who delights in God's law and meditates on it day and night becomes a tree planted by rivers, fruitful and unwithering."},
+        {"ref": "2 Timothy 3:16-17", "reflection": "All Scripture is God-breathed and profitable, to teach, correct, and equip you completely for every good work."},
+        {"ref": "Hebrews 4:12", "reflection": "The word of God is living and active, sharper than any two-edged sword. It reads you as you read it, and it heals as it cuts."},
+        {"ref": "Joshua 1:8-9", "reflection": "Meditate on it day and night, and your way will be prosperous. The command to be strong and courageous stands on the foundation of the Book."}
+      ],
+      "prayer": "Father, give me an appetite for Your word that outgrows every other hunger. As I read, let Your Spirit teach me, correct me, and equip me. Plant me by Your rivers and make my life fruitful. In Jesus' name, amen.",
+      "short": {"ref": "Psalms 1:2-3", "hook": "The habit that quietly changes everything.", "reflection": "Meditate on His word daily and you become a tree by the river: rooted, fruitful, unshakable."}
+    },
+    {
+      "day": 20,
+      "theme": "Contentment in Every Season",
+      "keywords": ["contentment", "enough", "comparison", "simplicity"],
+      "intro": "Comparison whispers that you never have enough. Contentment answers: I have God, and He is enough.",
+      "passages": [
+        {"ref": "Philippians 4:11-13", "reflection": "Paul learned contentment the way we all do: through both abundance and need. The secret in every state was Christ's strength within."},
+        {"ref": "1 Timothy 6:6-8", "reflection": "Godliness with contentment is great gain. We brought nothing into the world, and having food and covering, we can be content."},
+        {"ref": "Hebrews 13:5", "reflection": "Be free from the love of money, content with what you have, because God has said: I will in no way leave you, neither will I in any way forsake you."},
+        {"ref": "Psalms 16:5-6", "reflection": "The Lord is my portion and my cup. When He assigns your lot, the boundary lines fall in pleasant places, even when they look ordinary."},
+        {"ref": "Matthew 6:31-33", "reflection": "Seek first God's kingdom and His righteousness, and all these things will be added. Contentment grows where the kingdom comes first."}
+      ],
+      "prayer": "Lord, deliver me from the endless hunger of comparison. You are my portion, and You have never forsaken me. Teach me the secret Paul learned, contentment through Christ who strengthens me, in plenty and in need. Amen.",
+      "short": {"ref": "Hebrews 13:5", "hook": "The antidote to always wanting more.", "reflection": "Be content with what you have, because He said: I will NEVER leave you nor forsake you. He is the wealth."}
+    },
+    {
+      "day": 21,
+      "theme": "God's Presence in Loneliness",
+      "keywords": ["loneliness", "alone", "gods presence", "never alone"],
+      "intro": "Loneliness tells a convincing lie: nobody sees you. Heaven tells a stronger truth: you are never out of God's sight or reach.",
+      "passages": [
+        {"ref": "Psalms 139:1-10", "reflection": "Where can I go from Your Spirit? Even the far side of the sea cannot outrun His hand. You have never been unseen a single second of your life."},
+        {"ref": "Isaiah 43:1-3", "reflection": "When you pass through the waters, I will be with you. God does not promise dry paths, but He promises drenched-with-you presence."},
+        {"ref": "Matthew 28:20", "reflection": "Behold, I am with you always, even to the end of the age. The last recorded promise of Jesus in Matthew is presence without expiration."},
+        {"ref": "Psalms 68:5-6", "reflection": "A father of the fatherless, a defender of widows, God sets the lonely in families. He is a God who moves toward the isolated."},
+        {"ref": "Deuteronomy 31:8", "reflection": "The Lord Himself goes before you and will be with you. He will never leave you nor forsake you. Do not be afraid; do not be discouraged."}
+      ],
+      "prayer": "Father, when loneliness closes in, remind me that You searched me and know me, that You are behind and before me. Set me in the family and friendships You have prepared, and let me feel Your nearness today. In Jesus' name, amen.",
+      "short": {"ref": "Psalms 139:9-10", "hook": "For anyone who feels invisible today.", "reflection": "Even on the far side of the sea, His hand holds you. You have never once been unseen by God."}
+    },
+    {
+      "day": 22,
+      "theme": "Serving with Purpose",
+      "keywords": ["purpose", "serving", "calling", "gifts"],
+      "intro": "You were not saved to sit still. God shaped you with gifts on purpose, for purpose, and someone needs what you carry.",
+      "passages": [
+        {"ref": "Ephesians 2:10", "reflection": "You are His workmanship, created for good works God prepared beforehand. Your assignments were scheduled before your birthday."},
+        {"ref": "1 Peter 4:10-11", "reflection": "As each has received a gift, employ it in serving one another, as good stewards of God's grace, so that in all things God may be glorified."},
+        {"ref": "Matthew 5:14-16", "reflection": "You are the light of the world. Lamps are not lit to be hidden; let your light shine so people see your good works and glorify your Father."},
+        {"ref": "Colossians 3:23-24", "reflection": "Whatever you do, work heartily, as for the Lord and not for men. Every honest task becomes worship when done for Him."},
+        {"ref": "Mark 10:43-45", "reflection": "Whoever wants to become great among you shall be your servant. The Son of Man came not to be served, but to serve, and to give His life."}
+      ],
+      "prayer": "Lord, thank You for shaping me on purpose. Show me the good works You prepared for me today, even the small ones. Let me serve wholeheartedly, as for You, and let my light point people to my Father in heaven. Amen.",
+      "short": {"ref": "Ephesians 2:10", "hook": "You're not here by accident. Proof:", "reflection": "You are God's workmanship, created for good works He prepared IN ADVANCE. Someone needs what you carry."}
+    },
+    {
+      "day": 23,
+      "theme": "Peace That Guards Your Mind",
+      "keywords": ["mind", "thoughts", "renew your mind", "mental battle"],
+      "intro": "The biggest battles are often fought between your ears. God offers weapons, and a garrison of peace, for the war of thoughts.",
+      "passages": [
+        {"ref": "Romans 12:2", "reflection": "Do not be conformed to this world, but be transformed by the renewing of your mind. Transformation begins where thinking changes."},
+        {"ref": "2 Corinthians 10:4-5", "reflection": "Take every thought captive to the obedience of Christ. Not every thought that knocks deserves a seat at your table."},
+        {"ref": "Philippians 4:8", "reflection": "Whatever is true, honorable, just, pure, lovely, of good report, think on these things. Your mind moves toward what it dwells on."},
+        {"ref": "Isaiah 26:3", "reflection": "You will keep him in perfect peace whose mind is stayed on You. A stayed mind is a kept mind."},
+        {"ref": "Colossians 3:1-2", "reflection": "Set your mind on things above, not on things on the earth. Your life is hidden with Christ in God; think from that address."}
+      ],
+      "prayer": "Father, renew my mind today. Help me take every anxious, false, and condemning thought captive, and replace it with what is true, pure, and lovely. Keep me in perfect peace as I fix my thoughts on You. In Jesus' name, amen.",
+      "short": {"ref": "Philippians 4:8", "hook": "Your mind goes where you point it. Point it here.", "reflection": "Whatever is true, pure, lovely, think on THESE things. Guard the gate of your thoughts today."}
+    },
+    {
+      "day": 24,
+      "theme": "Generosity and the Open Hand",
+      "keywords": ["generosity", "giving", "blessing others", "open hand"],
+      "intro": "God is the greatest giver in the universe, and generosity is the family trait He loves to see in His children.",
+      "passages": [
+        {"ref": "2 Corinthians 9:6-8", "reflection": "God loves a cheerful giver, and He is able to make all grace abound so you have all sufficiency in all things. You cannot out-give God."},
+        {"ref": "Proverbs 11:24-25", "reflection": "There is one who scatters and increases yet more. The soul who waters others will be watered too, a law of the harvest written into life."},
+        {"ref": "Luke 6:38", "reflection": "Give, and it will be given to you: good measure, pressed down, shaken together, running over. The measure you use returns to you."},
+        {"ref": "Acts 20:35", "reflection": "Remember the words of the Lord Jesus: it is more blessed to give than to receive. Blessing flows strongest through open hands."},
+        {"ref": "Malachi 3:10", "reflection": "Test Me in this, says the Lord, and see if I will not open the windows of heaven. God invites His people to prove His faithfulness."}
+      ],
+      "prayer": "Generous Father, everything I have came from Your hand. Break the grip of fear and scarcity in me, and make me a cheerful giver. Show me one way to bless someone today, with money, time, or kindness. In Jesus' name, amen.",
+      "short": {"ref": "Luke 6:38", "hook": "The math of heaven doesn't work like yours.", "reflection": "Give, and it will be given: pressed down, shaken together, RUNNING OVER. Open hands stay full."}
+    },
+    {
+      "day": 25,
+      "theme": "Courage to Obey",
+      "keywords": ["obedience", "courage", "follow god", "surrender"],
+      "intro": "Obedience is love wearing work clothes. When God speaks, courage is simply saying yes before you see how it ends.",
+      "passages": [
+        {"ref": "Joshua 1:7-9", "reflection": "Be strong and very courageous, careful to obey. God tied Joshua's success not to talent or armies, but to obedience to His word."},
+        {"ref": "John 14:15", "reflection": "If you love Me, keep My commandments. Jesus measures love not by emotion but by obedience, love you can see."},
+        {"ref": "1 Samuel 15:22", "reflection": "To obey is better than sacrifice. God prefers a listening heart over impressive offerings that ignore His voice."},
+        {"ref": "Luke 5:4-7", "reflection": "Peter had fished all night and caught nothing, but he said: at Your word I will let down the net. Obedience after failure filled two boats."},
+        {"ref": "James 1:22-25", "reflection": "Be doers of the word and not hearers only. The blessing is not in knowing the word but in doing it."}
+      ],
+      "prayer": "Lord, give me a heart quick to obey. Where You have already spoken, help me act, even when I am tired, even after failure. At Your word I will let down the nets. In Jesus' name, amen.",
+      "short": {"ref": "Luke 5:5", "hook": "Failed all night? Try one more time — His way.", "reflection": "Peter caught nothing till he said: at YOUR word I'll try again. Obedience after failure fills boats."}
+    },
+    {
+      "day": 26,
+      "theme": "God Our Provider",
+      "keywords": ["provision", "provider", "needs", "jehovah jireh"],
+      "intro": "The God who feeds sparrows and dresses lilies has your name on His list. Provision is His nature, not His hobby.",
+      "passages": [
+        {"ref": "Matthew 6:25-27", "reflection": "Look at the birds: they do not sow or reap, yet your heavenly Father feeds them. Are you not of much more value than they?"},
+        {"ref": "Philippians 4:19", "reflection": "My God will supply every need of yours according to His riches in glory in Christ Jesus. The supply is measured by His riches, not yours."},
+        {"ref": "Psalms 34:8-10", "reflection": "Taste and see that the Lord is good. Even young lions grow hungry, but those who seek the Lord shall not lack any good thing."},
+        {"ref": "Genesis 22:13-14", "reflection": "Abraham called the place Yahweh Will Provide. On the mountain of testing, God's provision was already waiting in the thicket."},
+        {"ref": "2 Corinthians 9:8", "reflection": "God is able to make all grace abound to you, so that always, having all sufficiency in everything, you may abound to every good work."}
+      ],
+      "prayer": "Jehovah Jireh, my Provider, I bring You my needs, spoken and unspoken. Thank You that You feed birds and clothe lilies, and that I matter more. Supply according to Your riches, and make me generous with the overflow. Amen.",
+      "short": {"ref": "Philippians 4:19", "hook": "Worried about provision? Check the source.", "reflection": "God supplies your needs according to HIS riches in glory, not your bank balance. He's got you."}
+    },
+    {
+      "day": 27,
+      "theme": "Humility: The Way Up Is Down",
+      "keywords": ["humility", "pride", "humble", "grace"],
+      "intro": "In God's kingdom the stairs run backwards: the way up is down. Grace flows downhill to the humble heart.",
+      "passages": [
+        {"ref": "James 4:6-10", "reflection": "God resists the proud but gives grace to the humble. Humble yourself in the sight of the Lord, and He will lift you up."},
+        {"ref": "Philippians 2:3-8", "reflection": "Jesus, existing in the form of God, emptied Himself and became obedient to death on a cross. The highest One took the lowest place, for you."},
+        {"ref": "Micah 6:8", "reflection": "What does the Lord require? To act justly, to love mercy, and to walk humbly with your God. Three steps, one direction: downward into greatness."},
+        {"ref": "Proverbs 16:18-19", "reflection": "Pride goes before destruction, a haughty spirit before a fall. Better a humble spirit among the lowly than dividing plunder with the proud."},
+        {"ref": "1 Peter 5:5-7", "reflection": "Clothe yourselves with humility, and cast all your anxiety on Him, because He cares for you. The humble hand that lets go is the hand God fills."}
+      ],
+      "prayer": "Lord Jesus, You descended so I could be raised. Strip pride from my heart, and clothe me with humility. I humble myself under Your mighty hand today, trusting You to lift me up in Your time. Amen.",
+      "short": {"ref": "James 4:6", "hook": "Want more grace? There's one posture for it.", "reflection": "God resists the proud but GIVES grace to the humble. Grace flows downhill. Bow low, receive much."}
+    },
+    {
+      "day": 28,
+      "theme": "Light in the Darkness",
+      "keywords": ["light", "darkness", "hope", "jesus light of world"],
+      "intro": "Darkness is real, but it has never once won against light. And the Light of the world knows your name.",
+      "passages": [
+        {"ref": "John 8:12", "reflection": "I am the light of the world, Jesus said. Whoever follows Him will not walk in darkness but have the light of life."},
+        {"ref": "Psalms 27:1", "reflection": "The Lord is my light and my salvation; whom shall I fear? Light does not negotiate with darkness; it simply shines."},
+        {"ref": "Isaiah 9:2", "reflection": "The people who walked in darkness have seen a great light. This promise walked out of prophecy and into history in Jesus."},
+        {"ref": "John 1:4-5", "reflection": "The light shines in the darkness, and the darkness has not overcome it. Not then, not now, not ever."},
+        {"ref": "Matthew 5:14-16", "reflection": "Now He calls you the light of the world. Borrowed light, like the moon, but real light, meant to shine before others."}
+      ],
+      "prayer": "Jesus, Light of the world, shine into every dark corner of my life. Where I see no way, be my light and salvation. Then make me a lamp on a stand, carrying Your light to someone walking in darkness. Amen.",
+      "short": {"ref": "John 1:5", "hook": "Whatever darkness you're in, know this.", "reflection": "The light shines in the darkness, and the darkness has NOT overcome it. It never will."}
+    },
+    {
+      "day": 29,
+      "theme": "Running Your Race with Endurance",
+      "keywords": ["endurance", "perseverance", "race", "finish strong"],
+      "intro": "Faith is not a sprint; it is a long-distance race. Fix your eyes on Jesus, drop the extra weight, and keep running.",
+      "passages": [
+        {"ref": "Hebrews 12:1-3", "reflection": "Lay aside every weight and the sin that so easily entangles, and run with endurance, looking to Jesus, the author and perfecter of faith."},
+        {"ref": "2 Timothy 4:7-8", "reflection": "I have fought the good fight, finished the course, kept the faith. Paul's finish line words can become your life goal."},
+        {"ref": "Isaiah 40:31", "reflection": "Those who wait for the Lord renew their strength. They run and are not weary; they walk and do not faint."},
+        {"ref": "Philippians 3:13-14", "reflection": "Forgetting what lies behind and stretching forward to what lies ahead, press on toward the goal of the high calling of God in Christ Jesus."},
+        {"ref": "1 Corinthians 9:24-25", "reflection": "Run in such a way that you may win. Athletes train for a fading crown; we run for one that lasts forever."}
+      ],
+      "prayer": "Father, You set this race before me, so You will supply the endurance. Help me drop every weight, forget what is behind, and fix my eyes on Jesus. I want to finish my course and keep the faith. Amen.",
+      "short": {"ref": "Hebrews 12:1-2", "hook": "Feel like quitting? Runner's advice from heaven.", "reflection": "Drop the weight. Fix your eyes on Jesus. He authored your faith, and He will finish it."}
+    },
+    {
+      "day": 30,
+      "theme": "The Cross and the Empty Tomb",
+      "keywords": ["cross", "resurrection", "salvation", "gospel", "jesus"],
+      "intro": "Everything in our faith stands on two facts: a cross where love bled, and a tomb that could not stay closed.",
+      "passages": [
+        {"ref": "Isaiah 53:4-6", "reflection": "He was pierced for our transgressions, crushed for our iniquities. The punishment that brought our peace was on Him, and by His wounds we are healed."},
+        {"ref": "John 3:16-17", "reflection": "God so loved the world that He gave His only Son. The cross is what love looks like when it is stretched out for sinners."},
+        {"ref": "Romans 5:8", "reflection": "God demonstrates His own love toward us, in that while we were yet sinners, Christ died for us. Not after we improved, while we were yet sinners."},
+        {"ref": "1 Corinthians 15:3-8", "reflection": "Christ died for our sins, was buried, and was raised on the third day, seen by hundreds. The resurrection is history's best-attested miracle."},
+        {"ref": "Romans 10:9-13", "reflection": "Confess Jesus as Lord, believe God raised Him from the dead, and you will be saved. Whoever calls on the name of the Lord will be saved, whoever includes you."}
+      ],
+      "prayer": "Lord Jesus, thank You for the cross where You carried my sin, and the empty tomb that proves Your victory. I confess You as Lord and believe God raised You from the dead. Let me live today in resurrection hope. Amen.",
+      "short": {"ref": "Romans 5:8", "hook": "God proved His love with a timestamp.", "reflection": "WHILE we were still sinners, Christ died for us. Not after we cleaned up. While. That's the Gospel."}
+    },
+    {
+      "day": 31,
+      "theme": "Abiding in Christ Daily",
+      "keywords": ["abide", "remain in christ", "fruit", "daily walk"],
+      "intro": "The Christian life is not trying harder; it is staying connected. Branches do not strain to bear fruit, they abide.",
+      "passages": [
+        {"ref": "John 15:4-8", "reflection": "Abide in Me, and I in you. Apart from Him we can do nothing, but abiding branches bear much fruit, and the Father is glorified."},
+        {"ref": "Psalms 91:1", "reflection": "He who dwells in the secret place of the Most High will rest in the shadow of the Almighty. Dwelling, not visiting, is the invitation."},
+        {"ref": "Colossians 2:6-7", "reflection": "As you received Christ Jesus the Lord, so walk in Him, rooted and built up in Him, established in the faith, overflowing with thanksgiving."},
+        {"ref": "Galatians 5:22-25", "reflection": "The fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control. Fruit grows where the Spirit lives."},
+        {"ref": "Psalms 92:12-14", "reflection": "Planted in the house of the Lord, the righteous still bear fruit in old age, fresh and flourishing. Abiding has no retirement date."}
+      ],
+      "prayer": "Lord Jesus, You are the vine and I am the branch. Keep me connected to You today, in Your word, in prayer, in obedience. Bear Your fruit through my life, and let my Father be glorified. Amen.",
+      "short": {"ref": "John 15:5", "hook": "The secret to a fruitful life isn't hustle.", "reflection": "It's abiding. Stay connected to the Vine, and fruit happens. Apart from Him: nothing. With Him: much."}
+    }
+  ]
+}

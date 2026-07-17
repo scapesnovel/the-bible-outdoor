@@ -1,0 +1,66 @@
+# 👤 Human Runbook — the ONLY things I can't do myself
+
+Everything below is one-time, ~25 minutes total. Follow exactly. After step 5, you never touch it again.
+
+---
+
+## Step 1 — Create the Google account & YouTube channel (~5 min)
+
+1. Go to https://accounts.google.com/signup
+   - **Name**: `Rooted Daily`
+   - Pick any email like `rooteddailyfaith@gmail.com` (add numbers if taken — the public never sees this)
+2. Go to https://youtube.com → sign in → click your avatar → **Create a channel**
+   - **Channel name**: `Rooted Daily`
+   - **Handle**: `@RootedDailyFaith` (fallbacks: `@RootedDailyBible`, `@GetRootedDaily`)
+3. In **YouTube Studio → Customization**:
+   - **Profile picture**: upload `assets/brand/logo.png` from this repo
+   - **Banner**: upload `assets/brand/banner.png`
+   - **Description** — paste exactly:
+     > Grow your faith one day at a time. 🌿 Rooted Daily brings you a Scripture meditation with guided prayer every morning, plus a daily verse to carry with you. Rooted in the Word, growing in Christ. New videos every day — subscribe and stay rooted. (Scripture: World English Bible, public domain.)
+   - **Channel keywords** (Settings → Channel): `bible, daily devotional, scripture meditation, prayer, christian, faith, bible verses`
+4. **Verify the channel** (needed for custom thumbnails): https://www.youtube.com/verify → enter your phone → enter the code.
+
+## Step 2 — Create a free Google Cloud project + YouTube API access (~8 min)
+
+1. Go to https://console.cloud.google.com (sign in with the SAME new account)
+2. Top bar → **New Project** → name: `rooted-daily` → Create
+3. Menu → **APIs & Services → Library** → search **"YouTube Data API v3"** → **Enable**
+4. **APIs & Services → OAuth consent screen**:
+   - User type: **External** → Create
+   - App name: `rooted-daily`, support email: your new gmail → Save through the steps
+   - **Audience → Test users → Add users** → add your new gmail address
+5. **APIs & Services → Credentials → Create Credentials → OAuth client ID**:
+   - Application type: **Desktop app** → name: `uploader` → Create
+   - **Copy the Client ID and Client Secret** — you need them in Step 3.
+
+## Step 3 — Get the refresh token (~3 min, on your own computer)
+
+On any computer with Python and a browser:
+```bash
+pip install google-auth-oauthlib
+python3 pipeline/get_refresh_token.py "YOUR_CLIENT_ID" "YOUR_CLIENT_SECRET"
+```
+A browser opens → sign in with the channel's Google account → click **Continue/Allow** on everything (it will warn "app isn't verified" — click *Advanced → Go to rooted-daily*; that's normal for test apps).
+The script prints `YT_REFRESH_TOKEN`. Copy all three values.
+
+## Step 4 — Add GitHub secrets (~2 min)
+
+In this GitHub repository → **Settings → Secrets and variables → Actions → New repository secret**, add all three:
+
+| Secret name | Value |
+|---|---|
+| `YT_CLIENT_ID` | from Step 2 |
+| `YT_CLIENT_SECRET` | from Step 2 |
+| `YT_REFRESH_TOKEN` | from Step 3 |
+
+## Step 5 — Fire the first run (~1 min)
+
+Repo → **Actions** tab → **Daily Video Factory** → **Run workflow** → leave day empty → Run.
+~20–30 min later, two videos appear on the channel. From then on it runs itself at 05:30 UTC daily, and **Channel Stats Monitor** writes a performance report to `STATS.md` every evening — that's how we watch the contest without you lifting a finger.
+
+---
+
+## ⚠️ Notes
+- The OAuth token for "test" apps expires after 7 days ONLY if the consent screen is left in "Testing" with publishing status issues — to be safe, go to **OAuth consent screen → Audience → Publish app** (no verification needed for these scopes to keep tokens alive). If uploads ever fail with `invalid_grant`, re-run Step 3 and update the one secret.
+- Don't rename the repo or the workflows.
+- That's it. Everything else — scripts, voices, visuals, music, titles, SEO, thumbnails, uploads, monitoring — is mine.
