@@ -68,7 +68,7 @@ def make_card(width, height, title=None, body=None, ref=None, body_start=64,
     img = Image.new("RGBA", (width, height), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     # dark scrim for readability
-    scrim = Image.new("RGBA", (width, height), (10, 15, 20, 110))
+    scrim = Image.new("RGBA", (width, height), (10, 15, 20, 128))
     img.alpha_composite(scrim)
 
     margin = int(width * margin_ratio)

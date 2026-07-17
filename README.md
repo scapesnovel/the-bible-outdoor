@@ -8,7 +8,7 @@
 ## What it publishes — every single day, automatically
 | Upload | Format | Length | Content |
 |---|---|---|---|
-| 🎬 Long-form | 1920×1080 | ~10–12 min | Themed meditation: intro → 5 Scriptures read slowly with reflections → guided prayer → outro, over cinematic Ken Burns visuals + ambient worship music |
+| 🎬 Long-form | 1920×1080 | ~6–8 min | Themed meditation: intro → 5 Scriptures read slowly with reflections → guided prayer → outro, over cinematic Ken Burns visuals + ambient worship music |
 | 📱 Short | 1080×1920 | ~35–60 s | Hook → verse → reflection → subscribe CTA |
 
 Content = 31-day spiritual curriculum (`data/plan.json`): Peace, Trust, Fear, Strength, God's Love, Hope, Forgiveness, Faith, Prayer, Gratitude, Psalm 23, Wisdom, Identity, Patience, Joy, Healing, Love, Temptation, The Word, Contentment, Loneliness, Purpose, the Mind, Generosity, Obedience, Provision, Humility, Light, Endurance, The Gospel, Abiding. After day 31 the plan cycles automatically — the channel never stops.

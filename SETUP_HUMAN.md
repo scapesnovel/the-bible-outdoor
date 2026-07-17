@@ -4,6 +4,14 @@ Everything below is one-time, ~25 minutes total. Follow exactly. After step 5, y
 
 ---
 
+## Step 0 — Connect GitHub to this project (~2 min)
+
+1. In this Genspark project, open the **#github** tab and authorize GitHub (create a free github.com account first if needed — any username works).
+2. Create/select a repository (e.g. `rooted-daily`) — **must be Public** (public repos get unlimited free GitHub Actions minutes; private ones only 2,000 min/month which we'd burn through).
+3. Tell me it's connected — I push all the code myself.
+
+---
+
 ## Step 1 — Create the Google account & YouTube channel (~5 min)
 
 1. Go to https://accounts.google.com/signup
