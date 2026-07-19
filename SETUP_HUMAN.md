@@ -7,7 +7,7 @@ Everything below is one-time, ~25 minutes total. Follow exactly. After step 5, y
 ## Step 0 — Connect GitHub to this project (~2 min)
 
 1. In this Genspark project, open the **#github** tab and authorize GitHub (create a free github.com account first if needed — any username works).
-2. Create/select a repository (e.g. `rooted-daily`) — **must be Public** (public repos get unlimited free GitHub Actions minutes; private ones only 2,000 min/month which we'd burn through).
+2. Create/select a repository (e.g. `bible-outdoor`) — **must be Public** (public repos get unlimited free GitHub Actions minutes; private ones only 2,000 min/month which we'd burn through).
 3. Tell me it's connected — I push all the code myself.
 
 ---
@@ -15,27 +15,27 @@ Everything below is one-time, ~25 minutes total. Follow exactly. After step 5, y
 ## Step 1 — Create the Google account & YouTube channel (~5 min)
 
 1. Go to https://accounts.google.com/signup
-   - **Name**: `Rooted Daily`
-   - Pick any email like `rooteddailyfaith@gmail.com` (add numbers if taken — the public never sees this)
+   - **Name**: `The Bible Outdoor`
+   - Pick any email like `thebibleoutdoor@gmail.com` (add numbers if taken — the public never sees this)
 2. Go to https://youtube.com → sign in → click your avatar → **Create a channel**
-   - **Channel name**: `Rooted Daily`
-   - **Handle**: `@RootedDailyFaith` (fallbacks: `@RootedDailyBible`, `@GetRootedDaily`)
+   - **Channel name**: `The Bible Outdoor`
+   - **Handle**: `@TheBibleOutdoor` (fallbacks: `@TheBibleOutdoorDaily`, `@BibleOutdoorDaily`)
 3. In **YouTube Studio → Customization**:
    - **Profile picture**: upload `assets/brand/logo.png` from this repo
    - **Banner**: upload `assets/brand/banner.png`
    - **Description** — paste exactly:
-     > Grow your faith one day at a time. 🌿 Rooted Daily brings you a Scripture meditation with guided prayer every morning, plus a daily verse to carry with you. Rooted in the Word, growing in Christ. New videos every day — subscribe and stay rooted. (Scripture: World English Bible, public domain.)
+     > Where God's Word meets God's creation. ⛰️ The Bible Outdoor brings you a daily Scripture meditation with guided prayer, set against the beauty of mountains, oceans, and skies — plus a daily verse to carry with you. “The heavens declare the glory of God.” New videos every day — subscribe and grow your faith one day at a time. (Scripture: World English Bible, public domain.)
    - **Channel keywords** (Settings → Channel): `bible, daily devotional, scripture meditation, prayer, christian, faith, bible verses`
 4. **Verify the channel** (needed for custom thumbnails): https://www.youtube.com/verify → enter your phone → enter the code.
 
 ## Step 2 — Create a free Google Cloud project + YouTube API access (~8 min)
 
 1. Go to https://console.cloud.google.com (sign in with the SAME new account)
-2. Top bar → **New Project** → name: `rooted-daily` → Create
+2. Top bar → **New Project** → name: `bible-outdoor` → Create
 3. Menu → **APIs & Services → Library** → search **"YouTube Data API v3"** → **Enable**
 4. **APIs & Services → OAuth consent screen**:
    - User type: **External** → Create
-   - App name: `rooted-daily`, support email: your new gmail → Save through the steps
+   - App name: `bible-outdoor`, support email: your new gmail → Save through the steps
    - **Audience → Test users → Add users** → add your new gmail address
 5. **APIs & Services → Credentials → Create Credentials → OAuth client ID**:
    - Application type: **Desktop app** → name: `uploader` → Create
@@ -48,7 +48,7 @@ On any computer with Python and a browser:
 pip install google-auth-oauthlib
 python3 pipeline/get_refresh_token.py "YOUR_CLIENT_ID" "YOUR_CLIENT_SECRET"
 ```
-A browser opens → sign in with the channel's Google account → click **Continue/Allow** on everything (it will warn "app isn't verified" — click *Advanced → Go to rooted-daily*; that's normal for test apps).
+A browser opens → sign in with the channel's Google account → click **Continue/Allow** on everything (it will warn "app isn't verified" — click *Advanced → Go to bible-outdoor*; that's normal for test apps).
 The script prints `YT_REFRESH_TOKEN`. Copy all three values.
 
 ## Step 4 — Add GitHub secrets (~2 min)

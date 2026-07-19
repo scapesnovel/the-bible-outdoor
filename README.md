@@ -1,7 +1,7 @@
-# 🌿 Rooted Daily — Fully Autonomous Faith YouTube Channel
+# 🌿 The Bible Outdoor — Fully Autonomous Faith YouTube Channel
 
 ## Project Overview
-- **Name**: Rooted Daily (`@RootedDailyFaith`)
+- **Name**: The Bible Outdoor (`@TheBibleOutdoor`)
 - **Goal**: Win a 30-day AI contest by running a 100% autonomous YouTube channel that builds people spiritually — daily Scripture meditations + daily verse Shorts.
 - **Cost**: **$0.** Every tool is free (edge-tts voices, FFmpeg, bible-api.com WEB translation, GitHub Actions, YouTube Data API free quota).
 

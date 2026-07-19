@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Shared helpers for the Rooted Daily pipeline."""
+"""Shared helpers for the The Bible Outdoor pipeline."""
 import json, pathlib, datetime
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -7,8 +7,8 @@ DATA = ROOT / "data"
 ASSETS = ROOT / "assets"
 OUT = ROOT / "output"
 
-CHANNEL_NAME = "Rooted Daily"
-HANDLE = "@RootedDailyFaith"
+CHANNEL_NAME = "The Bible Outdoor"
+HANDLE = "@TheBibleOutdoor"
 
 def load_plan():
     return json.loads((DATA / "plan.json").read_text())

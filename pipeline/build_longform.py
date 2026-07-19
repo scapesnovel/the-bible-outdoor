@@ -94,7 +94,7 @@ def build(day_number=None):
         f"Today's meditation on {theme} walks slowly through five Scriptures, with reflections and a closing prayer.\n\n"
         "In this video:\n" +
         "\n".join(f"  • {r}" for r in refs) +
-        "\n\n🙏 SUBSCRIBE for a new Scripture meditation every day: it takes one click and keeps you rooted.\n\n"
+        "\n\n🙏 SUBSCRIBE for a new Scripture meditation every day — where God's Word meets God's creation.\n\n"
         "Share this with someone who needs it today.\n\n"
         "Scripture quotations are from the World English Bible (WEB), public domain.\n\n"
         f"#Bible #Scripture #{kw[0].title().replace(' ','')} #DailyDevotional #ChristianMeditation #Prayer #Faith"

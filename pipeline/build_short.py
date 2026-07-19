@@ -65,7 +65,7 @@ def build(day_number=None):
         title = f"{ref_disp} — {entry['theme']} #shorts"
     description = (
         f"{s['reflection']}\n\n\u201C{v['text']}\u201D — {ref_disp} (WEB, public domain)\n\n"
-        "🙏 One verse every day. Subscribe to stay rooted.\n\n"
+        "🙏 One verse every day. Subscribe and grow your faith daily.\n\n"
         f"#shorts #bible #bibleverse #{kw[0].replace(' ','')} #faith #jesus #dailyverse"
     )
     tags = list(dict.fromkeys(kw + ["shorts", "bible verse", "daily verse", "faith", "jesus", "scripture"]))[:25]

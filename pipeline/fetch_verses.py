@@ -18,7 +18,7 @@ def fetch(ref):
     url = "https://bible-api.com/" + urllib.parse.quote(ref) + "?translation=web"
     for attempt in range(6):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "RootedDaily/1.0"})
+            req = urllib.request.Request(url, headers={"User-Agent": "TheBibleOutdoor/1.0"})
             with urllib.request.urlopen(req, timeout=30) as r:
                 d = json.loads(r.read().decode())
             text = " ".join(v["text"].replace("\n", " ").strip() for v in d["verses"])

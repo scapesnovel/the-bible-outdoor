@@ -6,7 +6,7 @@ from common import OUT, get_day_entry
 
 def main(day=None, do_upload=True):
     plan, entry, day = get_day_entry(day)
-    print(f"=== Rooted Daily — Day {day}: {entry['theme']} ===")
+    print(f"=== The Bible Outdoor — Day {day}: {entry['theme']} ===")
 
     import build_longform, build_short, build_thumbnail
     lf_path, lf_meta = build_longform.build(day)
