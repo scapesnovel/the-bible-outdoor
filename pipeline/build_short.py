@@ -64,7 +64,7 @@ def build(day_number=None):
     if len(title) > 100:
         title = f"{ref_disp} — {entry['theme']} #shorts"
     description = (
-        f"{s['reflection']}\n\n\u201C{v['text']}\u201D — {ref_disp} (WEB, public domain)\n\n"
+        f"{s['reflection']}\n\n\u201C{v['text']}\u201D — {ref_disp} (BSB)\n\n"
         "🙏 One verse every day. Subscribe and grow your faith daily.\n\n"
         f"#shorts #bible #bibleverse #{kw[0].replace(' ','')} #faith #jesus #dailyverse"
     )

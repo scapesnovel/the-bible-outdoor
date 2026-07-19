@@ -2,8 +2,8 @@
   "channel": {
     "name": "The Bible Outdoor",
     "tagline": "Daily Scripture to Grow Your Faith",
-    "translation": "web",
-    "translation_name": "World English Bible (Public Domain)",
+    "translation": "BSB",
+    "translation_name": "Berean Standard Bible (free use)",
     "start_date": "2026-07-20"
   },
   "days": [

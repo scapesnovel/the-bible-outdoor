@@ -3,7 +3,7 @@
 ## Project Overview
 - **Name**: The Bible Outdoor (`@TheBibleOutdoor`)
 - **Goal**: Win a 30-day AI contest by running a 100% autonomous YouTube channel that builds people spiritually — daily Scripture meditations + daily verse Shorts.
-- **Cost**: **$0.** Every tool is free (edge-tts voices, FFmpeg, bible-api.com WEB translation, GitHub Actions, YouTube Data API free quota).
+- **Cost**: **$0.** Every tool is free (edge-tts voices, FFmpeg, Berean Standard Bible via bible.helloao.org, GitHub Actions, YouTube Data API free quota).
 
 ## What it publishes — every single day, automatically
 | Upload | Format | Length | Content |
@@ -13,7 +13,7 @@
 
 Content = 31-day spiritual curriculum (`data/plan.json`): Peace, Trust, Fear, Strength, God's Love, Hope, Forgiveness, Faith, Prayer, Gratitude, Psalm 23, Wisdom, Identity, Patience, Joy, Healing, Love, Temptation, The Word, Contentment, Loneliness, Purpose, the Mind, Generosity, Obedience, Provision, Humility, Light, Endurance, The Gospel, Abiding. After day 31 the plan cycles automatically — the channel never stops.
 
-All Scripture from the **World English Bible (public domain)** — zero copyright risk. Music + images are AI-generated originals owned by this project.
+All Scripture from the **Berean Standard Bible** (modern English that reads like the NIV, free for any use) — zero copyright risk. Music + images are AI-generated originals owned by this project.
 
 ## Architecture
 ```
@@ -33,7 +33,7 @@ GitHub Actions (free)                     YouTube
 
 ## Repository map
 - `data/plan.json` — 31-day curriculum (themes, reflections, prayers, hooks, SEO keywords)
-- `data/verses.json` — 163 pre-fetched WEB passages (offline-safe)
+- `data/verses.json` — 163 pre-fetched BSB passages (offline-safe)
 - `pipeline/daily.py` — orchestrator (build all + upload)
 - `pipeline/build_longform.py` / `build_short.py` / `build_thumbnail.py` — renderers
 - `pipeline/tts.py` / `text_render.py` / `av.py` — voice, text cards, FFmpeg helpers

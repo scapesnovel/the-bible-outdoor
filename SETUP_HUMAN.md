@@ -24,7 +24,7 @@ Everything below is one-time, ~25 minutes total. Follow exactly. After step 5, y
    - **Profile picture**: upload `assets/brand/logo.png` from this repo
    - **Banner**: upload `assets/brand/banner.png`
    - **Description** — paste exactly:
-     > Where God's Word meets God's creation. ⛰️ The Bible Outdoor brings you a daily Scripture meditation with guided prayer, set against the beauty of mountains, oceans, and skies — plus a daily verse to carry with you. “The heavens declare the glory of God.” New videos every day — subscribe and grow your faith one day at a time. (Scripture: World English Bible, public domain.)
+     > Where God's Word meets God's creation. ⛰️ The Bible Outdoor brings you a daily Scripture meditation with guided prayer, set against the beauty of mountains, oceans, and skies — plus a daily verse to carry with you. “The heavens declare the glory of God.” New videos every day — subscribe and grow your faith one day at a time. (Scripture: Berean Standard Bible.)
    - **Channel keywords** (Settings → Channel): `bible, daily devotional, scripture meditation, prayer, christian, faith, bible verses`
 4. **Verify the channel** (needed for custom thumbnails): https://www.youtube.com/verify → enter your phone → enter the code.
 

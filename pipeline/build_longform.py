@@ -42,10 +42,10 @@ def build(day_number=None):
         ref_disp = display_ref(v["reference"])
         verse_speech = f"{ref_disp}. ... {v['text']}"
         segments.append((f"verse{i}", verse_speech,
-                         dict(body=f"\u201C{v['text']}\u201D", ref=f"— {ref_disp} (WEB)"), 2.5))
+                         dict(body=f"\u201C{v['text']}\u201D", ref=f"— {ref_disp} (BSB)"), 2.5))
         # lectio divina: hear the same words a second time, slower
         segments.append((f"verse{i}b", f"Listen once more, and let these words settle into your heart. ... {v['text']}",
-                         dict(body=f"\u201C{v['text']}\u201D", ref=f"— {ref_disp} (WEB)"), 3.0))
+                         dict(body=f"\u201C{v['text']}\u201D", ref=f"— {ref_disp} (BSB)"), 3.0))
         segments.append((f"refl{i}", p["reflection"] + " ... Sit with that for a moment.",
                          dict(title=theme, body=p["reflection"]), 3.5))
 
@@ -96,7 +96,7 @@ def build(day_number=None):
         "\n".join(f"  • {r}" for r in refs) +
         "\n\n🙏 SUBSCRIBE for a new Scripture meditation every day — where God's Word meets God's creation.\n\n"
         "Share this with someone who needs it today.\n\n"
-        "Scripture quotations are from the World English Bible (WEB), public domain.\n\n"
+        "Scripture quotations are from the World English Bible (BSB), public domain.\n\n"
         f"#Bible #Scripture #{kw[0].title().replace(' ','')} #DailyDevotional #ChristianMeditation #Prayer #Faith"
     )
     tags = list(dict.fromkeys(
