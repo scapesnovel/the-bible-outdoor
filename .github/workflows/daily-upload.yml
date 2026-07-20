@@ -2,14 +2,16 @@ name: Daily Video Factory
 
 on:
   schedule:
-    # 05:30 UTC daily — morning devotional time for US East (~1:30am) is too early,
-    # so this targets 06:30-08:30 morning across Africa/Europe and evening US is covered
-    # by YouTube's own distribution. Adjust if analytics suggest better.
-    - cron: "30 5 * * *"
+    # 07:40 UTC daily: renders ~30 min, then videos are scheduled premieres —
+    # long-form goes live 10:45 UTC (6:45am US East morning-devotional prime slot),
+    # Short goes live 16:00 UTC (noon US East / evening EU scroll time).
+    - cron: "40 7 * * *"
+    # Safety net: if the morning run failed, retry at 09:40 UTC (idempotent no-op otherwise).
+    - cron: "40 9 * * *"
   workflow_dispatch:
     inputs:
       day:
-        description: "Force a specific day number (1-31), empty = auto by date"
+        description: "Force a specific day number (1-31), empty = auto next unpublished slot"
         required: false
         default: ""
 
@@ -26,6 +28,8 @@ jobs:
     timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-python@v5
         with:
@@ -36,7 +40,7 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-dejavu
           pip install -q edge-tts pillow google-api-python-client google-auth google-auth-httplib2
 
-      - name: Build and upload today's videos
+      - name: Build and upload today's videos (scheduled premieres)
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
@@ -45,7 +49,17 @@ jobs:
           DAY="${{ github.event.inputs.day }}"
           python3 pipeline/daily.py "${DAY:--}"
 
-      - name: Upload artifacts (videos kept 3 days for inspection)
+      - name: Commit publish state (no-repeat memory)
+        if: always()
+        run: |
+          git config user.name "bible-outdoor-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git pull --rebase origin main || true
+          git add data/state.json
+          git diff --cached --quiet || git commit -m "state: record published episode [skip ci]"
+          git push origin main || (git pull --rebase origin main && git push origin main)
+
+      - name: Keep artifacts 3 days for inspection
         if: always()
         uses: actions/upload-artifact@v4
         with:

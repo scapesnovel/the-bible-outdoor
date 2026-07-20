@@ -50,6 +50,25 @@ python3 pipeline/build_longform.py 1     # build day 1 long-form only
 python3 pipeline/daily.py 1 --no-upload  # build everything, skip upload
 ```
 
+## 🎯 Growth & Monetization Strategy (autonomous)
+**Goal**: 1,000 subscribers + 4,000 watch-hours (or 10M Shorts views) = YouTube Partner Program.
+
+1. **Never-repeat engine** — `data/state.json` records every published episode. Cycle 2+ re-covers themes with *different* verse order, different Short verse, and alternate title angles, so content stays fresh forever with zero repeats.
+2. **Prime-time premieres (Tier-1 targeting)** — videos are uploaded early but *scheduled*:
+   - Long-form goes live **10:45 UTC = 6:45am New York** (morning devotional habit slot; also 3:45pm Berlin, 11:45am São Paulo)
+   - Short goes live **16:00 UTC = noon New York** (lunch scroll peak; evening Europe)
+   - Same times every single day → habit formation → returning viewers → watch time.
+3. **Shorts = subscriber engine, Long-form = watch-hours engine** — Shorts funnel viewers to the channel; 6–8 min meditations accumulate the 4,000 hours.
+4. **Auto-playlists** — every upload is added to "Daily Scripture Meditations" / "Daily Verse Shorts" playlists for binge sessions.
+5. **SEO** — every title/description targets real search queries ("verses for anxiety", "morning prayer"), theme keywords baked per-day in `plan.json`.
+6. **Self-monitoring** — nightly `STATS.md` report tracks subs, views, 24h deltas, and **ETA to 1,000 subs** so strategy can be adjusted from data.
+
+## 🔒 Reliability & Security
+- **Idempotent**: same-day re-runs are safe no-ops (checks `state.json` first); a 2nd scheduled run at 09:40 UTC acts as automatic retry if the first fails.
+- **Resilient**: TTS retries with backoff; upload failures don't corrupt state; artifacts kept 3 days for inspection.
+- **Secrets**: OAuth tokens live ONLY in GitHub Actions Secrets (encrypted, never in code/logs). Minimal scopes (upload + manage own channel). No third-party services touch the account.
+- **Free forever**: GitHub Actions (public repo = unlimited), edge-tts, FFmpeg, bible.helloao.org, YouTube Data API free quota (2 uploads = 3,200 of 10,000 daily units).
+
 ## Deployment status
 - **Platform**: GitHub Actions (rendering + uploading), YouTube Data API v3
 - **Quota check**: 2 uploads/day = 3,200 units of the free 10,000/day. Safe.

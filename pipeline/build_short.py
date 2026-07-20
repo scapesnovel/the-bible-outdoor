@@ -9,8 +9,9 @@ import av
 
 W, H = 1080, 1920
 
-def build(day_number=None):
-    plan, entry, day_number = get_day_entry(day_number)
+def build(day_number=None, cycle=1):
+    plan, entry, day_number = get_day_entry(day_number, cycle)
+    cycle = entry.get("_cycle", cycle)
     verses = load_verses()
     work = OUT / f"day{day_number:02d}_short_work"
     if work.exists():
@@ -22,9 +23,9 @@ def build(day_number=None):
     s = entry["short"]
     v = verses[s["ref"]]
     ref_disp = display_ref(v["reference"])
-    rng = random.Random(day_number * 7)
+    rng = random.Random(day_number * 7 + cycle * 131)
     bgs = sorted((ASSETS / "backgrounds_vertical").glob("*.jpg"))
-    bg = bgs[day_number % len(bgs)]
+    bg = bgs[(day_number + cycle) % len(bgs)]
     music = rng.choice(sorted((ASSETS / "music").glob("*.mp3")))
 
     parts = [
@@ -70,8 +71,8 @@ def build(day_number=None):
     )
     tags = list(dict.fromkeys(kw + ["shorts", "bible verse", "daily verse", "faith", "jesus", "scripture"]))[:25]
     meta = {"title": title[:100], "description": description[:4900], "tags": tags,
-            "categoryId": "22", "day": day_number, "theme": entry["theme"], "type": "short",
-            "file": str(final)}
+            "categoryId": "22", "day": day_number, "cycle": cycle,
+            "theme": entry["theme"], "type": "short", "file": str(final)}
     (final_dir / "short_meta.json").write_text(json.dumps(meta, indent=1))
     shutil.rmtree(work)
     return final, meta

@@ -12,8 +12,9 @@ import av
 
 W, H = 1920, 1080
 
-def build(day_number=None):
-    plan, entry, day_number = get_day_entry(day_number)
+def build(day_number=None, cycle=1):
+    plan, entry, day_number = get_day_entry(day_number, cycle)
+    cycle = entry.get("_cycle", cycle)
     verses = load_verses()
     work = OUT / f"day{day_number:02d}_long_work"
     if work.exists():
@@ -88,7 +89,10 @@ def build(day_number=None):
     # 3) metadata
     refs = [display_ref(verses[p['ref']]['reference']) for p in entry["passages"]]
     kw = entry["keywords"]
-    title = f"{theme} — 5 Bible Verses & Guided Prayer | Daily Scripture Meditation (Day {day_number})"
+    ep = (cycle - 1) * len(plan["days"]) + day_number  # global episode number, never repeats
+    angles = ["5 Bible Verses & Guided Prayer", "Bible Verses to Meditate On",
+              "Scripture & Prayer for Your Soul", "Guided Bible Meditation"]
+    title = f"{theme} — {angles[(cycle - 1) % len(angles)]} | Daily Scripture Meditation (Day {ep})"
     description = (
         f"{entry['intro']}\n\n"
         f"Today's meditation on {theme} walks slowly through five Scriptures, with reflections and a closing prayer.\n\n"
@@ -104,8 +108,8 @@ def build(day_number=None):
               "christian meditation", "bible study", "morning prayer", "faith", theme.lower()]
     ))[:30]
     meta = {"title": title[:100], "description": description[:4900], "tags": tags,
-            "categoryId": "22", "day": day_number, "theme": theme, "type": "longform",
-            "file": str(final)}
+            "categoryId": "22", "day": day_number, "cycle": cycle, "episode": ep,
+            "theme": theme, "type": "longform", "file": str(final)}
     (final_dir / "longform_meta.json").write_text(json.dumps(meta, indent=1))
     shutil.rmtree(work)
     return final, meta

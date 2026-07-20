@@ -48,16 +48,22 @@ def main():
     log = [s for s in log if s["date"] != snap["date"]] + [snap]
     LOG.write_text(json.dumps(log, indent=1))
 
+    subs = snap["subscribers"]
     lines = [f"# 📊 {ch['snippet']['title']} — Performance Report",
              f"_Updated: {snap['date']}_\n",
              f"| Metric | Value |", "|---|---|",
-             f"| Subscribers | **{snap['subscribers']}** |",
+             f"| Subscribers | **{subs}** |",
              f"| Total views | **{snap['total_views']}** |",
-             f"| Videos published | **{snap['video_count']}** |"]
+             f"| Videos published | **{snap['video_count']}** |",
+             f"| 🎯 Monetization progress (subs) | {subs}/1000 ({subs/10:.1f}%) |"]
     if len(log) > 1:
         prev = log[-2]
-        lines.append(f"| Subs gained (24h) | +{snap['subscribers'] - prev['subscribers']} |")
-        lines.append(f"| Views gained (24h) | +{snap['total_views'] - prev['total_views']} |")
+        d_subs = subs - prev["subscribers"]
+        d_views = snap["total_views"] - prev["total_views"]
+        lines.append(f"| Subs gained (24h) | +{d_subs} |")
+        lines.append(f"| Views gained (24h) | +{d_views} |")
+        if d_subs > 0 and subs < 1000:
+            lines.append(f"| ETA to 1000 subs at current rate | ~{(1000 - subs) // max(d_subs, 1)} days |")
     lines += ["\n## Top videos", "| Views | Likes | Title | Published |", "|---|---|---|---|"]
     for v in video_rows[:15]:
         lines.append(f"| {v['views']} | {v['likes']} | {v['title']} | {v['published']} |")
