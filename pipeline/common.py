@@ -13,6 +13,12 @@ HANDLE = "@TheBibleOutdoor"
 def load_plan():
     return json.loads((DATA / "plan.json").read_text())
 
+def load_config():
+    p = DATA / "config.json"
+    if p.exists():
+        return json.loads(p.read_text())
+    return {"mode": "full", "shorts_per_day": 1}
+
 def load_verses():
     return json.loads((DATA / "verses.json").read_text())
 
@@ -30,13 +36,23 @@ def today_str():
     return datetime.date.today().isoformat()
 
 def already_published_today(state):
-    return any(p["date"] == today_str() and p.get("longform_id") and p.get("short_id")
-               for p in state["published"])
+    """Shorts mode: done when at least one Short is live today.
+    Full mode: done when both long-form and Short are live."""
+    for p in state["published"]:
+        if p["date"] != today_str():
+            continue
+        if p.get("mode") == "shorts":
+            if p.get("short_ids") or p.get("short_id"):
+                return True
+        elif p.get("longform_id") and p.get("short_id"):
+            return True
+    return False
 
 def next_slot(state, total_days):
     """Next (day, cycle) that has never been published. Never repeats:
     cycle 1 = days 1..31, cycle 2 = days 1..31 with variation, etc."""
-    n = len([p for p in state["published"] if p.get("longform_id")])
+    n = len([p for p in state["published"]
+             if p.get("longform_id") or p.get("short_ids") or p.get("short_id")])
     return (n % total_days) + 1, (n // total_days) + 1
 
 def get_day_entry(day_number=None, cycle=1):

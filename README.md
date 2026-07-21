@@ -58,15 +58,16 @@ python3 pipeline/daily.py 1 --no-upload  # build everything, skip upload
 ## 🎯 Growth & Monetization Strategy (autonomous)
 **Goal**: 1,000 subscribers + 4,000 watch-hours (or 10M Shorts views) = YouTube Partner Program.
 
-1. **Never-repeat engine (verse-level)** — verses are picked by judgment from the **entire Bible** (31,086 BSB verses), scored per theme, never in canonical order. Every used verse is burned into `data/used_verses.json` permanently — **the channel will never read the same verse twice**, even years out (6 verses/day ≈ 14 years of unique content). `data/state.json` additionally tracks episodes so a crashed run resumes safely.
-2. **Prime-time premieres (Tier-1 targeting)** — videos are uploaded early but *scheduled*:
+1. **Shorts-first growth phase** — current mode: **2 Shorts/day** (9am + 6pm New York scroll peaks) to build subscribers fast; long-form meditations activate later via `data/config.json` mode switch to accumulate watch-hours.
+2. **Never-repeat engine (verse-level)** — verses are picked by judgment from the **entire Bible** (31,086 BSB verses), scored per theme, never in canonical order. Every used verse is burned into `data/used_verses.json` permanently — **the channel will never read the same verse twice**. If a verse starts or ends mid-sentence, the picker automatically expands it to the neighbouring verses (e.g. Ephesians 2:8-9, Romans 8:38-39) so every passage read on air is a complete thought — and every verse in the range is burned into the ledger. `data/state.json` additionally tracks episodes so a crashed run resumes safely.
+3. **Prime-time premieres (Tier-1 targeting)** — videos are uploaded early but *scheduled*:
    - Long-form goes live **10:45 UTC = 6:45am New York** (morning devotional habit slot; also 3:45pm Berlin, 11:45am São Paulo)
    - Short goes live **16:00 UTC = noon New York** (lunch scroll peak; evening Europe)
    - Same times every single day → habit formation → returning viewers → watch time.
-3. **Shorts = subscriber engine, Long-form = watch-hours engine** — Shorts funnel viewers to the channel; 6–8 min meditations accumulate the 4,000 hours.
-4. **Auto-playlists** — every upload is added to "Daily Scripture Meditations" / "Daily Verse Shorts" playlists for binge sessions.
-5. **SEO** — every title/description targets real search queries ("verses for anxiety", "morning prayer"), theme keywords baked per-day in `plan.json`.
-6. **Self-monitoring** — nightly `STATS.md` report tracks subs, views, 24h deltas, and **ETA to 1,000 subs** so strategy can be adjusted from data.
+4. **Shorts = subscriber engine, Long-form = watch-hours engine** — Shorts funnel viewers to the channel; 6–8 min meditations accumulate the 4,000 hours.
+5. **Auto-playlists** — every upload is added to "Daily Scripture Meditations" / "Daily Verse Shorts" playlists for binge sessions.
+6. **SEO** — every title/description targets real search queries ("verses for anxiety", "morning prayer"), theme keywords baked per-day in `plan.json`.
+7. **Self-monitoring** — nightly `STATS.md` report tracks subs, views, 24h deltas, and **ETA to 1,000 subs** so strategy can be adjusted from data.
 
 ## 🔒 Reliability & Security
 - **Idempotent**: same-day re-runs are safe no-ops (checks `state.json` first); a 2nd scheduled run at 09:40 UTC acts as automatic retry if the first fails.

@@ -10,26 +10,37 @@ import av
 
 W, H = 1080, 1920
 
-def build(day_number=None, cycle=1):
+def build(day_number=None, cycle=1, variant=None):
+    """variant=None -> full mode (Short = verse #6 of the long-form episode).
+    variant=0,1,... -> Shorts-only mode (verse #variant of the day's Shorts pick)."""
     plan, entry, day_number = get_day_entry(day_number, cycle)
     cycle = entry.get("_cycle", cycle)
-    # Same deterministic episode pick as the long-form: verse #6 is the Short.
-    sel = vp.pick_for_episode(day_number, cycle, plan_days=len(plan["days"]))
+    if variant is None:
+        sel = vp.pick_for_episode(day_number, cycle, plan_days=len(plan["days"]))
+        verse = sel["short"]
+    else:
+        sel = vp.pick_for_shorts(day_number, cycle, count=max(2, variant + 1),
+                                 plan_days=len(plan["days"]))
+        verse = sel["verses"][variant]
     theme_key, ep_no = sel["theme_key"], sel["episode"]
-    work = OUT / f"day{day_number:02d}_short_work"
+    suffix = "" if not variant else f"_{chr(ord('a') + variant)}"
+    work = OUT / f"day{day_number:02d}_short{suffix}_work"
     if work.exists():
         shutil.rmtree(work)
     work.mkdir(parents=True)
     final_dir = OUT / f"day{day_number:02d}"
     final_dir.mkdir(parents=True, exist_ok=True)
 
-    v = sel["short"]
-    s = {"hook": entry["short"]["hook"],
-         "reflection": vp.reflect_short(v, theme_key, seed=ep_no * 31 + 6)}
+    v = verse
+    vi = 6 if variant is None else variant
+    hook = (entry["short"]["hook"] if variant in (None, 0)
+            else vp.hook_for(theme_key, seed=ep_no * 53 + vi))
+    s = {"hook": hook,
+         "reflection": vp.reflect_short(v, theme_key, seed=ep_no * 31 + vi)}
     ref_disp = display_ref(v["ref"])
-    rng = random.Random(day_number * 7 + cycle * 131)
+    rng = random.Random(day_number * 7 + cycle * 131 + vi * 17)
     bgs = sorted((ASSETS / "backgrounds_vertical").glob("*.jpg"))
-    bg = bgs[(day_number + cycle) % len(bgs)]
+    bg = bgs[(day_number + cycle + vi) % len(bgs)]
     music = rng.choice(sorted((ASSETS / "music").glob("*.mp3")))
 
     parts = [
@@ -59,7 +70,7 @@ def build(day_number=None, cycle=1):
 
     raw = work / "concat_raw.mp4"
     av.concat_segments(seg_files, raw, work)
-    final = final_dir / f"day{day_number:02d}_short.mp4"
+    final = final_dir / f"day{day_number:02d}_short{suffix}.mp4"
     av.mix_music(raw, music, final, music_vol=0.12)
     dur = av.duration(final)
     print(f"SHORT day {day_number}: {final} ({dur:.0f}s)")
@@ -77,8 +88,8 @@ def build(day_number=None, cycle=1):
     meta = {"title": title[:100], "description": description[:4900], "tags": tags,
             "categoryId": "22", "day": day_number, "cycle": cycle,
             "theme": entry["theme"], "type": "short", "file": str(final),
-            "verse_refs": [v["ref"]]}
-    (final_dir / "short_meta.json").write_text(json.dumps(meta, indent=1))
+            "verse_refs": v.get("refs", [v["ref"]])}
+    (final_dir / f"short{suffix}_meta.json").write_text(json.dumps(meta, indent=1))
     shutil.rmtree(work)
     return final, meta
 

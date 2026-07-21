@@ -73,7 +73,9 @@ _HARSH = re.compile(
     r"(woe to|wrath|slain|slaughter|labor pains|woman in labor|gnashing|"
     r"vengeance|destroy(?:ed)? the|corpses?|dung|prostitut|adulter|"
     r"swords?\b|spears?\b|the wicked are|no peace.{0,20}wicked|famine|plague|"
-    r"pestilence|devour|kill(?:ed)?\b|blood of|curse[ds]?\b)", re.I)
+    r"pestilence|devour|kill(?:ed)?\b|blood of|curse[ds]?\b|"
+    r"deceit|schemes?\b|do not speak|hate[ds]?\b|enemies|enemy\b|betray|"
+    r"perish|destruction|hypocrite|serpent|viper|demons?\b|unclean spirit)", re.I)
 
 def load_bible():
     with gzip.open(BIBLE_PATH, "rt", encoding="utf-8") as f:
@@ -104,15 +106,54 @@ def _score(text, book, strong, weak):
         s *= 1.5
     elif n < 40 or n > 420: # too short/long to carry a segment
         s *= 0.4
-    if _EXCLUDE.search(text):
-        s *= 0.05
-    if _HARSH.search(text):
-        s *= 0.1
+    if _EXCLUDE.search(text) or _HARSH.search(text):
+        return 0.0  # hard exclude: never devotional material
     return s
 
+# --- Complete-thought detection -------------------------------------------
+# A verse must not start or end mid-sentence. If it does, expand to the
+# neighbouring verses until the passage is a complete thought (max 3 verses).
+_TERMINAL_END = re.compile(r'[.!?][\u201d\u2019"\'\)\]]*\s*$')
+_MIDSENTENCE_START = re.compile(r'^[\u201c\u2018"\'\(\[]*[a-z]')
+
+def _ends_complete(text):
+    return bool(_TERMINAL_END.search(text.strip()))
+
+def _starts_complete(text):
+    return not _MIDSENTENCE_START.match(text.strip())
+
+def _expand_to_thought(bible, ref, used, max_verses=3, max_chars=520):
+    """Grow a verse backward/forward until it is a complete thought.
+    Returns (all_refs, combined_text, display_ref) or None if impossible
+    (crosses chapter, too long, or touches an already-used verse)."""
+    book_ch, vn = ref.rsplit(":", 1)
+    book, ch = book_ch.rsplit(" ", 1)
+    verses = bible[book][ch]
+    lo = hi = int(vn)
+    # backward: the passage must not open mid-sentence
+    while not _starts_complete(verses[str(lo)]):
+        if str(lo - 1) not in verses or hi - lo + 1 >= max_verses:
+            return None
+        lo -= 1
+    # forward: the passage must not end hanging
+    while not _ends_complete(verses[str(hi)]):
+        if str(hi + 1) not in verses or hi - lo + 1 >= max_verses:
+            return None
+        hi += 1
+    refs = [f"{book} {ch}:{i}" for i in range(lo, hi + 1)]
+    if any(r in used for r in refs):
+        return None
+    combined = " ".join(verses[str(i)].strip() for i in range(lo, hi + 1))
+    if len(combined) > max_chars or _EXCLUDE.search(combined) or _HARSH.search(combined):
+        return None
+    disp = refs[0] if lo == hi else f"{book} {ch}:{lo}-{hi}"
+    return refs, combined, disp
+
 def pick_verses(theme_key, n, seed, used=None, bible=None):
-    """Pick n distinct never-used verses for a theme. Returns list of
-    {"ref","text"} and the updated used-set (NOT saved; caller saves)."""
+    """Pick n distinct never-used COMPLETE-THOUGHT passages for a theme.
+    Each item: {"ref": display ref (may be a range), "refs": [every verse
+    burned], "text": full passage}. Returns (picked, updated used-set);
+    the ledger is NOT saved here — the caller saves it."""
     bible = bible or load_bible()
     used = used if used is not None else load_ledger()
     strong, weak = THEME_TERMS[theme_key]
@@ -132,7 +173,7 @@ def pick_verses(theme_key, n, seed, used=None, bible=None):
     rng = random.Random(seed)
     rng.shuffle(pool)
     # greedy pick with book diversity (max 2 per book per day)
-    picked, per_book = [], {}
+    picked, per_book, taken = [], {}, set()
     for sc, ref, text in sorted(pool, key=lambda x: -x[0]):
         book = ref.rsplit(" ", 1)[0]
         if per_book.get(book, 0) >= 2:
@@ -140,12 +181,16 @@ def pick_verses(theme_key, n, seed, used=None, bible=None):
         # small seeded jitter so the same theme picks differently across cycles
         if rng.random() < 0.25 and len(pool) - len(picked) > n * 3:
             continue
-        picked.append({"ref": ref, "text": text})
+        exp = _expand_to_thought(bible, ref, used | taken)
+        if exp is None:
+            continue  # can't form a complete thought — skip this candidate
+        refs, full_text, disp = exp
+        picked.append({"ref": disp, "refs": refs, "text": full_text})
+        taken.update(refs)
         per_book[book] = per_book.get(book, 0) + 1
         if len(picked) == n:
             break
-    for p in picked:
-        used.add(p["ref"])
+    used.update(taken)
     return picked, used
 
 # Day 1..31 of the plan -> theme key (aligned with data/plan.json order)
@@ -346,6 +391,39 @@ def reflect_short(verse, theme_key, seed):
     rng = random.Random(seed)
     app = rng.choice(apps)
     return f"{situation[0].upper() + situation[1:]}, this is God's word for you. Today, {app}."
+
+def pick_for_shorts(day, cycle, count=2, plan_days=31):
+    """Shorts-only mode: pick `count` fresh verses for the day's Shorts.
+    Deterministic per episode; ledger NOT saved here (daily.py saves it)."""
+    ep = (cycle - 1) * plan_days + day
+    theme = theme_for_day(day)
+    used = load_ledger()
+    bible = load_bible()
+    picked, used = pick_verses(theme, count, seed=ep * 977 + 411, used=used, bible=bible)
+    ti = THEME_KEYS.index(theme)
+    while len(picked) < count:  # dry-pool safety net
+        ti = (ti + 1) % len(THEME_KEYS)
+        extra, used = pick_verses(THEME_KEYS[ti], count - len(picked),
+                                  seed=ep * 977 + 411 + ti, used=used, bible=bible)
+        if extra:
+            picked.extend(extra)
+    return {"theme_key": theme, "episode": ep, "verses": picked, "used": used}
+
+_HOOK_TPL = [
+    "Stop scrolling. This verse is for you.",
+    "God has a word for you {situation}.",
+    "If today feels heavy, hear this.",
+    "You needed to see this verse today.",
+    "Before you keep scrolling — 30 seconds with God's Word.",
+    "This one verse can change your whole day.",
+    "Read this before the day gets loud.",
+    "Heaven has a message for you today.",
+]
+
+def hook_for(theme_key, seed):
+    situation, _ = THEME_APP[theme_key]
+    rng = random.Random(seed)
+    return rng.choice(_HOOK_TPL).format(situation=situation)
 
 if __name__ == "__main__":
     used = load_ledger()

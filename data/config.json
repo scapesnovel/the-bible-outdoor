@@ -1,0 +1,5 @@
+{
+ "mode": "shorts",
+ "shorts_per_day": 2,
+ "_comment": "mode: 'shorts' = Shorts-only growth phase (2/day). Switch to 'full' to add daily long-form meditations once Shorts are established."
+}

@@ -19,7 +19,7 @@ def build(day_number=None, cycle=1):
     # Fresh verses picked by judgment from the FULL Bible — never repeated.
     sel = vp.pick_for_episode(day_number, cycle, plan_days=len(plan["days"]))
     theme_key, ep_no = sel["theme_key"], sel["episode"]
-    passages = [{"ref": p["ref"], "text": p["text"],
+    passages = [{"ref": p["ref"], "refs": p.get("refs", [p["ref"]]), "text": p["text"],
                  "reflection": vp.reflect(p, theme_key, seed=ep_no * 31 + i)}
                 for i, p in enumerate(sel["longform"], 1)]
     work = OUT / f"day{day_number:02d}_long_work"
@@ -115,7 +115,8 @@ def build(day_number=None, cycle=1):
     meta = {"title": title[:100], "description": description[:4900], "tags": tags,
             "categoryId": "22", "day": day_number, "cycle": cycle, "episode": ep,
             "theme": theme, "type": "longform", "file": str(final),
-            "verse_refs": [p["ref"] for p in passages] + [sel["short"]["ref"]]}
+            "verse_refs": [r for p in passages for r in p.get("refs", [p["ref"]])]
+                          + sel["short"].get("refs", [sel["short"]["ref"]])}
     (final_dir / "longform_meta.json").write_text(json.dumps(meta, indent=1))
     shutil.rmtree(work)
     return final, meta
