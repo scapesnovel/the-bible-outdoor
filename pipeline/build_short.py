@@ -36,7 +36,7 @@ def build(day_number=None, cycle=1, variant=None):
     hook = (entry["short"]["hook"] if variant in (None, 0)
             else vp.hook_for(theme_key, seed=ep_no * 53 + vi))
     s = {"hook": hook,
-         "reflection": vp.reflect_short(v, theme_key, seed=ep_no * 31 + vi)}
+         "reflection": vp.encouragement_for(v, theme_key, seed=ep_no * 31 + vi, short=True)}
     ref_disp = display_ref(v["ref"])
     rng = random.Random(day_number * 7 + cycle * 131 + vi * 17)
     bgs = sorted((ASSETS / "backgrounds_vertical").glob("*.jpg"))
@@ -50,7 +50,7 @@ def build(day_number=None, cycle=1, variant=None):
          dict(body=f"\u201C{v['text']}\u201D", ref=f"— {ref_disp}", body_start=72), 0.6),
         ("refl", s["reflection"],
          dict(body=s["reflection"], body_start=68), 0.5),
-        ("cta", "Follow for one verse every single day. God bless you.",
+        ("cta", vp.cta_line(seed=ep_no * 71 + vi),
          dict(title="One verse. Every day.", ref="Subscribe — " + CHANNEL_NAME, title_size=72, ref_size=44), 0.3),
     ]
 

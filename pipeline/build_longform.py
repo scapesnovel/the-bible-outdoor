@@ -20,7 +20,7 @@ def build(day_number=None, cycle=1):
     sel = vp.pick_for_episode(day_number, cycle, plan_days=len(plan["days"]))
     theme_key, ep_no = sel["theme_key"], sel["episode"]
     passages = [{"ref": p["ref"], "refs": p.get("refs", [p["ref"]]), "text": p["text"],
-                 "reflection": vp.reflect(p, theme_key, seed=ep_no * 31 + i)}
+                 "reflection": vp.encouragement_for(p, theme_key, seed=ep_no * 31 + i)}
                 for i, p in enumerate(sel["longform"], 1)]
     work = OUT / f"day{day_number:02d}_long_work"
     if work.exists():
@@ -59,9 +59,7 @@ def build(day_number=None, cycle=1):
     segments.append(("prayer", prayer_speech,
                      dict(title="Let Us Pray", body=entry["prayer"]), 1.2))
 
-    outro_text = ("May the Lord bless you and keep you today. If this meditation strengthened you, "
-                  "subscribe and share it with someone who needs it. New Scripture meditations every day. "
-                  f"See you tomorrow on {CHANNEL_NAME}.")
+    outro_text = vp.outro_line(seed=ep_no * 37, channel_name=CHANNEL_NAME)
     segments.append(("outro", outro_text,
                      dict(title=CHANNEL_NAME, body="New meditations every day.\nSubscribe & grow with us.".replace("\n", " "),
                           ref="Numbers 6:24 — The LORD bless you, and keep you."), 0.5))

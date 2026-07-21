@@ -75,7 +75,9 @@ _HARSH = re.compile(
     r"swords?\b|spears?\b|the wicked are|no peace.{0,20}wicked|famine|plague|"
     r"pestilence|devour|kill(?:ed)?\b|blood of|curse[ds]?\b|"
     r"deceit|schemes?\b|do not speak|hate[ds]?\b|enemies|enemy\b|betray|"
-    r"perish|destruction|hypocrite|serpent|viper|demons?\b|unclean spirit)", re.I)
+    r"perish|destruction|hypocrite|serpent|viper|demons?\b|unclean spirit|"
+    r"babylon|assyria|philistine|chaldean|gossip|slander|"
+    r"king of (?!kings)\w+|land of (?!the living)\w+)", re.I)
 
 def load_bible():
     with gzip.open(BIBLE_PATH, "rt", encoding="utf-8") as f:
@@ -225,6 +227,135 @@ def pick_for_episode(day, cycle, plan_days=31):
         picked.extend(extra)
     return {"theme_key": theme, "episode": ep,
             "longform": picked[:5], "short": picked[5], "used": used}
+
+# ---------------------------------------------------------------------------
+# Content-aware reflection engine.
+# Priority 1: data/reflections.json.gz — a pre-generated, verse-specific
+#   encouragement bank (built once in the sandbox with an LLM).
+# Priority 2: the composer below, which reads the ACTUAL verse — its imagery,
+#   its speaker, whether it's a promise / command / blessing — and writes an
+#   encouragement around that specific content. Never generic, never fails.
+# ---------------------------------------------------------------------------
+_BANK = None
+def _bank():
+    global _BANK
+    if _BANK is None:
+        p = DATA / "reflections.json.gz"
+        if p.exists():
+            with gzip.open(p, "rt", encoding="utf-8") as f:
+                _BANK = json.load(f)
+        else:
+            _BANK = {}
+    return _BANK
+
+# imagery detected in the verse text -> phrase woven into the encouragement
+_IMAGERY = [
+    (r"shepherd|flock|pasture", "the Shepherd who knows your name"),
+    (r"light|lamp|shine|dawn", "this light that darkness cannot put out"),
+    (r"rock|fortress|refuge|stronghold|shelter", "a refuge that does not crack under pressure"),
+    (r"wings?\b|eagle", "wings that carry what you cannot"),
+    (r"water|river|stream|rain|fountain", "water for the driest places in you"),
+    (r"bread|feed|food|eat|hunger", "bread for today's hunger, not yesterday's"),
+    (r"vine|branch|fruit|tree|planted|root", "a life rooted where storms cannot reach"),
+    (r"path|way\b|walk|steps|feet", "the next step, lit just enough"),
+    (r"hand|arms?\b|uphold|carry|hold", "hands that have never once dropped you"),
+    (r"heart\b|hearts\b", "the very center of who you are"),
+    (r"mountain|hills?\b", "something steadier than the mountains"),
+    (r"sea|waves?|storm|wind", "the One the wind and waves still obey"),
+    (r"father|child|children|son s|adopt", "a Father who claims you as His own"),
+    (r"rest\b|sleep|quiet|still", "rest that goes deeper than sleep"),
+    (r"anchor|hope\b", "an anchor that holds in open water"),
+    (r"throne|king\b|reign", "a King still fully on His throne"),
+    (r"morning|new every", "mercy that resets with the sunrise"),
+    (r"never leave|never forsake|with you|am with", "a presence that does not walk out"),
+]
+
+_OPENER_PROMISE = [
+    "That is not a wish — it is a promise with God's own name on it.",
+    "God signs His promises with His character, and He has never defaulted on one.",
+    "Heaven has already committed to this. The only question is whether you'll lean on it.",
+    "This promise was written down so you could stand on it — today, not someday.",
+]
+_OPENER_COMMAND = [
+    "Notice: God doesn't suggest this — He commands it, because He knows what fear costs you.",
+    "This is not pressure; it is permission. God is releasing you from carrying this alone.",
+    "God never commands what He does not also empower. He supplies what He asks.",
+    "There's kindness inside this command — it is a Father steering His child away from harm.",
+]
+_OPENER_BLESSING = [
+    "Receive this the way it was written — as a blessing spoken directly over you.",
+    "These words were meant to land on someone. Today, let them land on you.",
+    "Let this blessing rest on you like morning light — undeserved, unearned, given.",
+]
+_OPENER_DECLARE = [
+    "Say it slowly and it changes shape — from ancient words into your own testimony.",
+    "The person who first prayed this had real problems, like yours. And God was enough.",
+    "This was true three thousand years ago, and it has not weakened since.",
+    "Make these words yours. Borrowed faith is still faith, and God honors it.",
+]
+
+def _verse_kind(text):
+    t = text.lower()
+    if re.search(r"^(do not|don.t|fear not|be strong|be still|cast|trust in|delight|commit|come to|ask|seek|rejoice|give thanks|humble|love one another|abide|remain|let not|take heart|watch|stand firm)", t):
+        return "command"
+    if re.search(r"(i will|he will|god will|the lord will|you will|shall\b|never leave|never forsake|i am with|will be with)", t):
+        return "promise"
+    if re.search(r"^(blessed|may the|the lord bless|grace and peace|peace i leave)", t):
+        return "blessing"
+    return "declare"
+
+def _imagery_line(text, rng):
+    hits = [phrase for pat, phrase in _IMAGERY if re.search(pat, text, re.I)]
+    if not hits:
+        return None
+    return rng.choice(hits)
+
+_CLOSER = [
+    "Carry that with you into the next hour.",
+    "Whisper it back to God as you go.",
+    "Let it be the last thing you think about tonight and the first tomorrow.",
+    "Take it personally — it was written for you.",
+    "Walk into today like someone who believes it.",
+    "Hold it out to God and ask Him to make it real in you.",
+    "Let that truth outrun your worry today.",
+    "Stand on it. It will hold.",
+]
+
+_KIND_OPENERS = {"promise": _OPENER_PROMISE, "command": _OPENER_COMMAND,
+                 "blessing": _OPENER_BLESSING, "declare": _OPENER_DECLARE}
+
+def compose_encouragement(verse, theme_key, seed):
+    """Verse-specific encouragement built from the verse's own content."""
+    rng = random.Random(seed)
+    text = verse["text"]
+    kind = _verse_kind(text)
+    opener = rng.choice(_KIND_OPENERS[kind])
+    situation, apps = THEME_APP[theme_key]
+    img = _imagery_line(text, rng)
+    if img:
+        middle = f"{situation[0].upper() + situation[1:]}, God gives you {img}."
+    else:
+        middle = f"{situation[0].upper() + situation[1:]}, this is solid ground."
+    closer = rng.choice(_CLOSER)
+    app = rng.choice(apps)
+    lead = "So" if "today" in app.lower() else "Today,"
+    return f"{opener} {middle} {lead} {app}. {closer}"
+
+def encouragement_for(verse, theme_key, seed, short=False):
+    """Bank first (verse-specific, LLM-authored), composer as fallback."""
+    entry = _bank().get(verse["ref"])
+    if entry and entry.get("refl"):
+        base = entry["refl"]
+        if short:
+            return base
+        rng = random.Random(seed)
+        return f"{base} {rng.choice(_CLOSER)}"
+    full = compose_encouragement(verse, theme_key, seed)
+    if short:
+        # composer output trimmed: opener + middle + app (drop closer for pace)
+        parts = full.split(". ")
+        return ". ".join(parts[:3]).rstrip(".") + "."
+    return full
 
 # ---------------------------------------------------------------------------
 # Reflection composer: turns any picked verse into a short devotional
@@ -408,6 +539,32 @@ def pick_for_shorts(day, cycle, count=2, plan_days=31):
         if extra:
             picked.extend(extra)
     return {"theme_key": theme, "episode": ep, "verses": picked, "used": used}
+
+_CTA = [
+    "Follow for one verse every single day. God bless you.",
+    "One verse a day changes everything. Subscribe, and God bless you.",
+    "Come back tomorrow — there's a verse waiting for you. God bless you.",
+    "Subscribe and let God's Word find you every day. Be blessed.",
+    "If this reached you, share it with someone who needs it. See you tomorrow.",
+    "A new verse every day — follow so you never miss yours. God bless you.",
+    "Take this verse with you today. Subscribe for tomorrow's. God bless you.",
+    "God's Word, every single day. Follow along — and be blessed today.",
+]
+
+def cta_line(seed):
+    return random.Random(seed).choice(_CTA)
+
+_OUTRO = [
+    "May the Lord bless you and keep you today. If this meditation strengthened you, subscribe and share it with someone who needs it. New Scripture meditations every day.",
+    "May His peace go with you into everything today holds. If this spoke to you, subscribe and pass it on to someone who needs these words. A new meditation is here every day.",
+    "The Lord watch over your coming and going, today and always. Subscribe so tomorrow's meditation finds you, and share this one with a friend who needs it.",
+    "Go gently into your day, carried by what you've heard. If it helped you, subscribe and share it forward. God's Word will be here for you again tomorrow.",
+    "May grace and peace follow you out of this quiet moment. Subscribe for tomorrow's meditation, and send this one to someone God puts on your heart.",
+    "The Lord make His face shine upon you today. If these words strengthened you, subscribe and share them with someone who is struggling. New meditations every day.",
+]
+
+def outro_line(seed, channel_name):
+    return f"{random.Random(seed).choice(_OUTRO)} See you tomorrow on {channel_name}."
 
 _HOOK_TPL = [
     "Stop scrolling. This verse is for you.",
