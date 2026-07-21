@@ -5,7 +5,8 @@ Structure per passage: intro -> [verse read slowly -> reflection -> pause] x5 ->
 """
 import sys, json, pathlib, shutil, random
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from common import ROOT, ASSETS, OUT, CHANNEL_NAME, get_day_entry, load_verses, display_ref
+from common import ROOT, ASSETS, OUT, CHANNEL_NAME, get_day_entry, display_ref
+import verse_picker as vp
 from tts import tts, VOICE_MAIN
 from text_render import make_card
 import av
@@ -15,7 +16,12 @@ W, H = 1920, 1080
 def build(day_number=None, cycle=1):
     plan, entry, day_number = get_day_entry(day_number, cycle)
     cycle = entry.get("_cycle", cycle)
-    verses = load_verses()
+    # Fresh verses picked by judgment from the FULL Bible — never repeated.
+    sel = vp.pick_for_episode(day_number, cycle, plan_days=len(plan["days"]))
+    theme_key, ep_no = sel["theme_key"], sel["episode"]
+    passages = [{"ref": p["ref"], "text": p["text"],
+                 "reflection": vp.reflect(p, theme_key, seed=ep_no * 31 + i)}
+                for i, p in enumerate(sel["longform"], 1)]
     work = OUT / f"day{day_number:02d}_long_work"
     if work.exists():
         shutil.rmtree(work)
@@ -38,15 +44,14 @@ def build(day_number=None, cycle=1):
                      dict(title=CHANNEL_NAME, body=f"Today's Meditation\n{theme}".replace("\n", " — "),
                           ref="Take a deep breath, and be still."), 1.2))
 
-    for i, p in enumerate(entry["passages"], 1):
-        v = verses[p["ref"]]
-        ref_disp = display_ref(v["reference"])
-        verse_speech = f"{ref_disp}. ... {v['text']}"
+    for i, p in enumerate(passages, 1):
+        ref_disp = display_ref(p["ref"])
+        verse_speech = f"{ref_disp}. ... {p['text']}"
         segments.append((f"verse{i}", verse_speech,
-                         dict(body=f"\u201C{v['text']}\u201D", ref=f"— {ref_disp} (BSB)"), 2.5))
+                         dict(body=f"\u201C{p['text']}\u201D", ref=f"— {ref_disp} (BSB)"), 2.5))
         # lectio divina: hear the same words a second time, slower
-        segments.append((f"verse{i}b", f"Listen once more, and let these words settle into your heart. ... {v['text']}",
-                         dict(body=f"\u201C{v['text']}\u201D", ref=f"— {ref_disp} (BSB)"), 3.0))
+        segments.append((f"verse{i}b", f"Listen once more, and let these words settle into your heart. ... {p['text']}",
+                         dict(body=f"\u201C{p['text']}\u201D", ref=f"— {ref_disp} (BSB)"), 3.0))
         segments.append((f"refl{i}", p["reflection"] + " ... Sit with that for a moment.",
                          dict(title=theme, body=p["reflection"]), 3.5))
 
@@ -87,9 +92,9 @@ def build(day_number=None, cycle=1):
     print(f"LONGFORM day {day_number}: {final} ({dur/60:.1f} min)")
 
     # 3) metadata
-    refs = [display_ref(verses[p['ref']]['reference']) for p in entry["passages"]]
+    refs = [display_ref(p["ref"]) for p in passages]
     kw = entry["keywords"]
-    ep = (cycle - 1) * len(plan["days"]) + day_number  # global episode number, never repeats
+    ep = ep_no  # global episode number, never repeats
     angles = ["5 Bible Verses & Guided Prayer", "Bible Verses to Meditate On",
               "Scripture & Prayer for Your Soul", "Guided Bible Meditation"]
     title = f"{theme} — {angles[(cycle - 1) % len(angles)]} | Daily Scripture Meditation (Day {ep})"
@@ -100,7 +105,7 @@ def build(day_number=None, cycle=1):
         "\n".join(f"  • {r}" for r in refs) +
         "\n\n🙏 SUBSCRIBE for a new Scripture meditation every day — where God's Word meets God's creation.\n\n"
         "Share this with someone who needs it today.\n\n"
-        "Scripture quotations are from the World English Bible (BSB), public domain.\n\n"
+        "Scripture quotations are from the Berean Standard Bible (BSB), used with permission.\n\n"
         f"#Bible #Scripture #{kw[0].title().replace(' ','')} #DailyDevotional #ChristianMeditation #Prayer #Faith"
     )
     tags = list(dict.fromkeys(
@@ -109,7 +114,8 @@ def build(day_number=None, cycle=1):
     ))[:30]
     meta = {"title": title[:100], "description": description[:4900], "tags": tags,
             "categoryId": "22", "day": day_number, "cycle": cycle, "episode": ep,
-            "theme": theme, "type": "longform", "file": str(final)}
+            "theme": theme, "type": "longform", "file": str(final),
+            "verse_refs": [p["ref"] for p in passages] + [sel["short"]["ref"]]}
     (final_dir / "longform_meta.json").write_text(json.dumps(meta, indent=1))
     shutil.rmtree(work)
     return final, meta

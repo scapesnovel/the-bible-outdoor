@@ -9,9 +9,10 @@
 - Records video IDs in state.json (committed back by the workflow),
   so a re-run the same day is a safe no-op.
 """
-import sys, os, pathlib, datetime, traceback
+import sys, os, json, pathlib, datetime, traceback
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from common import OUT, load_state, save_state, next_slot, load_plan, today_str, already_published_today
+import verse_picker as vp
 
 LONGFORM_UTC = (10, 45)
 SHORT_UTC = (16, 0)
@@ -68,9 +69,17 @@ def main(force_day=None, do_upload=True):
         traceback.print_exc()
 
     if record["longform_id"] or record["short_id"]:
+        # Verses used in this episode are burned into the permanent ledger
+        # so they are NEVER picked again.
+        lf_meta_d = json.loads((final_dir / "longform_meta.json").read_text())
+        used = vp.load_ledger()
+        new_refs = lf_meta_d.get("verse_refs", [])
+        used.update(new_refs)
+        vp.save_ledger(used)
+        record["verse_refs"] = new_refs
         state["published"].append(record)
         save_state(state)
-        print(f"State saved: episode {ep} recorded.")
+        print(f"State saved: episode {ep} recorded, {len(new_refs)} verses added to never-repeat ledger ({len(used)} total).")
     if failures:
         sys.exit(1)
 

@@ -2,7 +2,8 @@
 """Build the daily vertical Short (~45-60s): hook -> verse -> reflection -> CTA."""
 import sys, json, pathlib, shutil, random
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from common import ROOT, ASSETS, OUT, CHANNEL_NAME, get_day_entry, load_verses, display_ref
+from common import ROOT, ASSETS, OUT, CHANNEL_NAME, get_day_entry, display_ref
+import verse_picker as vp
 from tts import tts, VOICE_SHORT
 from text_render import make_card
 import av
@@ -12,7 +13,9 @@ W, H = 1080, 1920
 def build(day_number=None, cycle=1):
     plan, entry, day_number = get_day_entry(day_number, cycle)
     cycle = entry.get("_cycle", cycle)
-    verses = load_verses()
+    # Same deterministic episode pick as the long-form: verse #6 is the Short.
+    sel = vp.pick_for_episode(day_number, cycle, plan_days=len(plan["days"]))
+    theme_key, ep_no = sel["theme_key"], sel["episode"]
     work = OUT / f"day{day_number:02d}_short_work"
     if work.exists():
         shutil.rmtree(work)
@@ -20,9 +23,10 @@ def build(day_number=None, cycle=1):
     final_dir = OUT / f"day{day_number:02d}"
     final_dir.mkdir(parents=True, exist_ok=True)
 
-    s = entry["short"]
-    v = verses[s["ref"]]
-    ref_disp = display_ref(v["reference"])
+    v = sel["short"]
+    s = {"hook": entry["short"]["hook"],
+         "reflection": vp.reflect_short(v, theme_key, seed=ep_no * 31 + 6)}
+    ref_disp = display_ref(v["ref"])
     rng = random.Random(day_number * 7 + cycle * 131)
     bgs = sorted((ASSETS / "backgrounds_vertical").glob("*.jpg"))
     bg = bgs[(day_number + cycle) % len(bgs)]
@@ -72,7 +76,8 @@ def build(day_number=None, cycle=1):
     tags = list(dict.fromkeys(kw + ["shorts", "bible verse", "daily verse", "faith", "jesus", "scripture"]))[:25]
     meta = {"title": title[:100], "description": description[:4900], "tags": tags,
             "categoryId": "22", "day": day_number, "cycle": cycle,
-            "theme": entry["theme"], "type": "short", "file": str(final)}
+            "theme": entry["theme"], "type": "short", "file": str(final),
+            "verse_refs": [v["ref"]]}
     (final_dir / "short_meta.json").write_text(json.dumps(meta, indent=1))
     shutil.rmtree(work)
     return final, meta

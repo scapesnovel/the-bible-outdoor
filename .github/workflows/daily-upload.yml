@@ -49,14 +49,14 @@ jobs:
           DAY="${{ github.event.inputs.day }}"
           python3 pipeline/daily.py "${DAY:--}"
 
-      - name: Commit publish state (no-repeat memory)
+      - name: Commit publish state + verse ledger (no-repeat memory)
         if: always()
         run: |
           git config user.name "bible-outdoor-bot"
           git config user.email "bot@users.noreply.github.com"
           git pull --rebase origin main || true
-          git add data/state.json
-          git diff --cached --quiet || git commit -m "state: record published episode [skip ci]"
+          git add data/state.json data/used_verses.json
+          git diff --cached --quiet || git commit -m "state: record published episode + used verses [skip ci]"
           git push origin main || (git pull --rebase origin main && git push origin main)
 
       - name: Keep artifacts 3 days for inspection

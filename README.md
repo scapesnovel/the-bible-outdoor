@@ -19,8 +19,10 @@ All Scripture from the **Berean Standard Bible** (modern English that reads like
 ```
 GitHub Actions (free)                     YouTube
 ┌─────────────────────────────────┐
-│ daily-upload.yml @ 05:30 UTC    │
-│  plan.json + verses.json        │
+│ daily-upload.yml @ 07:40 UTC    │
+│  full BSB Bible (31,086 verses) │
+│   → judgment verse picker       │
+│     (never repeats a verse)     │
 │   → edge-tts narration (free)   │
 │   → PIL text cards + thumbnail  │
 │   → FFmpeg Ken Burns + music    │──── upload x2 ───→ 🎬 + 📱
@@ -32,9 +34,12 @@ GitHub Actions (free)                     YouTube
 ```
 
 ## Repository map
-- `data/plan.json` — 31-day curriculum (themes, reflections, prayers, hooks, SEO keywords)
-- `data/verses.json` — 163 pre-fetched BSB passages (offline-safe)
-- `pipeline/daily.py` — orchestrator (build all + upload)
+- `data/plan.json` — 31-day theme curriculum (intros, prayers, hooks, SEO keywords)
+- `data/bible.json.gz` — the **full BSB Bible** (31,086 verses, 66 books) — the verse pool
+- `data/used_verses.json` — permanent never-repeat ledger (committed back by the workflow)
+- `pipeline/verse_picker.py` — judgment engine: scores every fresh verse for theme fit, devotional book weight, and narration length; excludes genealogies/harsh judgment wording; seeded shuffle so picks are never in canonical order; composes per-verse reflections
+- `pipeline/download_bible.py` — one-time full-Bible fetcher (already run)
+- `pipeline/daily.py` — orchestrator (build all + upload + burn used verses into ledger)
 - `pipeline/build_longform.py` / `build_short.py` / `build_thumbnail.py` — renderers
 - `pipeline/tts.py` / `text_render.py` / `av.py` — voice, text cards, FFmpeg helpers
 - `pipeline/upload.py` — YouTube upload + thumbnail set
@@ -53,7 +58,7 @@ python3 pipeline/daily.py 1 --no-upload  # build everything, skip upload
 ## 🎯 Growth & Monetization Strategy (autonomous)
 **Goal**: 1,000 subscribers + 4,000 watch-hours (or 10M Shorts views) = YouTube Partner Program.
 
-1. **Never-repeat engine** — `data/state.json` records every published episode. Cycle 2+ re-covers themes with *different* verse order, different Short verse, and alternate title angles, so content stays fresh forever with zero repeats.
+1. **Never-repeat engine (verse-level)** — verses are picked by judgment from the **entire Bible** (31,086 BSB verses), scored per theme, never in canonical order. Every used verse is burned into `data/used_verses.json` permanently — **the channel will never read the same verse twice**, even years out (6 verses/day ≈ 14 years of unique content). `data/state.json` additionally tracks episodes so a crashed run resumes safely.
 2. **Prime-time premieres (Tier-1 targeting)** — videos are uploaded early but *scheduled*:
    - Long-form goes live **10:45 UTC = 6:45am New York** (morning devotional habit slot; also 3:45pm Berlin, 11:45am São Paulo)
    - Short goes live **16:00 UTC = noon New York** (lunch scroll peak; evening Europe)
