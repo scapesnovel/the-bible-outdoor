@@ -62,8 +62,17 @@ def save_bank(bank):
     tmp.replace(BANK_PATH)
 
 def _client():
+    """Prefer Gemini (free tier via Google AI Studio) when GEMINI_API_KEY is
+    set; otherwise the OpenAI-compatible proxy from env."""
     from openai import OpenAI
+    gem = os.environ.get("GEMINI_API_KEY")
+    if gem:
+        return OpenAI(api_key=gem,
+                      base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
     return OpenAI()  # OPENAI_API_KEY / OPENAI_BASE_URL from env
+
+def _model():
+    return "gemini-2.5-flash" if os.environ.get("GEMINI_API_KEY") else MODEL
 
 def gen_batch(client, items):
     """items: list of (ref, text). Returns {ref: refl}."""
@@ -71,7 +80,7 @@ def gen_batch(client, items):
     for attempt in range(4):
         try:
             resp = client.chat.completions.create(
-                model=MODEL,
+                model=_model(),
                 messages=[{"role": "system", "content": SYSTEM},
                           {"role": "user", "content": user}],
                 response_format={"type": "json_object"},
