@@ -4,11 +4,17 @@ Everything below is one-time, ~25 minutes total. Follow exactly. After step 5, y
 
 ---
 
-## Step 0 — Connect GitHub to this project (~2 min)
+## Step 0 — Connect GitHub to this project ✅ DONE
 
-1. In this Genspark project, open the **#github** tab and authorize GitHub (create a free github.com account first if needed — any username works).
-2. Create/select a repository (e.g. `bible-outdoor`) — **must be Public** (public repos get unlimited free GitHub Actions minutes; private ones only 2,000 min/month which we'd burn through).
-3. Tell me it's connected — I push all the code myself.
+Repo connected: https://github.com/scapesnovel/the-bible-outdoor — all code pushed.
+
+## Step 0.5 — Add the 2 workflow files (~2 min) ⚠️ NEEDED
+
+GitHub blocks bots from creating workflow files, so this one needs your hands (copy-paste only):
+
+1. Open https://github.com/scapesnovel/the-bible-outdoor → press **`.`** (period key) OR click **Add file → Create new file**
+2. File name: `.github/workflows/daily-upload.yml` — paste the contents of [daily-upload.yml](https://www.genspark.ai/api/files/s/ukjrFlEN) → **Commit changes** (to main)
+3. Again **Add file → Create new file**: `.github/workflows/stats-monitor.yml` — paste the contents of [stats-monitor.yml](https://www.genspark.ai/api/files/s/EL3rCAnS) → **Commit changes**
 
 ---
 
@@ -64,7 +70,9 @@ In this GitHub repository → **Settings → Secrets and variables → Actions �
 ## Step 5 — Fire the first run (~1 min)
 
 Repo → **Actions** tab → **Daily Video Factory** → **Run workflow** → leave day empty → Run.
-~20–30 min later, two videos appear on the channel. From then on it runs itself at 05:30 UTC daily, and **Channel Stats Monitor** writes a performance report to `STATS.md` every evening — that's how we watch the contest without you lifting a finger.
+~5–10 min later, **2 Shorts** appear on the channel as scheduled premieres (9am + 6pm New York time). From then on it runs itself daily at 07:40 UTC with a 09:40 retry safety-net, and **Channel Stats Monitor** writes a performance report to `STATS.md` every evening — that's how we watch the contest without you lifting a finger.
+
+> **Current strategy: Shorts-only phase.** 2 fresh-verse Shorts/day build subscribers fastest. Once the channel has momentum I flip one switch (`data/config.json`) and daily long-form meditations start too — no human action needed for that.
 
 ---
 
