@@ -121,7 +121,7 @@ function botRanOn(dateISO) {
 }
 function validate() {
   const msg = $("validate-msg"), btn = $("btn-publish");
-  const fail = t => { msg.innerHTML = `<span class="err"><i class="fa-solid fa-circle-xmark"></i> ${t}</span>`; btn.disabled = true; };
+  const fail = t => { msg.innerHTML = `<span class="err"><i class="fa-solid fa-circle-xmark"></i> ${t}</span>`; btn.disabled = true; return false; };
   const expl = $("inp-expl").value.trim();
   $("expl-count").textContent = `${expl.length} / 600`;
   if (!token()) return fail("Set your GitHub token in ⚙️ Settings first.");
@@ -144,6 +144,7 @@ function validate() {
   }
   msg.innerHTML = `<span class="ok"><i class="fa-solid fa-circle-check"></i> Slot is valid — premieres ${when.toLocaleString()}</span>`;
   btn.disabled = false;
+  return true;
 }
 function renderSuggestions() {
   const wrap = $("suggest-slots"); wrap.innerHTML = "";
@@ -221,11 +222,12 @@ async function commitQueue(message) {
 }
 async function publish() {
   const btn = $("btn-publish");
-  btn.disabled = true; btn.textContent = "Publishing…";
+  btn.disabled = true;
+  btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Publishing…`;
   try {
     await loadQueueAndState();      // race safety: re-validate with fresh data
-    if (!$("validate-msg").textContent.includes("✔")) {
-      alert("Slot became invalid (fresh data). Pick another time.");
+    if (!validate()) {
+      toast("That slot just became unavailable — fresh data shows a conflict. Pick another time.", "err");
     } else {
       const { ref, text } = chosenVerse();
       const when = new Date(`${$("inp-date").value}T${$("inp-time").value}`);
@@ -242,24 +244,67 @@ async function publish() {
       QUEUE.queue.push(item);
       await commitQueue(`custom: queue ${item.display_ref} for ${item.publish_at}`);
       $("inp-expl").value = ""; $("inp-hook").value = "";
-      alert(`✅ Queued! The bot will render "${item.display_ref}" (voice-over + music + visuals) and premiere it ${when.toLocaleString()}. Track it in the queue below.`);
+      toast(`Queued! "${item.display_ref}" will be rendered and premieres ${when.toLocaleString([], { weekday: "short", hour: "2-digit", minute: "2-digit" })}.`, "ok");
       renderQueue(); renderToday(); renderSuggestions();
     }
-  } catch (e) { alert("Error: " + e.message); }
-  btn.textContent = "Publish → schedule";
+  } catch (e) { toast("Error: " + e.message, "err"); }
+  btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Publish &amp; schedule`;
   validate();
 }
 async function cancelItem(id) {
-  if (!confirm("Cancel this custom Short? If already uploaded it will be deleted from YouTube, and the bot resumes normal service that day.")) return;
+  const yes = await askConfirm("Cancel this custom Short?",
+    "If it was already uploaded it will be deleted from YouTube, and the bot resumes normal service that day.");
+  if (!yes) return;
   try {
     await loadQueueAndState();
     const x = QUEUE.queue.find(q => q.id === id);
     if (x && x.status !== "removed") {
       x.status = "cancelled";
       await commitQueue(`custom: cancel ${x.display_ref}`);
+      toast(`"${x.display_ref}" is being cancelled.`, "ok");
     }
     renderQueue();
-  } catch (e) { alert("Error: " + e.message); }
+  } catch (e) { toast("Error: " + e.message, "err"); }
+}
+
+/* ---------- Toast + confirm (styled, replaces browser popups) ---------- */
+function toast(text, kind = "ok", ms = 4200) {
+  let wrap = $("toast-wrap");
+  if (!wrap) {
+    wrap = document.createElement("div");
+    wrap.id = "toast-wrap";
+    document.body.appendChild(wrap);
+  }
+  const t = document.createElement("div");
+  t.className = `toast ${kind}`;
+  t.innerHTML = `<i class="fa-solid ${kind === "ok" ? "fa-circle-check" : "fa-circle-exclamation"}"></i><span>${text}</span>`;
+  wrap.appendChild(t);
+  requestAnimationFrame(() => t.classList.add("show"));
+  setTimeout(() => { t.classList.remove("show"); setTimeout(() => t.remove(), 350); }, ms);
+}
+function askConfirm(title, body) {
+  return new Promise(resolve => {
+    const ov = document.createElement("div");
+    ov.className = "modal";
+    ov.innerHTML = `
+      <div class="card modal-card">
+        <div class="card-head">
+          <span class="card-icon gold"><i class="fa-solid fa-triangle-exclamation"></i></span>
+          <h2>${title}</h2>
+        </div>
+        <p class="tiny muted">${body}</p>
+        <div class="row mt2">
+          <button class="btn-primary grow" data-a="1"><i class="fa-solid fa-check"></i> Yes, cancel it</button>
+          <button class="btn-ghost" data-a="0">Keep it</button>
+        </div>
+      </div>`;
+    ov.addEventListener("click", e => {
+      const a = e.target.closest("[data-a]");
+      if (a) { ov.remove(); resolve(a.dataset.a === "1"); }
+      else if (e.target === ov) { ov.remove(); resolve(false); }
+    });
+    document.body.appendChild(ov);
+  });
 }
 
 /* ---------- Settings ---------- */
