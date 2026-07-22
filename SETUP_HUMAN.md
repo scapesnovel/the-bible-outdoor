@@ -47,15 +47,9 @@ GitHub blocks bots from creating workflow files, so this one needs your hands (c
    - Application type: **Desktop app** → name: `uploader` → Create
    - **Copy the Client ID and Client Secret** — you need them in Step 3.
 
-## Step 3 — Get the refresh token (~3 min, on your own computer)
+## Step 3 — Get the refresh token ✅ DONE
 
-On any computer with Python and a browser:
-```bash
-pip install google-auth-oauthlib
-python3 pipeline/get_refresh_token.py "YOUR_CLIENT_ID" "YOUR_CLIENT_SECRET"
-```
-A browser opens → sign in with the channel's Google account → click **Continue/Allow** on everything (it will warn "app isn't verified" — click *Advanced → Go to bible-outdoor*; that's normal for test apps).
-The script prints `YT_REFRESH_TOKEN`. Copy all three values.
+~~Run get_refresh_token.py~~ — completed via the AI (manual OAuth flow + token exchange in the sandbox). The refresh token was verified live against the channel (`@thebibleoutdoor`, id `UCoONIAP3MxoiSSFJGoHfqMw`). The three secret values are in the chat — copy them into Step 4.
 
 ## Step 4 — Add GitHub secrets (~2 min)
 
@@ -63,9 +57,11 @@ In this GitHub repository → **Settings → Secrets and variables → Actions �
 
 | Secret name | Value |
 |---|---|
-| `YT_CLIENT_ID` | from Step 2 |
-| `YT_CLIENT_SECRET` | from Step 2 |
-| `YT_REFRESH_TOKEN` | from Step 3 |
+| `YT_CLIENT_ID` | from Step 2 (the `...apps.googleusercontent.com` string) |
+| `YT_CLIENT_SECRET` | from Step 2 (starts `GOCSPX-`) |
+| `YT_REFRESH_TOKEN` | from Step 3 (starts `1//` — provided in chat) |
+
+(The AI attempted to set these automatically but the GitHub App token lacks secrets permission — must be done by hand, same as the workflow files were.)
 
 ## Step 5 — Fire the first run (~1 min)
 
