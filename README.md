@@ -45,7 +45,11 @@ GitHub Actions (free)                     YouTube
 - `pipeline/upload.py` — YouTube upload + thumbnail set
 - `pipeline/stats.py` — daily performance report → `STATS.md`
 - `pipeline/get_refresh_token.py` — one-time OAuth helper (human step)
-- `.github/workflows/` — the two automation schedules
+- `pipeline/build_custom.py` / `custom.py` — owner custom-Short renderer + queue orchestrator
+- `data/custom_queue.json` — owner's custom-Short queue (written by the phone app)
+- `docs/` — the **Owner PWA** (GitHub Pages): pick verse → type explanation → schedule
+- `setup/custom-upload.yml` — workflow file to paste into `.github/workflows/` (manual, once)
+- `.github/workflows/` — the automation schedules
 
 ## Local test commands
 ```bash
@@ -53,7 +57,18 @@ pip install edge-tts pillow google-api-python-client google-auth google-auth-htt
 python3 pipeline/build_short.py 1        # build day 1 Short only
 python3 pipeline/build_longform.py 1     # build day 1 long-form only
 python3 pipeline/daily.py 1 --no-upload  # build everything, skip upload
+python3 pipeline/custom.py --no-upload   # process custom queue without uploading
 ```
+
+## 📱 Owner App (custom Shorts from your phone)
+GitHub-Pages PWA at `https://scapesnovel.github.io/the-bible-outdoor/` — install via Chrome “Add to Home screen”.
+- Verse picker over the full bundled BSB (same version as the bot); ranges auto-join into one passage
+- Owner types the explanation → becomes the voice-over; hook optional (auto if empty)
+- Schedule guard: max **2 Shorts/day** (customs + bot combined), **≥4h** between Shorts, **≥3h** lead for rendering; ⭐ suggests the bot's prime slots (13:00 & 22:00 UTC)
+- Displacement: 1 custom → bot posts 1 that day; 2 customs → bot skips the day (its verses aren't lost — they only burn on upload)
+- Custom verses **never** burn the no-repeat ledger (owner's explanation is personal; the bot may feature the verse again later with its own reflection)
+- Cancel from the queue → uploaded video is deleted from YouTube automatically
+- Backend = the repo itself: app reads state via raw URLs, writes `data/custom_queue.json` via the Contents API (fine-grained PAT stored only on the phone); `custom-upload.yml` renders + schedules on push
 
 ## 🎯 Growth & Monetization Strategy (autonomous)
 **Goal**: 1,000 subscribers + 4,000 watch-hours (or 10M Shorts views) = YouTube Partner Program.

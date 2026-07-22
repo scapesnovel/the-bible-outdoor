@@ -17,6 +17,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from common import (OUT, load_state, save_state, next_slot, load_plan,
                     load_config, today_str, already_published_today)
 import verse_picker as vp
+import custom as custom_mod
 
 LONGFORM_UTC = (10, 45)
 SHORT_UTC = (16, 0)
@@ -29,6 +30,46 @@ def publish_at(hh_mm):
     if t <= now + datetime.timedelta(minutes=10):
         t += datetime.timedelta(days=1)
     return t.isoformat().replace("+00:00", "Z")
+
+def _customs_today():
+    """Owner-scheduled custom Shorts whose publish date is today (UTC).
+    Returns their publish datetimes."""
+    q = custom_mod.load_queue()
+    out = []
+    for x in q.get("queue", []):
+        if x.get("status") in ("pending", "scheduled"):
+            try:
+                t = datetime.datetime.fromisoformat(x["publish_at"].replace("Z", "+00:00"))
+            except Exception:
+                continue
+            if t.date().isoformat() == today_str():
+                out.append(t)
+    return out
+
+def _bot_slots_avoiding(customs, n):
+    """Pick n publish slots from the candidate grid keeping >= MIN_GAP_HOURS
+    from every custom Short and from each other."""
+    gap = custom_mod.MIN_GAP_HOURS
+    candidates = [(13, 0), (22, 0), (16, 0), (18, 0), (20, 0), (11, 0)]
+    chosen = []
+    def ok(hh_mm):
+        t = datetime.datetime.now(datetime.timezone.utc).replace(
+            hour=hh_mm[0], minute=hh_mm[1], second=0, microsecond=0)
+        for c in customs:
+            if abs((t - c).total_seconds()) / 3600 < gap:
+                return False
+        for s in chosen:
+            ts = datetime.datetime.now(datetime.timezone.utc).replace(
+                hour=s[0], minute=s[1], second=0, microsecond=0)
+            if abs((t - ts).total_seconds()) / 3600 < gap:
+                return False
+        return True
+    for c in candidates:
+        if len(chosen) >= n:
+            break
+        if ok(c):
+            chosen.append(c)
+    return chosen
 
 def _burn_ledger(refs):
     used = vp.load_ledger()
@@ -61,6 +102,18 @@ def main(force_day=None, do_upload=True):
     if mode == "shorts":
         # ---- Shorts-only growth phase: 2 Shorts/day ----
         n = int(cfg.get("shorts_per_day", 2))
+
+        # Owner displacement rules: each custom Short scheduled today replaces
+        # one bot Short. Displaced verses aren't lost — they only burn on
+        # upload, so they stay in the pool for a future day.
+        customs = _customs_today()
+        if customs:
+            n = max(0, n - len(customs))
+            print(f"Owner has {len(customs)} custom Short(s) today -> bot builds {n}.")
+        if n == 0:
+            print("Day fully covered by custom Shorts. Bot skips — resumes next day.")
+            return
+
         built = []
         for i in range(n):
             path, meta = build_short.build(day, cycle, variant=i)
@@ -69,7 +122,10 @@ def main(force_day=None, do_upload=True):
             print("Build-only mode; skipping upload.")
             return
         import upload
-        slots = [SHORT_A_UTC, SHORT_B_UTC, (18, 0), (20, 0)]
+        slots = (_bot_slots_avoiding(customs, n) if customs
+                 else [SHORT_A_UTC, SHORT_B_UTC, (18, 0), (20, 0)])
+        if len(slots) < n:
+            slots += [(20, 0), (18, 0)]  # emergency fallback, still same-day
         record = {"date": today_str(), "day": day, "cycle": cycle, "episode": ep,
                   "theme": entry["theme"], "mode": "shorts", "short_ids": [],
                   "verse_refs": []}

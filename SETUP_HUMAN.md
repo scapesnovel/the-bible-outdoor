@@ -51,7 +51,7 @@ GitHub blocks bots from creating workflow files, so this one needs your hands (c
 
 ~~Run get_refresh_token.py~~ — completed via the AI (manual OAuth flow + token exchange in the sandbox). The refresh token was verified live against the channel (`@thebibleoutdoor`, id `UCoONIAP3MxoiSSFJGoHfqMw`). The three secret values are in the chat — copy them into Step 4.
 
-## Step 4 — Add GitHub secrets (~2 min)
+## Step 4 — Add GitHub secrets ✅ DONE (~2 min)
 
 In this GitHub repository → **Settings → Secrets and variables → Actions → New repository secret**, add all three:
 
@@ -63,12 +63,34 @@ In this GitHub repository → **Settings → Secrets and variables → Actions �
 
 (The AI attempted to set these automatically but the GitHub App token lacks secrets permission — must be done by hand, same as the workflow files were.)
 
-## Step 5 — Fire the first run (~1 min)
+## Step 5 — Fire the first run ✅ DONE (~1 min)
 
 Repo → **Actions** tab → **Daily Video Factory** → **Run workflow** → leave day empty → Run.
 ~5–10 min later, **2 Shorts** appear on the channel as scheduled premieres (9am + 6pm New York time). From then on it runs itself daily at 07:40 UTC with a 09:40 retry safety-net, and **Channel Stats Monitor** writes a performance report to `STATS.md` every evening — that's how we watch the contest without you lifting a finger.
 
 > **Current strategy: Shorts-only phase.** 2 fresh-verse Shorts/day build subscribers fastest. Once the channel has momentum I flip one switch (`data/config.json`) and daily long-form meditations start too — no human action needed for that.
+
+---
+
+## Step 6 — Owner phone app (optional, ~5 min, one-time)
+
+The **Owner App** lets you publish your OWN verse + explanation as a Short from your phone. The bot renders it (voice-over, music, visuals) and yields its own slots automatically. Three things to do:
+
+**6a. Add the custom workflow** (same manual paste as before — the App token can't write workflows):
+- Repo → **Add file → Create new file** → name it `.github/workflows/custom-upload.yml`
+- Paste the contents of **`setup/custom-upload.yml`** from this repo → Commit.
+
+**6b. Turn on GitHub Pages** (hosts the app free forever):
+- Repo → **Settings → Pages** → Source: **Deploy from a branch** → Branch: **main**, folder: **/docs** → Save.
+- After ~2 min the app is live at: `https://scapesnovel.github.io/the-bible-outdoor/`
+
+**6c. Create the app's key** (lets your phone write to the queue):
+- GitHub → **Settings (your account) → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token**
+- Name: `bible-outdoor-app` · Expiration: **No expiration** (or 1 year) · Repository access: **Only select repositories → the-bible-outdoor**
+- Permissions → Repository permissions → **Contents: Read and write**. Everything else: No access. → Generate, copy the `github_pat_…` token.
+- Open the app on your phone → **⚙️ Settings** → paste the token → Save. (Then in Chrome: menu → **Add to Home screen** — it installs like a real app.)
+
+How it behaves: pick book/chapter/verse(s) (full BSB text auto-fills), type your explanation, choose a time (app only offers valid slots: max 2 Shorts/day, ≥4h apart, ≥3h ahead; ⭐ marks the bot's proven prime times). 1 custom that day → bot posts 1; 2 customs → bot skips the day. Cancel from the queue anytime — uploaded videos get deleted from YouTube automatically. You may reuse any verse; the bot may also reuse your custom verses later (your explanation is yours alone — custom verses never enter the bot's no-repeat ledger).
 
 ---
 
