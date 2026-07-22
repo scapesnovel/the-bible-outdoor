@@ -532,12 +532,17 @@ def pick_for_shorts(day, cycle, count=2, plan_days=31):
     bible = load_bible()
     picked, used = pick_verses(theme, count, seed=ep * 977 + 411, used=used, bible=bible)
     ti = THEME_KEYS.index(theme)
-    while len(picked) < count:  # dry-pool safety net
+    tries = 0
+    while len(picked) < count and tries < len(THEME_KEYS):  # dry-pool safety net
         ti = (ti + 1) % len(THEME_KEYS)
+        tries += 1
         extra, used = pick_verses(THEME_KEYS[ti], count - len(picked),
                                   seed=ep * 977 + 411 + ti, used=used, bible=bible)
         if extra:
             picked.extend(extra)
+            tries = 0
+    if len(picked) < count:
+        raise RuntimeError(f"verse pool exhausted: only {len(picked)}/{count} fresh verses left")
     return {"theme_key": theme, "episode": ep, "verses": picked, "used": used}
 
 _CTA = [
