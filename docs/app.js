@@ -42,9 +42,20 @@ async function loadBible() {
     text = await new Response(r2.body.pipeThrough(ds)).text();
   }
   BIBLE = JSON.parse(text);
-  const sel = $("sel-book");
-  sel.innerHTML = Object.keys(BIBLE).map(b => `<option>${b}</option>`).join("");
+  fillBooks();
   fillChapters();
+}
+function fillBooks(filter) {
+  const sel = $("sel-book");
+  const prev = sel.value;
+  let books = Object.keys(BIBLE);
+  if (filter) {
+    const f = filter.toLowerCase();
+    const m = books.filter(b => b.toLowerCase().includes(f));
+    if (m.length) books = m;
+  }
+  sel.innerHTML = books.map(b => `<option>${b}</option>`).join("");
+  if (books.includes(prev)) sel.value = prev;
 }
 function fillChapters() {
   const book = $("sel-book").value;
@@ -72,21 +83,25 @@ function updatePreview() {
   const { ref, text } = chosenVerse();
   const p = $("verse-preview");
   p.classList.remove("hidden");
-  p.innerHTML = `\u201C${text}\u201D <b class="not-italic text-[#c9a45c]">— ${ref.replace("Psalms ", "Psalm ")}</b>` +
-    (text.length > 480 ? `<div class="text-red-400 text-xs mt-1 not-italic">⚠️ Long for a Short — consider fewer verses.</div>` : "");
+  p.innerHTML = `\u201C${text}\u201D <b>— ${ref.replace("Psalms ", "Psalm ")}</b>` +
+    (text.length > 480 ? `<span class="verse-warn"><i class="fa-solid fa-triangle-exclamation"></i> Long for a Short — consider fewer verses.</span>` : "");
   validate();
 }
 
 async function loadQueueAndState() {
+  let ok = false;
   try {
     const q = await ghGet("data/custom_queue.json");
     QUEUE_SHA = q.sha;
     QUEUE = JSON.parse(b64decode(q.content));
+    ok = true;
   } catch (e) { /* keep last known */ }
   try {
     const s = await fetch(`${RAW}/data/state.json?t=${Date.now()}`);
     STATE = await s.json();
   } catch (e) { /* keep last known */ }
+  const dot = $("conn-dot");
+  if (dot) { dot.className = "conn-dot " + (ok ? "on" : (token() ? "off" : "")); dot.title = ok ? "Connected" : "Not connected — set token in Settings"; }
   renderQueue(); renderToday(); renderSuggestions(); validate();
 }
 
@@ -106,9 +121,9 @@ function botRanOn(dateISO) {
 }
 function validate() {
   const msg = $("validate-msg"), btn = $("btn-publish");
-  const fail = t => { msg.innerHTML = `<span class="text-red-400">✖ ${t}</span>`; btn.disabled = true; };
+  const fail = t => { msg.innerHTML = `<span class="err"><i class="fa-solid fa-circle-xmark"></i> ${t}</span>`; btn.disabled = true; };
   const expl = $("inp-expl").value.trim();
-  $("expl-count").textContent = `${expl.length} chars`;
+  $("expl-count").textContent = `${expl.length} / 600`;
   if (!token()) return fail("Set your GitHub token in ⚙️ Settings first.");
   if (!BIBLE) return fail("Bible still loading…");
   if (expl.length < 20) return fail("Explanation needs at least 20 characters.");
@@ -127,7 +142,7 @@ function validate() {
     if (gap < MIN_GAP_H)
       return fail(`Only ${gap.toFixed(1)}h from another Short that day — minimum ${MIN_GAP_H}h.`);
   }
-  msg.innerHTML = `<span class="text-green-400">✔ Slot is valid — premieres ${when.toLocaleString()}</span>`;
+  msg.innerHTML = `<span class="ok"><i class="fa-solid fa-circle-check"></i> Slot is valid — premieres ${when.toLocaleString()}</span>`;
   btn.disabled = false;
 }
 function renderSuggestions() {
@@ -141,11 +156,13 @@ function renderSuggestions() {
       const dateISO = d.toISOString().slice(0, 10);
       if (botRanOn(dateISO) || shortsOnDate(dateISO).n >= MAX_PER_DAY) continue;
       const b = document.createElement("button");
-      b.className = "chip hover:border-[#c9a45c]";
-      b.innerHTML = `<span class="star">⭐</span> ${d.toLocaleString([], { weekday: "short", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}`;
+      b.className = "chip";
+      b.innerHTML = `<i class="fa-solid fa-star star"></i> ${d.toLocaleString([], { weekday: "short", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}`;
       b.onclick = () => {
         $("inp-date").value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
         $("inp-time").value = `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+        document.querySelectorAll("#suggest-slots .chip").forEach(c => c.classList.remove("active"));
+        b.classList.add("active");
         validate();
       };
       wrap.appendChild(b);
@@ -158,27 +175,34 @@ function renderSuggestions() {
 function renderToday() {
   const today = new Date().toISOString().slice(0, 10);
   const { n } = shortsOnDate(today);
+  const slotA = new Date(); slotA.setUTCHours(13, 0, 0, 0);
+  const slotB = new Date(); slotB.setUTCHours(22, 0, 0, 0);
+  const fmt = d => d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   $("today-info").innerHTML =
-    `<div>Today (${today} UTC): <b class="text-[#e8eef2]">${n}</b>/${MAX_PER_DAY} Shorts ${botRanOn(today) ? "— bot already ran ✅" : ""}</div>
-     <div class="mt-1">Bot's daily premiere slots: <span class="star">⭐</span> 13:00 UTC (9am NY) &amp; <span class="star">⭐</span> 22:00 UTC (6pm NY)</div>`;
+    `<div class="today-row"><i class="fa-solid fa-clapperboard"></i>
+       <span><span class="today-count">${n}</span> / ${MAX_PER_DAY} Shorts today ${botRanOn(today) ? ' · <span style="color:var(--green)">bot already ran ✓</span>' : ""}</span></div>
+     <div class="today-row"><i class="fa-solid fa-star"></i>
+       <span>Bot prime slots: <b>${fmt(slotA)}</b> &amp; <b>${fmt(slotB)}</b> (your time)</span></div>`;
 }
 
 /* ---------- Queue UI ---------- */
-const BADGE = { pending: "🕐 pending", rendered: "🎬 rendered", scheduled: "📅 scheduled", cancelled: "🛑 cancelling…", removed: "🗑 removed", rejected: "⚠️ rejected" };
+const BADGE = { pending: "PENDING", rendered: "RENDERED", scheduled: "SCHEDULED", cancelled: "CANCELLING", removed: "REMOVED", rejected: "REJECTED" };
 function renderQueue() {
   const el = $("queue-list");
   const items = (QUEUE.queue || []).filter(x => x.status !== "removed").slice().reverse();
-  if (!items.length) { el.innerHTML = "No custom Shorts yet."; return; }
+  if (!items.length) { el.innerHTML = `<div class="tiny muted" style="padding:.4rem 0">No custom Shorts yet — create your first one above.</div>`; return; }
   el.innerHTML = items.map(x => `
-    <div class="bg-[#0e2130] border border-[#2a4a60] rounded-lg p-3">
-      <div class="flex items-center gap-2">
-        <b class="text-[#e8eef2]">${x.display_ref}</b>
-        <span class="chip ml-auto">${BADGE[x.status] || x.status}</span>
+    <div class="q-item">
+      <div class="q-top">
+        <span class="q-ref"><i class="fa-solid fa-book-open" style="color:var(--gold);font-size:.75rem;margin-right:.35rem"></i>${x.display_ref}</span>
+        <span class="q-badge ${x.status}">${BADGE[x.status] || x.status}</span>
       </div>
-      <div class="text-xs mt-1">Premieres: ${new Date(x.publish_at).toLocaleString()}</div>
-      ${x.reason ? `<div class="text-xs text-red-400 mt-1">${x.reason}</div>` : ""}
-      ${x.video_id ? `<a class="text-xs text-[#c9a45c] underline" href="https://youtu.be/${x.video_id}" target="_blank">watch</a>` : ""}
-      ${["pending", "scheduled", "rendered"].includes(x.status) ? `<button data-id="${x.id}" class="btn2 px-3 py-1 text-xs mt-2 cancel-btn">Cancel</button>` : ""}
+      <div class="q-when"><i class="fa-regular fa-clock"></i> Premieres ${new Date(x.publish_at).toLocaleString([], { weekday: "short", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}</div>
+      ${x.reason ? `<div class="q-reason">${x.reason}</div>` : ""}
+      <div class="q-actions">
+        ${x.video_id ? `<a class="q-link" href="https://youtu.be/${x.video_id}" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i> watch</a>` : ""}
+        ${["pending", "scheduled", "rendered"].includes(x.status) ? `<button data-id="${x.id}" class="q-cancel cancel-btn"><i class="fa-solid fa-xmark"></i> Cancel</button>` : ""}
+      </div>
     </div>`).join("");
   el.querySelectorAll(".cancel-btn").forEach(b => b.onclick = () => cancelItem(b.dataset.id));
 }
@@ -247,10 +271,10 @@ $("btn-save-token").onclick = async () => {
   st.textContent = "Checking…";
   try {
     await ghGet("data/custom_queue.json");
-    st.innerHTML = `<span class="text-green-400">✔ Token works — you're connected.</span>`;
+    st.innerHTML = `<span style="color:var(--green)"><i class="fa-solid fa-circle-check"></i> Token works — you're connected.</span>`;
     loadQueueAndState();
   } catch (e) {
-    st.innerHTML = `<span class="text-red-400">✖ ${e.message}</span>`;
+    st.innerHTML = `<span style="color:var(--red)"><i class="fa-solid fa-circle-xmark"></i> ${e.message}</span>`;
   }
 };
 
@@ -263,6 +287,9 @@ $("inp-expl").oninput = validate;
 $("inp-date").onchange = validate;
 $("inp-time").onchange = validate;
 $("btn-publish").onclick = publish;
+$("inp-book-search").oninput = e => { if (BIBLE) { fillBooks(e.target.value.trim()); fillChapters(); } };
+const btnRefresh = $("btn-refresh");
+if (btnRefresh) btnRefresh.onclick = () => { btnRefresh.firstElementChild.classList.add("fa-spin"); loadQueueAndState().finally(() => setTimeout(() => btnRefresh.firstElementChild.classList.remove("fa-spin"), 600)); };
 
 loadBible().catch(e => { $("verse-preview").classList.remove("hidden"); $("verse-preview").textContent = "Could not load Bible: " + e.message; });
 loadQueueAndState();

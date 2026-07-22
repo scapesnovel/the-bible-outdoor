@@ -3,109 +3,137 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>The Bible Outdoor — Owner</title>
+<title>The Bible Outdoor — Owner Studio</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
-<meta name="theme-color" content="#0c1a24">
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-  body { background:#0c1a24; color:#e8eef2; font-family: ui-sans-serif, system-ui, sans-serif; }
-  .card { background:#132736; border:1px solid #1f3a4d; border-radius:1rem; }
-  .btn { background:#c9a45c; color:#0c1a24; font-weight:700; border-radius:.75rem; }
-  .btn:disabled { opacity:.4 }
-  .btn2 { background:#1f3a4d; color:#e8eef2; border-radius:.75rem; }
-  input, select, textarea { background:#0e2130; border:1px solid #2a4a60; color:#e8eef2; border-radius:.6rem; padding:.55rem .8rem; width:100%; }
-  input:focus, select:focus, textarea:focus { outline:2px solid #c9a45c; }
-  .chip { border:1px solid #2a4a60; border-radius:9999px; padding:.15rem .7rem; font-size:.75rem; }
-  .star { color:#c9a45c; }
-</style>
+<meta name="theme-color" content="#0a1622">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-screen pb-24">
+<body>
 
-<header id="app-header" class="p-4 flex items-center gap-3 border-b border-[#1f3a4d]">
-  <img src="icon-192.png" class="w-10 h-10 rounded-full" alt="logo">
-  <div>
-    <h1 class="font-bold text-lg leading-tight">The Bible Outdoor</h1>
-    <p class="text-xs text-[#9db4c2]">Owner publishing app</p>
+<!-- ======= HEADER ======= -->
+<header id="app-header">
+  <div class="header-glow"></div>
+  <div class="header-inner">
+    <img src="icon-192.png" class="header-logo" alt="The Bible Outdoor logo">
+    <div class="header-text">
+      <h1>The Bible Outdoor</h1>
+      <p>Owner Studio</p>
+    </div>
+    <button id="btn-settings" class="icon-btn" aria-label="Settings"><i class="fa-solid fa-gear"></i></button>
   </div>
-  <button id="btn-settings" class="ml-auto btn2 px-3 py-2 text-sm">⚙️</button>
 </header>
 
-<main id="main" class="p-4 max-w-lg mx-auto space-y-4">
+<main id="main">
 
-  <section id="status-card" class="card p-4">
-    <h2 class="font-bold mb-2">📅 Today's schedule</h2>
-    <div id="today-info" class="text-sm text-[#9db4c2]">Loading…</div>
+  <!-- ======= TODAY ======= -->
+  <section id="status-card" class="card">
+    <div class="card-head">
+      <span class="card-icon"><i class="fa-regular fa-calendar-check"></i></span>
+      <h2>Today's schedule</h2>
+      <span id="conn-dot" class="conn-dot" title="Connection"></span>
+    </div>
+    <div id="today-info" class="muted small">Loading…</div>
   </section>
 
-  <section id="create-card" class="card p-4 space-y-3">
-    <h2 class="font-bold">✍️ Create a custom Short</h2>
+  <!-- ======= CREATE ======= -->
+  <section id="create-card" class="card">
+    <div class="card-head">
+      <span class="card-icon gold"><i class="fa-solid fa-feather-pointed"></i></span>
+      <h2>Create a custom Short</h2>
+    </div>
 
-    <div id="verse-picker">
-      <label class="text-xs text-[#9db4c2]">Book / Chapter / Verses (BSB — same version as the bot)</label>
-      <div class="flex gap-2 mt-1">
-        <select id="sel-book" class="flex-1"><option>Loading Bible…</option></select>
-        <select id="sel-chapter" class="w-20"></select>
+    <!-- Step 1: verse -->
+    <div class="step">
+      <div class="step-label"><span class="step-num">1</span> Choose the verse <span class="tag">BSB — same version as the bot</span></div>
+      <input id="inp-book-search" type="search" placeholder="Search book… e.g. Psalms, John" autocomplete="off">
+      <div class="row mt2">
+        <select id="sel-book" class="grow"><option>Loading Bible…</option></select>
+        <select id="sel-chapter" class="w-ch" aria-label="Chapter"></select>
       </div>
-      <div class="flex gap-2 mt-2 items-center">
-        <select id="sel-v1" class="w-24"></select>
-        <span class="text-[#9db4c2] text-sm">to</span>
-        <select id="sel-v2" class="w-24"></select>
-        <span class="text-xs text-[#9db4c2]">(same verse = single)</span>
+      <div class="row mt2 items-center">
+        <select id="sel-v1" class="w-vs" aria-label="From verse"></select>
+        <span class="muted small">to</span>
+        <select id="sel-v2" class="w-vs" aria-label="To verse"></select>
+        <span class="muted tiny">same verse = single</span>
       </div>
+      <blockquote id="verse-preview" class="verse-preview hidden"></blockquote>
     </div>
 
-    <div id="verse-preview" class="hidden bg-[#0e2130] border border-[#2a4a60] rounded-lg p-3 text-sm italic"></div>
-
-    <div id="explanation-box">
-      <label class="text-xs text-[#9db4c2]">Your explanation (spoken as the voice-over, min 20 chars)</label>
-      <textarea id="inp-expl" rows="4" placeholder="What does this verse mean to you? Speak from the heart — this becomes the narration."></textarea>
-      <div id="expl-count" class="text-right text-xs text-[#9db4c2]">0 chars</div>
-    </div>
-
-    <div id="hook-box">
-      <label class="text-xs text-[#9db4c2]">Hook line (optional — leave empty for an automatic one)</label>
-      <input id="inp-hook" maxlength="80" placeholder="e.g. This verse changed my week.">
-    </div>
-
-    <div id="schedule-box">
-      <label class="text-xs text-[#9db4c2]">Publish date &amp; time (your local time)</label>
-      <div class="flex gap-2 mt-1">
-        <input type="date" id="inp-date" class="flex-1">
-        <input type="time" id="inp-time" class="w-32">
+    <!-- Step 2: explanation -->
+    <div class="step">
+      <div class="step-label"><span class="step-num">2</span> Your explanation <span class="tag">becomes the voice-over</span></div>
+      <textarea id="inp-expl" rows="4" maxlength="600" placeholder="What does this verse mean to you? Speak from the heart — this is narrated over the video."></textarea>
+      <div class="row between">
+        <span class="tiny muted">min 20 chars · ~15–25s spoken</span>
+        <span id="expl-count" class="tiny muted">0 / 600</span>
       </div>
-      <div class="flex flex-wrap gap-2 mt-2" id="suggest-slots"></div>
-      <p class="text-xs text-[#9db4c2] mt-2">⭐ = the bot's proven prime slots (9:00 AM &amp; 6:00 PM New York — peak devotional scrolling). Rules: max 2 Shorts/day total, ≥4h apart, ≥3h from now (render time).</p>
+      <input id="inp-hook" class="mt2" maxlength="80" placeholder="Hook line (optional — auto if empty), e.g. This verse changed my week.">
     </div>
 
-    <div id="validate-msg" class="text-sm"></div>
-    <button id="btn-publish" class="btn w-full py-3 text-base" disabled>Publish → schedule</button>
+    <!-- Step 3: schedule -->
+    <div class="step">
+      <div class="step-label"><span class="step-num">3</span> Schedule the premiere <span class="tag">your local time</span></div>
+      <div class="row mt1">
+        <input type="date" id="inp-date" class="grow">
+        <input type="time" id="inp-time" class="w-time">
+      </div>
+      <div id="suggest-slots" class="chips mt2"></div>
+      <p class="tiny muted mt1"><i class="fa-solid fa-star star"></i> = proven prime slots (9 AM &amp; 6 PM New York — peak devotional scrolling).
+      Rules: max 2 Shorts/day total · ≥ 4 h apart · ≥ 3 h from now (render time).</p>
+    </div>
+
+    <div id="validate-msg" class="validate"></div>
+    <button id="btn-publish" class="btn-primary" disabled>
+      <i class="fa-solid fa-paper-plane"></i> Publish &amp; schedule
+    </button>
   </section>
 
-  <section id="queue-card" class="card p-4">
-    <h2 class="font-bold mb-2">🗂 Your queue</h2>
-    <div id="queue-list" class="space-y-2 text-sm text-[#9db4c2]">Loading…</div>
+  <!-- ======= QUEUE ======= -->
+  <section id="queue-card" class="card">
+    <div class="card-head">
+      <span class="card-icon"><i class="fa-solid fa-list-check"></i></span>
+      <h2>Your queue</h2>
+      <button id="btn-refresh" class="icon-btn small" aria-label="Refresh"><i class="fa-solid fa-rotate"></i></button>
+    </div>
+    <div id="queue-list" class="queue small muted">Loading…</div>
   </section>
 
-  <section id="help-card" class="card p-4 text-xs text-[#9db4c2] space-y-1">
-    <h2 class="font-bold text-sm text-[#e8eef2]">ℹ️ How it works</h2>
-    <p>• When you publish, the bot renders your Short (voice-over, music, background) and schedules it at your chosen time.</p>
-    <p>• 1 custom that day → the bot posts only 1 of its own. 2 customs → the bot skips the day. Its verses aren't lost — they move to future days automatically.</p>
-    <p>• You may reuse any verse (even ones the bot used) — your explanation makes it unique. The bot may also reuse your custom verses later with its own reflection.</p>
-    <p>• Cancel anytime from the queue — if already uploaded, it's deleted from YouTube.</p>
+  <!-- ======= HOW IT WORKS ======= -->
+  <section id="help-card" class="card subtle">
+    <div class="card-head">
+      <span class="card-icon"><i class="fa-regular fa-circle-question"></i></span>
+      <h2>How it works</h2>
+    </div>
+    <ul class="help-list tiny muted">
+      <li><i class="fa-solid fa-wand-magic-sparkles"></i> On publish, the bot renders your Short — voice-over, music, cinematic background — and premieres it at your time.</li>
+      <li><i class="fa-solid fa-right-left"></i> 1 custom that day → bot posts 1 of its own. 2 customs → bot skips the day. Its verses simply move to future days.</li>
+      <li><i class="fa-solid fa-book-bible"></i> You may reuse any verse — your explanation makes it unique. The bot may also revisit your verses later with its own reflection.</li>
+      <li><i class="fa-solid fa-ban"></i> Cancel anytime from the queue — already-uploaded videos are deleted from YouTube automatically.</li>
+    </ul>
   </section>
+
+  <footer class="tiny muted center">The Bible Outdoor · Owner Studio · runs on GitHub, free forever</footer>
 </main>
 
-<div id="modal-settings" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-  <div class="card p-5 w-full max-w-md space-y-3">
-    <h2 class="font-bold">⚙️ Settings</h2>
-    <p class="text-xs text-[#9db4c2]">One-time: paste a fine-grained GitHub token with <b>Contents: Read &amp; write</b> access to <b>scapesnovel/the-bible-outdoor</b> only. It stays on this phone.</p>
-    <input id="inp-token" type="password" placeholder="github_pat_…">
-    <div class="flex gap-2">
-      <button id="btn-save-token" class="btn flex-1 py-2">Save</button>
-      <button id="btn-close-settings" class="btn2 flex-1 py-2">Close</button>
+<!-- ======= SETTINGS MODAL ======= -->
+<div id="modal-settings" class="modal hidden">
+  <div class="card modal-card">
+    <div class="card-head">
+      <span class="card-icon gold"><i class="fa-solid fa-key"></i></span>
+      <h2>Connect to the channel</h2>
     </div>
-    <div id="token-status" class="text-xs"></div>
+    <p class="tiny muted">One-time: paste a fine-grained GitHub token with <b>Contents: Read &amp; write</b> on <b>scapesnovel/the-bible-outdoor</b> only. It never leaves this phone.</p>
+    <input id="inp-token" type="password" placeholder="github_pat_…" class="mt2">
+    <div class="row mt2">
+      <button id="btn-save-token" class="btn-primary grow">Save &amp; test</button>
+      <button id="btn-close-settings" class="btn-ghost">Close</button>
+    </div>
+    <div id="token-status" class="tiny mt1"></div>
   </div>
 </div>
 
