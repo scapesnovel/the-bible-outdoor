@@ -15,8 +15,12 @@ import verse_picker as vp
 DATA = vp.DATA
 BANK_PATH = DATA / "reflections.json.gz"
 BATCH = 25
-WORKERS = 5
+WORKERS = 1          # free tier is ~5 requests/min — parallelism just thrashes 429s
+PACE_SECONDS = 13    # ~4.6 req/min, safely under the cap
 MODEL = "gpt-5-mini"
+# Gemini free-tier models each have SEPARATE per-minute quotas — rotate on 429
+GEMINI_MODELS = ["gemini-flash-latest", "gemini-2.0-flash", "gemini-2.0-flash-lite",
+                 "gemini-flash-lite-latest", "gemini-2.5-flash-lite"]
 
 SYSTEM = (
     "You write brief spoken encouragements for a Christian daily-verse YouTube channel. "
@@ -71,13 +75,19 @@ def _client():
                       base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
     return OpenAI()  # OPENAI_API_KEY / OPENAI_BASE_URL from env
 
+_model_idx = 0
+
 def _model():
-    return "gemini-2.5-flash" if os.environ.get("GEMINI_API_KEY") else MODEL
+    if os.environ.get("GEMINI_API_KEY"):
+        return os.environ.get("GEMINI_MODEL", GEMINI_MODELS[_model_idx % len(GEMINI_MODELS)])
+    return MODEL
 
 def gen_batch(client, items):
-    """items: list of (ref, text). Returns {ref: refl}."""
+    """items: list of (ref, text). Returns {ref: refl}. Rotates Gemini models
+    on 429 (each model has its own free-tier per-minute quota)."""
+    global _model_idx
     user = "\n\n".join(f"[{r}] {t}" for r, t in items)
-    for attempt in range(4):
+    for attempt in range(6):
         try:
             resp = client.chat.completions.create(
                 model=_model(),
@@ -94,8 +104,14 @@ def gen_batch(client, items):
             if out:
                 return out
         except Exception as e:
-            print(f"    batch retry {attempt+1}: {type(e).__name__}: {e}", flush=True)
-            time.sleep(3 * (attempt + 1))
+            msg = str(e)
+            if "429" in msg or "RESOURCE_EXHAUSTED" in msg:
+                _model_idx += 1  # switch to a model with a fresh quota
+                print(f"    429 -> rotating to {_model()}", flush=True)
+                time.sleep(5)
+            else:
+                print(f"    batch retry {attempt+1}: {type(e).__name__}: {msg[:90]}", flush=True)
+                time.sleep(3 * (attempt + 1))
     return {}
 
 def main():
@@ -109,19 +125,16 @@ def main():
     client = _client()
     batches = [todo[i:i+BATCH] for i in range(0, len(todo), BATCH)]
     done_since_save = 0
-    with ThreadPoolExecutor(max_workers=WORKERS) as ex:
-        futs = {ex.submit(gen_batch, client, b): b for b in batches}
-        for n, fut in enumerate(as_completed(futs), 1):
-            batch = futs[fut]
-            got = fut.result()
-            # store with the passage text so runtime never needs the Bible for lookup
-            for r, t in batch:
-                if r in got:
-                    bank[r] = {"refl": got[r]}
-            done_since_save += len(got)
-            print(f"  [{n}/{len(batches)}] +{len(got)}/{len(batch)}  total={len(bank)}", flush=True)
-            if done_since_save >= 100:
-                save_bank(bank); done_since_save = 0
+    for n, batch in enumerate(batches, 1):
+        got = gen_batch(client, batch)
+        for r, t in batch:
+            if r in got:
+                bank[r] = {"refl": got[r]}
+        done_since_save += len(got)
+        print(f"  [{n}/{len(batches)}] +{len(got)}/{len(batch)}  total={len(bank)}", flush=True)
+        if done_since_save >= 100:
+            save_bank(bank); done_since_save = 0
+        time.sleep(PACE_SECONDS)  # stay under the per-minute cap
     save_bank(bank)
     missing = len(pool) - len(bank)
     print(f"DONE: {len(bank)} reflections saved -> {BANK_PATH} | missing: {missing} (template fallback covers these)")
