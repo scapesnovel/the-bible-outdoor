@@ -1,0 +1,66 @@
+name: Custom Short Publisher
+
+# Fires when the owner's phone app commits a change to the custom queue.
+# Renders the custom Short (voice-over + music + background) and uploads it
+# as a scheduled premiere at the owner's chosen time. Also handles
+# cancellations (deletes the video from YouTube if already uploaded).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/custom_queue.json"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: custom-upload
+  cancel-in-progress: false
+
+jobs:
+  render-and-schedule:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-dejavu
+          pip install -q edge-tts pillow google-api-python-client google-auth google-auth-httplib2
+
+      - name: Process custom queue (render + schedule / cancel)
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: python3 pipeline/custom.py
+
+      - name: Commit queue status updates
+        if: always()
+        run: |
+          git config user.name "bible-outdoor-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git pull --rebase origin main || true
+          git add data/custom_queue.json
+          git diff --cached --quiet || git commit -m "custom: queue status update [skip ci]"
+          git push origin main || (git pull --rebase origin main && git push origin main)
+
+      - name: Keep artifacts 3 days
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: custom-${{ github.run_number }}
+          path: |
+            output/custom/*.mp4
+            output/custom/*.json
+          retention-days: 3
+          if-no-files-found: ignore
