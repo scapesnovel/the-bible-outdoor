@@ -1,2 +1,15 @@
 # 📊 The Bible Outdoor — Performance Report
-_Awaiting first day of official publishing._
+_Updated: 2026-07-23_
+
+| Metric | Value |
+|---|---|
+| Subscribers | **0** |
+| Total views | **0** |
+| Videos published | **0** |
+| 🎯 Monetization progress (subs) | 0/1000 (0.0%) |
+
+## Top videos
+| Views | Likes | Title | Published |
+|---|---|---|---|
+| 0 | 0 | If today feels heavy, hear this. | Psalm 131:2 #shorts | 2026-07-23 |
+| 0 | 0 | Feeling anxious today? Jesus left you something. | John 14:27 #shorts | 2026-07-23 |
