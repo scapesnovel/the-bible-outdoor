@@ -1,26 +1,3 @@
 {
- "queue": [
-  {
-   "id": "mrx5zfydjkts",
-   "display_ref": "Genesis 1:1",
-   "text": "In the beginning God created the heavens and the earth.",
-   "explanation": "What does this verse mean to you",
-   "hook": "",
-   "publish_at": "2026-07-24T22:00:00Z",
-   "status": "removed",
-   "created": "2026-07-23T07:02:48.714Z",
-   "video_id": "9OKgwCMyIC0"
-  },
-  {
-   "id": "mrxd0bx5tkrv",
-   "display_ref": "Genesis 1:1",
-   "text": "In the beginning God created the heavens and the earth.",
-   "explanation": "What does it mean when you dream about your day",
-   "hook": "",
-   "publish_at": "2026-07-25T13:00:00Z",
-   "status": "removed",
-   "created": "2026-07-23T10:19:27.450Z",
-   "video_id": "VWH-KaaQVLY"
-  }
- ]
+ "queue": []
 }

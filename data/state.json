@@ -1,22 +1,3 @@
 {
- "published": [
-  {
-   "date": "2026-07-22",
-   "day": 1,
-   "cycle": 1,
-   "episode": 1,
-   "theme": "Peace in the Storm",
-   "mode": "shorts",
-   "short_ids": [
-    "j1RfTficn3Q",
-    "2zObz_qN-0o"
-   ],
-   "verse_refs": [
-    "John 14:27",
-    "Psalms 131:2"
-   ],
-   "longform_id": null,
-   "short_id": "j1RfTficn3Q"
-  }
- ]
+ "published": []
 }
