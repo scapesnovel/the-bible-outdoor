@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var swipe: SwipeRefreshLayout
 
     companion object {
-        const val APP_URL = "https://scapesnovel.github.io/the-bible-outdoor/"
+        const val APP_URL = "https://scapesnovel.github.io/tbo-app/"
         // hosts allowed to stay INSIDE the app; everything else opens in the browser
         val INTERNAL_HOSTS = setOf(
             "scapesnovel.github.io",
