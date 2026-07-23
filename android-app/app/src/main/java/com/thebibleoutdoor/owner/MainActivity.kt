@@ -12,6 +12,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var web: WebView
     private lateinit var swipe: SwipeRefreshLayout
+    private var pageReady = false
 
     companion object {
         const val APP_URL = "https://scapesnovel.github.io/tbo-app/"
@@ -32,7 +34,13 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splash = installSplashScreen()
         super.onCreate(savedInstanceState)
+        // hold the native splash until the web app has painted (max ~2.5s)
+        val bootAt = System.currentTimeMillis()
+        splash.setKeepOnScreenCondition {
+            !pageReady && System.currentTimeMillis() - bootAt < 2500
+        }
         WindowCompat.setDecorFitsSystemWindows(window, true)
         window.statusBarColor = Color.parseColor("#0A1622") // matches app theme
 
@@ -71,6 +79,11 @@ class MainActivity : AppCompatActivity() {
 
             override fun onPageFinished(view: WebView, url: String) {
                 swipe.isRefreshing = false
+                pageReady = true
+            }
+
+            override fun onPageCommitVisible(view: WebView, url: String) {
+                pageReady = true   // first paint — web splash takes over seamlessly
             }
 
             override fun onReceivedError(

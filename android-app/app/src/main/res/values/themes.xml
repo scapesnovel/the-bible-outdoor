@@ -7,4 +7,12 @@
         <item name="colorPrimary">#CFA85E</item>
         <item name="colorAccent">#CFA85E</item>
     </style>
+
+    <!-- Native launch splash: shows the INSTANT the icon is tapped -->
+    <style name="Theme.OwnerStudio.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#0A1622</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_logo</item>
+        <item name="windowSplashScreenAnimationDuration">600</item>
+        <item name="postSplashScreenTheme">@style/Theme.OwnerStudio</item>
+    </style>
 </resources>
