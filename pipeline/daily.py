@@ -11,6 +11,16 @@ Modes (data/config.json):
 - Picks the next unpublished (day, cycle) slot from data/state.json
 - Records video IDs + used verses in committed state, so a re-run the
   same day is a safe no-op and no verse is ever repeated.
+
+SCHEDULING GUARANTEE (collision-proof):
+- Publish times are chosen by a YouTube-aware allocator: before anything
+  is scheduled, the bot reads the channel's real upcoming scheduled
+  videos and everything published in the last 24h, and keeps a hard
+  >= MIN_GAP_HOURS gap from ALL of them, from every owner custom Short,
+  and from its own picks within the same run.
+- A missed prime slot is NEVER rolled to the next day (that caused the
+  Jul-25 double-publish). If today's prime slots are gone, the Short is
+  scheduled shortly after generation instead, stepped past any conflict.
 """
 import sys, os, json, pathlib, datetime, traceback
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
@@ -24,12 +34,135 @@ SHORT_UTC = (16, 0)
 SHORT_A_UTC = (13, 0)   # 9am New York — morning scroll
 SHORT_B_UTC = (22, 0)   # 6pm New York — evening scroll
 
-def publish_at(hh_mm):
-    now = datetime.datetime.now(datetime.timezone.utc)
-    t = now.replace(hour=hh_mm[0], minute=hh_mm[1], second=0, microsecond=0)
-    if t <= now + datetime.timedelta(minutes=10):
-        t += datetime.timedelta(days=1)
+GAP_H = custom_mod.MIN_GAP_HOURS      # hard gap between any two publishes
+LEAD_MIN = 20                         # min minutes between "now" and a publish
+# Preferred same-day slots, in order of audience value.
+PREF_SLOTS = [(13, 0), (22, 0), (16, 0), (18, 0), (20, 0), (11, 0)]
+
+
+def _utcnow():
+    return datetime.datetime.now(datetime.timezone.utc)
+
+
+def _iso(t):
     return t.isoformat().replace("+00:00", "Z")
+
+
+def _parse_iso(s):
+    return datetime.datetime.fromisoformat(s.replace("Z", "+00:00"))
+
+
+def publish_at(hh_mm):
+    """Same-day-only publish time. If the slot already passed, publish
+    soon after generation instead of rolling to the next day (the old
+    +1 day rollover collided with the next day's run)."""
+    now = _utcnow()
+    t = now.replace(hour=hh_mm[0], minute=hh_mm[1], second=0, microsecond=0)
+    if t <= now + datetime.timedelta(minutes=LEAD_MIN):
+        t = now + datetime.timedelta(minutes=LEAD_MIN + 10)
+        t = t.replace(second=0, microsecond=0)
+    return _iso(t)
+
+
+def _youtube_occupied(yt):
+    """Real publish times already taken on the channel: every future
+    scheduled video (publishAt) + everything published in the last 24h."""
+    occ = []
+    try:
+        ch = yt.channels().list(part="contentDetails", mine=True).execute()
+        uploads = ch["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
+        items = yt.playlistItems().list(part="contentDetails",
+                                        playlistId=uploads, maxResults=20).execute()
+        ids = [i["contentDetails"]["videoId"] for i in items.get("items", [])]
+        if ids:
+            vids = yt.videos().list(part="status,snippet", id=",".join(ids)).execute()
+            cutoff = _utcnow() - datetime.timedelta(hours=24)
+            for v in vids.get("items", []):
+                ts = (v.get("status", {}).get("publishAt")
+                      or v.get("snippet", {}).get("publishedAt"))
+                if not ts:
+                    continue
+                try:
+                    t = _parse_iso(ts)
+                except Exception:
+                    continue
+                if t > cutoff:
+                    occ.append(t)
+        print(f"Schedule check: {len(occ)} occupied time(s) on channel "
+              f"(scheduled or published <24h).")
+    except Exception:
+        traceback.print_exc()
+        print("WARN: could not read channel schedule from YouTube; "
+              "using local state/queue times only.")
+    return occ
+
+
+def _queue_occupied():
+    """All pending/scheduled owner custom Shorts (any date)."""
+    occ = []
+    q = custom_mod.load_queue()
+    for x in q.get("queue", []):
+        if x.get("status") in ("pending", "scheduled"):
+            try:
+                occ.append(_parse_iso(x["publish_at"]))
+            except Exception:
+                continue
+    return occ
+
+
+def _state_occupied(state):
+    """Publish times recorded in recent state entries (belt & braces in
+    case the YouTube read fails)."""
+    occ = []
+    cutoff = _utcnow() - datetime.timedelta(hours=48)
+    for rec in state.get("published", [])[-6:]:
+        for ts in rec.get("publish_times", []):
+            try:
+                t = _parse_iso(ts)
+            except Exception:
+                continue
+            if t > cutoff:
+                occ.append(t)
+    return occ
+
+
+def allocate_publish_times(n, occupied):
+    """Pick n publish datetimes. Prefer today's prime slots; every pick
+    keeps >= GAP_H hours from every occupied time and from each other.
+    If no clean slot remains today, publish shortly after generation
+    (stepped past conflicts) — never a blind next-day rollover."""
+    now = _utcnow()
+    earliest = now + datetime.timedelta(minutes=LEAD_MIN)
+    chosen = []
+
+    def clear(t):
+        for o in list(occupied) + chosen:
+            if abs((t - o).total_seconds()) < GAP_H * 3600:
+                return False
+        return True
+
+    for _ in range(n):
+        pick = None
+        for hh, mm in PREF_SLOTS:
+            t = now.replace(hour=hh, minute=mm, second=0, microsecond=0)
+            if t >= earliest and clear(t):
+                pick = t
+                break
+        if pick is None:
+            # ASAP after generation, stepping past any conflicting window.
+            t = (earliest + datetime.timedelta(minutes=10)).replace(second=0, microsecond=0)
+            for _guard in range(50):
+                conflicts = [o for o in list(occupied) + chosen
+                             if abs((t - o).total_seconds()) < GAP_H * 3600]
+                if not conflicts:
+                    break
+                t = max(conflicts) + datetime.timedelta(hours=GAP_H, minutes=5)
+            pick = t
+        chosen.append(pick)
+
+    chosen.sort()
+    return chosen
+
 
 def _customs_today():
     """Owner-scheduled custom Shorts whose publish date is today (UTC).
@@ -39,43 +172,20 @@ def _customs_today():
     for x in q.get("queue", []):
         if x.get("status") in ("pending", "scheduled"):
             try:
-                t = datetime.datetime.fromisoformat(x["publish_at"].replace("Z", "+00:00"))
+                t = _parse_iso(x["publish_at"])
             except Exception:
                 continue
             if t.date().isoformat() == today_str():
                 out.append(t)
     return out
 
-def _bot_slots_avoiding(customs, n):
-    """Pick n publish slots from the candidate grid keeping >= MIN_GAP_HOURS
-    from every custom Short and from each other."""
-    gap = custom_mod.MIN_GAP_HOURS
-    candidates = [(13, 0), (22, 0), (16, 0), (18, 0), (20, 0), (11, 0)]
-    chosen = []
-    def ok(hh_mm):
-        t = datetime.datetime.now(datetime.timezone.utc).replace(
-            hour=hh_mm[0], minute=hh_mm[1], second=0, microsecond=0)
-        for c in customs:
-            if abs((t - c).total_seconds()) / 3600 < gap:
-                return False
-        for s in chosen:
-            ts = datetime.datetime.now(datetime.timezone.utc).replace(
-                hour=s[0], minute=s[1], second=0, microsecond=0)
-            if abs((t - ts).total_seconds()) / 3600 < gap:
-                return False
-        return True
-    for c in candidates:
-        if len(chosen) >= n:
-            break
-        if ok(c):
-            chosen.append(c)
-    return chosen
 
 def _burn_ledger(refs):
     used = vp.load_ledger()
     used.update(refs)
     vp.save_ledger(used)
     return len(used)
+
 
 def main(force_day=None, do_upload=True):
     state = load_state()
@@ -122,21 +232,30 @@ def main(force_day=None, do_upload=True):
             print("Build-only mode; skipping upload.")
             return
         import upload
-        slots = (_bot_slots_avoiding(customs, n) if customs
-                 else [SHORT_A_UTC, SHORT_B_UTC, (18, 0), (20, 0)])
-        if len(slots) < n:
-            slots += [(20, 0), (18, 0)]  # emergency fallback, still same-day
+
+        # Collision-proof allocation: consult the channel's REAL schedule.
+        occupied = _queue_occupied() + _state_occupied(state)
+        try:
+            occupied += _youtube_occupied(upload.yt_client())
+        except Exception:
+            traceback.print_exc()
+            print("WARN: YouTube client unavailable for schedule check.")
+        times = allocate_publish_times(n, occupied)
+        print("Publish plan: " + ", ".join(_iso(t) for t in times))
+
         record = {"date": today_str(), "day": day, "cycle": cycle, "episode": ep,
                   "theme": entry["theme"], "mode": "shorts", "short_ids": [],
-                  "verse_refs": []}
+                  "verse_refs": [], "publish_times": []}
         failures = 0
         for i, (path, meta) in enumerate(built):
             suffix = "" if i == 0 else f"_{chr(ord('a') + i)}"
+            iso = _iso(times[i % len(times)])
             try:
                 vid = upload.upload(final_dir / f"short{suffix}_meta.json", None,
-                                    publish_at_iso=publish_at(slots[i % len(slots)]))
+                                    publish_at_iso=iso)
                 record["short_ids"].append(vid)
                 record["verse_refs"] += meta["verse_refs"]
+                record["publish_times"].append(iso)
             except Exception:
                 failures += 1
                 traceback.print_exc()
