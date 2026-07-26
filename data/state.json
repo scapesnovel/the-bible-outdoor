@@ -54,6 +54,28 @@
    ],
    "longform_id": null,
    "short_id": "zSGTUR3F5c8"
+  },
+  {
+   "date": "2026-07-26",
+   "day": 4,
+   "cycle": 1,
+   "episode": 4,
+   "theme": "Strength When You Are Weary",
+   "mode": "shorts",
+   "short_ids": [
+    "G_hfw4UgQmE",
+    "DjqNGwkKTaY"
+   ],
+   "verse_refs": [
+    "Isaiah 40:31",
+    "Isaiah 44:12"
+   ],
+   "publish_times": [
+    "2026-07-26T13:00:00Z",
+    "2026-07-26T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "G_hfw4UgQmE"
   }
  ]
 }
