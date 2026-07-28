@@ -98,6 +98,28 @@
    ],
    "longform_id": null,
    "short_id": "UDzcjnd-vGU"
+  },
+  {
+   "date": "2026-07-28",
+   "day": 6,
+   "cycle": 1,
+   "episode": 6,
+   "theme": "Hope in Hard Times",
+   "mode": "shorts",
+   "short_ids": [
+    "H4l0RbIh5YY",
+    "YX3OJ5fsPcI"
+   ],
+   "verse_refs": [
+    "Psalms 5:3",
+    "Psalms 130:6"
+   ],
+   "publish_times": [
+    "2026-07-28T16:00:00Z",
+    "2026-07-28T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "H4l0RbIh5YY"
   }
  ]
 }
