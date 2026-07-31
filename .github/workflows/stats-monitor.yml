@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   stats:
@@ -36,3 +37,22 @@ jobs:
           git add STATS.md data/stats_log.json
           git diff --cached --quiet || git commit -m "stats: daily performance snapshot"
           git push
+
+      - name: Alert owner on failure (opens a GitHub issue -> you get an email)
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="🚨 Channel Stats Monitor failed — $(date -u +%Y-%m-%d)"
+          BODY="Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          Most common cause: YouTube refresh token expired/revoked.
+          Fix: publish the OAuth app (console.cloud.google.com -> OAuth consent screen -> PUBLISH APP), then regenerate the token with pipeline/get_refresh_token.py and update the YT_REFRESH_TOKEN secret.
+
+          The pipeline auto-retries on its next cron. Custom Shorts whose time passed are auto-rescheduled."
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number' || echo "")
+          if [ -z "$EXISTING" ]; then
+            gh issue create --title "$TITLE" --body "$BODY" || true
+          else
+            gh issue comment "$EXISTING" --body "Failed again: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" || true
+          fi
