@@ -6,8 +6,10 @@ on:
     # long-form goes live 10:45 UTC (6:45am US East morning-devotional prime slot),
     # Short goes live 16:00 UTC (noon US East / evening EU scroll time).
     - cron: "40 7 * * *"
-    # Safety net: if the morning run failed, retry at 09:40 UTC (idempotent no-op otherwise).
+    # Safety nets: retries through the day (idempotent no-op if already published).
     - cron: "40 9 * * *"
+    - cron: "40 12 * * *"
+    - cron: "40 15 * * *"
   workflow_dispatch:
     inputs:
       day:
@@ -17,6 +19,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: daily-upload
@@ -70,3 +73,22 @@ jobs:
             output/**/*.json
           retention-days: 3
           if-no-files-found: ignore
+
+      - name: Alert owner on failure (opens a GitHub issue -> you get an email)
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="🚨 Daily Video Factory failed — $(date -u +%Y-%m-%d)"
+          BODY="Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          Most common cause: YouTube refresh token expired/revoked.
+          Fix: publish the OAuth app (console.cloud.google.com -> OAuth consent screen -> PUBLISH APP), then regenerate the token with pipeline/get_refresh_token.py and update the YT_REFRESH_TOKEN secret.
+
+          The pipeline auto-retries on its next cron. Custom Shorts whose time passed are auto-rescheduled."
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number' || echo "")
+          if [ -z "$EXISTING" ]; then
+            gh issue create --title "$TITLE" --body "$BODY" || true
+          else
+            gh issue comment "$EXISTING" --body "Failed again: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" || true
+          fi
