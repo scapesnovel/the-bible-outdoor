@@ -13,8 +13,12 @@ import google.oauth2.credentials
 import googleapiclient.discovery
 import googleapiclient.http
 
-def yt_client():
-    creds = google.oauth2.credentials.Credentials(
+def _creds():
+    missing = [k for k in ("YT_REFRESH_TOKEN", "YT_CLIENT_ID", "YT_CLIENT_SECRET")
+               if not os.environ.get(k)]
+    if missing:
+        raise SystemExit(f"FATAL: missing GitHub secrets: {', '.join(missing)}")
+    return google.oauth2.credentials.Credentials(
         token=None,
         refresh_token=os.environ["YT_REFRESH_TOKEN"],
         client_id=os.environ["YT_CLIENT_ID"],
@@ -23,7 +27,36 @@ def yt_client():
         scopes=["https://www.googleapis.com/auth/youtube.upload",
                 "https://www.googleapis.com/auth/youtube"],
     )
-    return googleapiclient.discovery.build("youtube", "v3", credentials=creds)
+
+def yt_client():
+    return googleapiclient.discovery.build("youtube", "v3", credentials=_creds())
+
+def check_token():
+    """Preflight: verify the refresh token works BEFORE spending ~30 min
+    rendering video. Dies with a loud, actionable message if it's dead
+    (classic cause: OAuth app left in 'Testing' mode -> Google revokes
+    refresh tokens after 7 days)."""
+    import google.auth.transport.requests
+    import google.auth.exceptions
+    creds = _creds()
+    try:
+        creds.refresh(google.auth.transport.requests.Request())
+        print("Token preflight: YouTube credentials OK.")
+    except google.auth.exceptions.RefreshError as e:
+        print("=" * 64)
+        print("FATAL: YouTube refresh token is EXPIRED or REVOKED.")
+        print(f"  ({e})")
+        print()
+        print("FIX (5 minutes, one time):")
+        print("  1. console.cloud.google.com -> APIs & Services ->")
+        print("     OAuth consent screen -> click PUBLISH APP")
+        print("     (Testing mode kills refresh tokens after 7 days!)")
+        print("  2. On your PC: python3 pipeline/get_refresh_token.py \\")
+        print("       <CLIENT_ID> <CLIENT_SECRET>")
+        print("  3. GitHub repo -> Settings -> Secrets and variables ->")
+        print("     Actions -> update YT_REFRESH_TOKEN")
+        print("=" * 64)
+        raise SystemExit(1)
 
 def upload(meta_path, thumbnail=None, privacy="public", publish_at_iso=None):
     """Upload a video. If publish_at_iso is given, it is uploaded as private

@@ -50,6 +50,52 @@ def bot_uploads_on(state, date_iso):
                 n += 0  # long-form doesn't count against the Shorts cap
     return n
 
+def _day_is_free(queue, state, item, t):
+    """Would publishing item at t violate the day cap or gaps?"""
+    d = t.date().isoformat()
+    same_day = [x for x in queue["queue"]
+                if x["id"] != item["id"] and x.get("status") in ("pending", "scheduled")
+                and _date(x["publish_at"]) == d]
+    if len(same_day) + 1 + bot_uploads_on(state, d) > MAX_PER_DAY:
+        return False
+    for x in same_day:
+        if abs((t - _dt(x["publish_at"])).total_seconds()) / 3600 < MIN_GAP_HOURS:
+            return False
+    return True
+
+def reschedule_if_stale(item, queue, state):
+    """If a pending item's publish_at slipped into the past (e.g. the
+    pipeline was down for days), pick the next valid time instead of
+    silently rejecting the owner's Short. Preserves the original
+    time-of-day when possible."""
+    now = datetime.datetime.now(datetime.timezone.utc)
+    try:
+        t = _dt(item["publish_at"])
+    except Exception:
+        return False
+    if t >= now + datetime.timedelta(hours=MIN_LEAD_HOURS):
+        return False  # still fine
+    original = item["publish_at"]
+    # Candidate 1..7: same wall-clock time on the next days
+    cand = []
+    for d in range(0, 8):
+        c = (now + datetime.timedelta(days=d)).replace(
+            hour=t.hour, minute=t.minute, second=0, microsecond=0)
+        cand.append(c)
+    # Candidate fallback: ASAP with lead buffer
+    cand.append((now + datetime.timedelta(hours=MIN_LEAD_HOURS, minutes=20)
+                 ).replace(second=0, microsecond=0))
+    for c in sorted(cand):
+        if c < now + datetime.timedelta(hours=MIN_LEAD_HOURS):
+            continue
+        if _day_is_free(queue, state, item, c):
+            item["publish_at"] = c.isoformat().replace("+00:00", "Z")
+            item["rescheduled_from"] = original
+            print(f"RESCHEDULED stale custom Short {item['id']}: "
+                  f"{original} -> {item['publish_at']}")
+            return True
+    return False
+
 def validate(item, queue, state):
     """Return None if OK else a human-readable rejection reason."""
     now = datetime.datetime.now(datetime.timezone.utc)
@@ -81,6 +127,11 @@ def main(do_upload=True):
     changed = False
     failures = 0
 
+    if do_upload and any(x.get("status") in ("pending", "cancelled")
+                         for x in q["queue"]):
+        import upload
+        upload.check_token()  # fail fast BEFORE spending 30 min rendering
+
     for item in q["queue"]:
         st = item.get("status")
 
@@ -103,6 +154,8 @@ def main(do_upload=True):
         if st != "pending":
             continue
 
+        if reschedule_if_stale(item, q, state):
+            changed = True
         reason = validate(item, q, state)
         if reason:
             print(f"REJECTED {item['id']}: {reason}")

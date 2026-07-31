@@ -206,6 +206,10 @@ def main(force_day=None, do_upload=True):
     mode = cfg.get("mode", "full")
     print(f"=== The Bible Outdoor — Episode {ep} (day {day}, cycle {cycle}, mode={mode}): {entry['theme']} ===")
 
+    if do_upload:
+        import upload
+        upload.check_token()  # fail fast BEFORE spending ~30 min rendering
+
     import build_short
     final_dir = OUT / f"day{day:02d}"
 
