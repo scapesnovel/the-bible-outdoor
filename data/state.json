@@ -139,6 +139,29 @@
    ],
    "longform_id": null,
    "short_id": "KVpxx4XbG8k"
+  },
+  {
+   "date": "2026-08-01",
+   "day": 8,
+   "cycle": 1,
+   "episode": 8,
+   "theme": "Walking in Faith",
+   "mode": "shorts",
+   "short_ids": [
+    "W5pcZAwWRkw",
+    "8f3JFSqPkaU"
+   ],
+   "verse_refs": [
+    "Hebrews 11:6",
+    "2 Corinthians 4:13",
+    "2 Corinthians 4:14"
+   ],
+   "publish_times": [
+    "2026-08-01T13:00:00Z",
+    "2026-08-01T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "W5pcZAwWRkw"
   }
  ]
 }
