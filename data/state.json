@@ -181,6 +181,29 @@
    ],
    "longform_id": null,
    "short_id": "USarpcuB-Hc"
+  },
+  {
+   "date": "2026-08-04",
+   "day": 10,
+   "cycle": 1,
+   "episode": 10,
+   "theme": "Gratitude and Thanksgiving",
+   "mode": "shorts",
+   "short_ids": [
+    "mCIuyIs38iE",
+    "LWPFqf0N2fg"
+   ],
+   "verse_refs": [
+    "Psalms 9:2",
+    "Psalms 30:11",
+    "Psalms 30:12"
+   ],
+   "publish_times": [
+    "2026-08-04T18:00:00Z",
+    "2026-08-04T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "mCIuyIs38iE"
   }
  ]
 }
