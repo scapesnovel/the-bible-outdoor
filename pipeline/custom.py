@@ -26,6 +26,11 @@ MIN_GAP_HOURS = 4
 MIN_LEAD_HOURS = 3
 MAX_PER_DAY = 2
 
+# ---- Monetization guard (YouTube "inauthentic/repetitious content" policy) ----
+MAX_VERSE_POSTS = 2        # a verse may appear at most this many times on the channel
+MIN_REPEAT_GAP_DAYS = 30   # a repeat must be at least this many days from the previous post
+MAX_EXPL_SIMILARITY = 0.6  # repeat explanations must be substantially different
+
 def load_queue():
     if QUEUE_PATH.exists():
         return json.loads(QUEUE_PATH.read_text())
@@ -49,6 +54,49 @@ def bot_uploads_on(state, date_iso):
             if p.get("longform_id"):
                 n += 0  # long-form doesn't count against the Shorts cap
     return n
+
+def norm_ref(r):
+    r = (r or "").strip()
+    if r.startswith("Psalm "):
+        r = "Psalms " + r[6:]
+    return r
+
+def expand_refs(display_ref):
+    """'1 Peter 4:14-15' -> ['1 Peter 4:14', '1 Peter 4:15']."""
+    import re
+    r = norm_ref(display_ref)
+    m = re.match(r"^(.+?)\s+(\d+):(\d+)(?:-(\d+))?$", r)
+    if not m:
+        return [r] if r else []
+    book, ch = m.group(1), m.group(2)
+    v1, v2 = int(m.group(3)), int(m.group(4) or m.group(3))
+    return [f"{book} {ch}:{v}" for v in range(v1, min(v2, v1 + 30) + 1)]
+
+def _verse_usage(queue, state, exclude_id=None):
+    """ref -> list of {'date','explanation'} for every live/planned post."""
+    uses = {}
+    for p in state.get("published", []):
+        for ref in (p.get("verse_refs") or []):
+            uses.setdefault(norm_ref(ref), []).append(
+                {"date": p.get("date"), "explanation": None})
+    for x in queue.get("queue", []):
+        if x["id"] == exclude_id:
+            continue
+        if x.get("status") not in ("pending", "scheduled", "rendered"):
+            continue
+        d = _date(x["publish_at"])
+        for ref in expand_refs(x.get("display_ref", "")):
+            uses.setdefault(ref, []).append(
+                {"date": d, "explanation": x.get("explanation") or ""})
+    return uses
+
+def _similarity(a, b):
+    import re
+    ta = set(re.findall(r"[a-z']+", (a or "").lower()))
+    tb = set(re.findall(r"[a-z']+", (b or "").lower()))
+    if not ta or not tb:
+        return 0.0
+    return len(ta & tb) / len(ta | tb)
 
 def _day_is_free(queue, state, item, t):
     """Would publishing item at t violate the day cap or gaps?"""
@@ -119,6 +167,26 @@ def validate(item, queue, state):
         return "empty verse text"
     if len((item.get("explanation") or "").strip()) < 20:
         return "explanation too short (min 20 chars)"
+
+    # ---- Monetization guard: limited repeats, spaced out, fresh explanations ----
+    uses = _verse_usage(queue, state, exclude_id=item["id"])
+    for ref in expand_refs(item.get("display_ref", "")):
+        prior = uses.get(ref, [])
+        if len(prior) + 1 > MAX_VERSE_POSTS:
+            return (f"{ref} already posted {len(prior)}x — channel limit is "
+                    f"{MAX_VERSE_POSTS} posts per verse (protects monetization)")
+        if prior:
+            gaps = [abs((t.date() - datetime.date.fromisoformat(p["date"])).days)
+                    for p in prior if p.get("date")]
+            if gaps and min(gaps) < MIN_REPEAT_GAP_DAYS:
+                return (f"{ref} was posted {min(gaps)} day(s) from this slot — "
+                        f"repeats must be >= {MIN_REPEAT_GAP_DAYS} days apart")
+            for p in prior:
+                if p.get("explanation") is not None:
+                    sim = _similarity(item.get("explanation", ""), p["explanation"])
+                    if sim > MAX_EXPL_SIMILARITY:
+                        return (f"explanation is {int(sim*100)}% similar to the previous "
+                                f"post of {ref} — a repeat needs a fresh reflection")
     return None
 
 def main(do_upload=True):
@@ -174,6 +242,20 @@ def main(do_upload=True):
             item["status"] = "scheduled" if do_upload else "rendered"
             changed = True
             print(f"SCHEDULED custom Short {item['id']} -> {item['publish_at']}")
+            # Monetization guard: once a verse hits the channel-wide limit,
+            # burn it into the bot ledger so the bot never re-picks it.
+            try:
+                import verse_picker as vp
+                uses = _verse_usage(q, state)
+                ledger = vp.load_ledger()
+                burn = {r for r in expand_refs(item.get("display_ref", ""))
+                        if len(uses.get(r, [])) >= MAX_VERSE_POSTS and r not in ledger}
+                if burn:
+                    ledger.update(burn)
+                    vp.save_ledger(ledger)
+                    print(f"ledger: burned {sorted(burn)} (verse post-limit reached)")
+            except Exception:
+                traceback.print_exc()
         except Exception:
             failures += 1
             traceback.print_exc()
