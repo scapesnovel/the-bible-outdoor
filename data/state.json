@@ -223,6 +223,28 @@
    ],
    "longform_id": null,
    "short_id": "jUeYy-8ao9c"
+  },
+  {
+   "date": "2026-08-07",
+   "day": 12,
+   "cycle": 1,
+   "episode": 12,
+   "theme": "Wisdom for Daily Decisions",
+   "mode": "shorts",
+   "short_ids": [
+    "V9SE36V93aQ",
+    "oBqvO9e9j4M"
+   ],
+   "verse_refs": [
+    "Proverbs 21:11",
+    "Isaiah 11:2"
+   ],
+   "publish_times": [
+    "2026-08-07T13:00:00Z",
+    "2026-08-07T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "V9SE36V93aQ"
   }
  ]
 }
