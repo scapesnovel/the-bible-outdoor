@@ -554,6 +554,14 @@ _CTA = [
     "A new verse every day — follow so you never miss yours. God bless you.",
     "Take this verse with you today. Subscribe for tomorrow's. God bless you.",
     "God's Word, every single day. Follow along — and be blessed today.",
+    "Carry this verse into your day — and tell us in the comments how it lands.",
+    "Which word stayed with you? Leave it in the comments. God bless you.",
+    "Save this for the moment you'll need it. Tomorrow brings another.",
+    "Send this to one person God puts on your heart. See you tomorrow.",
+    "Pray this verse back to God today. Subscribe for tomorrow's word.",
+    "Write this verse where you'll see it. A new one is coming tomorrow.",
+    "Let this be the verse you remember today. Follow for the next one.",
+    "God bless you — comment where you're watching from, we pray for you.",
 ]
 
 def cta_line(seed):
@@ -580,6 +588,26 @@ _HOOK_TPL = [
     "This one verse can change your whole day.",
     "Read this before the day gets loud.",
     "Heaven has a message for you today.",
+    "Someone prayed you would find this verse.",
+    "This is not on your feed by accident.",
+    "Give God the next thirty seconds.",
+    "One verse before you do anything else.",
+    "The Word you're about to hear is older than every problem you have.",
+    "You've scrolled far enough. Rest here a moment.",
+    "There's a reason this found you {situation}.",
+    "Don't rush past this one.",
+    "What if this verse is the answer you asked for?",
+    "Three thousand years old — and written for today.",
+    "Let this be the best thirty seconds of your scroll.",
+    "Your soul needs this more than your feed does.",
+    "Pause. Breathe. Listen to this.",
+    "This verse has carried millions {situation}. Now it's yours.",
+    "Today's word is short — but it's strong.",
+    "Hold still for this one.",
+    "God speaks quietly. This is one of those moments.",
+    "You can keep this verse for free — forever.",
+    "One line of Scripture can outlast a thousand worries.",
+    "Whatever today looks like, start with this.",
 ]
 
 def hook_for(theme_key, seed):

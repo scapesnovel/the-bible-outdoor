@@ -14,6 +14,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from common import ROOT, ASSETS, OUT, CHANNEL_NAME, display_ref
 import verse_picker as vp
 from tts import tts, VOICE_SHORT
+import metadata
 from text_render import make_card
 import av
 
@@ -86,15 +87,11 @@ def build(item):
     dur = av.duration(final)
     print(f"CUSTOM SHORT {iid}: {final} ({dur:.0f}s)")
 
-    title = f"{hook} | {ref_disp} #shorts"
-    if len(title) > 100:
-        title = f"{ref_disp} — a verse for you today #shorts"
-    description = (
-        f"{explanation}\n\n\u201C{text}\u201D — {ref_disp} (BSB)\n\n"
-        "🙏 One verse every day. Subscribe and grow your faith daily.\n\n"
-        "#shorts #bible #bibleverse #faith #jesus #dailyverse"
-    )
-    tags = ["shorts", "bible verse", "daily verse", "faith", "jesus", "scripture"]
+    # Variety engine: unique title shape / description / hashtags per video
+    title = metadata.short_title(hook, ref_disp, seed=seed)
+    description = metadata.short_description(
+        explanation, text, ref_disp, seed=seed, theme_key="custom")
+    tags = metadata.short_tags(theme_key="custom", seed=seed)
     meta = {"title": title[:100], "description": description[:4900], "tags": tags,
             "categoryId": "22", "day": 0, "cycle": 0, "theme": "custom",
             "type": "short", "file": str(final),

@@ -5,6 +5,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from common import ROOT, ASSETS, OUT, CHANNEL_NAME, get_day_entry, display_ref
 import verse_picker as vp
 from tts import tts, VOICE_SHORT
+import metadata
 from text_render import make_card
 import av
 
@@ -76,15 +77,15 @@ def build(day_number=None, cycle=1, variant=None):
     print(f"SHORT day {day_number}: {final} ({dur:.0f}s)")
 
     kw = entry["keywords"]
-    title = f"{s['hook']} | {ref_disp} #shorts"
-    if len(title) > 100:
-        title = f"{ref_disp} — {entry['theme']} #shorts"
-    description = (
-        f"{s['reflection']}\n\n\u201C{v['text']}\u201D — {ref_disp} (BSB)\n\n"
-        "🙏 One verse every day. Subscribe and grow your faith daily.\n\n"
-        f"#shorts #bible #bibleverse #{kw[0].replace(' ','')} #faith #jesus #dailyverse"
-    )
-    tags = list(dict.fromkeys(kw + ["shorts", "bible verse", "daily verse", "faith", "jesus", "scripture"]))[:25]
+    # Variety engine: unique title shape / description / hashtags per video
+    # (anti-"inauthentic content" — see MONETIZATION.md)
+    meta_seed = day_number * 1000 + cycle * 37 + vi
+    title = metadata.short_title(s["hook"], ref_disp, seed=meta_seed,
+                                 theme=entry["theme"])
+    description = metadata.short_description(
+        s["reflection"], v["text"], ref_disp, seed=meta_seed,
+        theme_key=theme_key, keywords=kw)
+    tags = metadata.short_tags(keywords=kw, theme_key=theme_key, seed=meta_seed)
     meta = {"title": title[:100], "description": description[:4900], "tags": tags,
             "categoryId": "22", "day": day_number, "cycle": cycle,
             "theme": entry["theme"], "type": "short", "file": str(final),
