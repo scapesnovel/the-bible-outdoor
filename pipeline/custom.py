@@ -6,8 +6,13 @@ the phone app). For each queue item:
 
   status "pending"   -> validate, render via build_custom.py, upload as a
                         scheduled premiere at publish_at, mark "scheduled"
-  status "cancelled" -> if already uploaded, delete the video from YouTube;
-                        mark "removed"
+  status "cancelled" -> if still UNPUBLISHED, delete the video from YouTube
+                        and mark "removed". If the premiere time has already
+                        passed, the video is LIVE — never delete it; flip the
+                        item to "published" instead (deleting live videos
+                        looks like metric gaming and loses real views).
+  status "scheduled" -> once publish_at passes, flip to "published" so the
+                        app's queue only shows genuinely upcoming Shorts.
 
 Rules enforced server-side (the app enforces them client-side too):
   * max 2 Shorts per publish-date (customs + bot uploads combined)
@@ -25,6 +30,7 @@ QUEUE_PATH = DATA / "custom_queue.json"
 MIN_GAP_HOURS = 4
 MIN_LEAD_HOURS = 3
 MAX_PER_DAY = 2
+MAX_UPCOMING = 6           # max not-yet-live custom Shorts in the pipeline at once
 
 # ---- Monetization guard (YouTube "inauthentic/repetitious content" policy) ----
 MAX_VERSE_POSTS = 2        # a verse may appear at most this many times on the channel
@@ -82,7 +88,7 @@ def _verse_usage(queue, state, exclude_id=None):
     for x in queue.get("queue", []):
         if x["id"] == exclude_id:
             continue
-        if x.get("status") not in ("pending", "scheduled", "rendered"):
+        if x.get("status") not in ("pending", "scheduled", "rendered", "published"):
             continue
         d = _date(x["publish_at"])
         for ref in expand_refs(x.get("display_ref", "")):
@@ -102,7 +108,7 @@ def _day_is_free(queue, state, item, t):
     """Would publishing item at t violate the day cap or gaps?"""
     d = t.date().isoformat()
     same_day = [x for x in queue["queue"]
-                if x["id"] != item["id"] and x.get("status") in ("pending", "scheduled")
+                if x["id"] != item["id"] and x.get("status") in ("pending", "scheduled", "rendered", "published")
                 and _date(x["publish_at"]) == d]
     if len(same_day) + 1 + bot_uploads_on(state, d) > MAX_PER_DAY:
         return False
@@ -155,7 +161,7 @@ def validate(item, queue, state):
         return f"needs at least {MIN_LEAD_HOURS}h lead time for rendering"
     d = _date(item["publish_at"])
     same_day = [x for x in queue["queue"]
-                if x["id"] != item["id"] and x.get("status") in ("pending", "scheduled")
+                if x["id"] != item["id"] and x.get("status") in ("pending", "scheduled", "rendered", "published")
                 and _date(x["publish_at"]) == d]
     if len(same_day) + 1 + bot_uploads_on(state, d) > MAX_PER_DAY:
         return f"more than {MAX_PER_DAY} Shorts on {d}"
@@ -167,6 +173,13 @@ def validate(item, queue, state):
         return "empty verse text"
     if len((item.get("explanation") or "").strip()) < 20:
         return "explanation too short (min 20 chars)"
+    upcoming = [x for x in queue["queue"]
+                if x["id"] != item["id"]
+                and x.get("status") in ("pending", "scheduled", "rendered")
+                and _dt(x["publish_at"]) > now]
+    if len(upcoming) >= MAX_UPCOMING:
+        return (f"pipeline full — {MAX_UPCOMING} custom Shorts already waiting to "
+                f"premiere; let some go live first")
 
     # ---- Monetization guard: limited repeats, spaced out, fresh explanations ----
     uses = _verse_usage(queue, state, exclude_id=item["id"])
@@ -200,11 +213,30 @@ def main(do_upload=True):
         import upload
         upload.check_token()  # fail fast BEFORE spending 30 min rendering
 
+    now = datetime.datetime.now(datetime.timezone.utc)
     for item in q["queue"]:
         st = item.get("status")
 
+        # Lifecycle: a scheduled premiere whose time has passed is LIVE.
+        if st == "scheduled" and _dt(item["publish_at"]) <= now:
+            item["status"] = "published"
+            changed = True
+            print(f"PUBLISHED (premiere time passed): {item['id']} ({item.get('video_id','')})")
+            continue
+
         if st == "cancelled":
             vid = item.get("video_id")
+            went_live = vid and _dt(item["publish_at"]) <= now
+            if went_live:
+                # SAFETY: the premiere already happened — this is a LIVE video
+                # with real views. Never delete it; undo the cancel.
+                item["status"] = "published"
+                item["reason"] = ("Cancel ignored — this Short already premiered and "
+                                  "is live on the channel. Live videos are never "
+                                  "auto-deleted (protects views + channel standing).")
+                changed = True
+                print(f"CANCEL REFUSED (already live): {item['id']} ({vid})")
+                continue
             if vid and do_upload:
                 try:
                     import upload
