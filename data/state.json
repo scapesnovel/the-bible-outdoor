@@ -288,6 +288,28 @@
    ],
    "longform_id": null,
    "short_id": "BcmPb9tpC_k"
+  },
+  {
+   "date": "2026-08-10",
+   "day": 15,
+   "cycle": 1,
+   "episode": 15,
+   "theme": "Joy That Doesn't Depend on Circumstances",
+   "mode": "shorts",
+   "short_ids": [
+    "FsiO7bhp7TI",
+    "sPvPINmWH2w"
+   ],
+   "verse_refs": [
+    "Isaiah 65:18",
+    "Psalms 68:3"
+   ],
+   "publish_times": [
+    "2026-08-10T13:00:00Z",
+    "2026-08-10T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "FsiO7bhp7TI"
   }
  ]
 }
