@@ -310,6 +310,29 @@
    ],
    "longform_id": null,
    "short_id": "FsiO7bhp7TI"
+  },
+  {
+   "date": "2026-08-11",
+   "day": 16,
+   "cycle": 1,
+   "episode": 16,
+   "theme": "Healing for the Brokenhearted",
+   "mode": "shorts",
+   "short_ids": [
+    "fFA_PWz3ZlY",
+    "8ru2Tfuev5I"
+   ],
+   "verse_refs": [
+    "Isaiah 57:18",
+    "Isaiah 57:19",
+    "Psalms 147:3"
+   ],
+   "publish_times": [
+    "2026-08-11T13:00:00Z",
+    "2026-08-11T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "fFA_PWz3ZlY"
   }
  ]
 }
