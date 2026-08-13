@@ -355,6 +355,28 @@
    ],
    "longform_id": null,
    "short_id": "6AayqA9I8oc"
+  },
+  {
+   "date": "2026-08-13",
+   "day": 18,
+   "cycle": 1,
+   "episode": 18,
+   "theme": "Standing Firm in Temptation",
+   "mode": "shorts",
+   "short_ids": [
+    "XW1im7mutRM",
+    "2WoU8phfCqw"
+   ],
+   "verse_refs": [
+    "1 Corinthians 10:13",
+    "Psalms 139:7"
+   ],
+   "publish_times": [
+    "2026-08-13T13:00:00Z",
+    "2026-08-13T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "XW1im7mutRM"
   }
  ]
 }
