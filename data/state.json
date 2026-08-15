@@ -396,6 +396,28 @@
    ],
    "longform_id": null,
    "short_id": "91HQ9Nj80eA"
+  },
+  {
+   "date": "2026-08-15",
+   "day": 20,
+   "cycle": 1,
+   "episode": 20,
+   "theme": "Contentment in Every Season",
+   "mode": "shorts",
+   "short_ids": [
+    "GB0PGtTFLj0",
+    "CUYknViIQIk"
+   ],
+   "verse_refs": [
+    "Psalms 111:10",
+    "Matthew 19:24"
+   ],
+   "publish_times": [
+    "2026-08-15T13:00:00Z",
+    "2026-08-15T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "GB0PGtTFLj0"
   }
  ]
 }
