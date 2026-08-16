@@ -418,6 +418,28 @@
    ],
    "longform_id": null,
    "short_id": "GB0PGtTFLj0"
+  },
+  {
+   "date": "2026-08-16",
+   "day": 21,
+   "cycle": 1,
+   "episode": 21,
+   "theme": "God's Presence in Loneliness",
+   "mode": "shorts",
+   "short_ids": [
+    "irLaahUIOoo",
+    "b7ebTolRS7g"
+   ],
+   "verse_refs": [
+    "Deuteronomy 31:8",
+    "Joshua 1:5"
+   ],
+   "publish_times": [
+    "2026-08-16T13:00:00Z",
+    "2026-08-16T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "irLaahUIOoo"
   }
  ]
 }
