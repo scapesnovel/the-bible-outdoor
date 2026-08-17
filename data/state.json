@@ -440,6 +440,28 @@
    ],
    "longform_id": null,
    "short_id": "irLaahUIOoo"
+  },
+  {
+   "date": "2026-08-17",
+   "day": 22,
+   "cycle": 1,
+   "episode": 22,
+   "theme": "Serving with Purpose",
+   "mode": "shorts",
+   "short_ids": [
+    "ATlO0fzL9fE",
+    "kwnvoRLnWEE"
+   ],
+   "verse_refs": [
+    "Psalms 138:8",
+    "Psalms 28:4"
+   ],
+   "publish_times": [
+    "2026-08-17T13:00:00Z",
+    "2026-08-17T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "ATlO0fzL9fE"
   }
  ]
 }
