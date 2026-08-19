@@ -481,6 +481,30 @@
    ],
    "longform_id": null,
    "short_id": "RP_F7ADQDHg"
+  },
+  {
+   "date": "2026-08-19",
+   "day": 24,
+   "cycle": 1,
+   "episode": 24,
+   "theme": "Generosity and the Open Hand",
+   "mode": "shorts",
+   "short_ids": [
+    "dRN4-AKklac",
+    "okop8VzfOSc"
+   ],
+   "verse_refs": [
+    "2 Corinthians 9:6",
+    "Romans 12:6",
+    "Romans 12:7",
+    "Romans 12:8"
+   ],
+   "publish_times": [
+    "2026-08-19T13:00:00Z",
+    "2026-08-19T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "dRN4-AKklac"
   }
  ]
 }
