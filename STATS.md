@@ -1,15 +1,15 @@
 # 📊 The Bible Outdoor — Performance Report
-_Updated: 2026-08-18_
+_Updated: 2026-08-19_
 
 | Metric | Value |
 |---|---|
-| Subscribers | **215** |
-| Total views | **24038** |
-| Videos published | **46** |
-| 🎯 Monetization progress (subs) | 215/1000 (21.5%) |
+| Subscribers | **222** |
+| Total views | **24239** |
+| Videos published | **48** |
+| 🎯 Monetization progress (subs) | 222/1000 (22.2%) |
 | Subs gained (24h) | +7 |
-| Views gained (24h) | +1746 |
-| ETA to 1000 subs at current rate | ~112 days |
+| Views gained (24h) | +201 |
+| ETA to 1000 subs at current rate | ~111 days |
 
 ## Top videos
 | Views | Likes | Title | Published |
@@ -19,13 +19,13 @@ _Updated: 2026-08-18_
 | 881 | 90 | A word for today: Psalm 27:14 #shorts | 2026-08-09 |
 | 829 | 138 | God has a word for you when you wonder if you are truly loved. | Colos | 2026-07-27 |
 | 817 | 103 | Psalm 147:3 — Stop scrolling. This verse is for you #shorts | 2026-08-11 |
+| 776 | 92 | A word for today: Psalm 28:4 #shorts | 2026-08-17 |
 | 763 | 80 | Your word is my command | Matthew 14:28 #shorts | 2026-08-03 |
 | 758 | 91 | Isaiah 57:18-19 — If your heart is heavy tonight, this is for you #sho | 2026-08-11 |
-| 754 | 90 | A word for today: Psalm 28:4 #shorts | 2026-08-17 |
+| 745 | 107 | Psalm 138:8 might be exactly what you need today #shorts | 2026-08-17 |
 | 741 | 69 | Before you check your phone, read this. | Psalm 9:2 #shorts | 2026-08-04 |
-| 732 | 93 | Deuteronomy 31:8 — take this with you today #shorts | 2026-08-16 |
+| 735 | 95 | Deuteronomy 31:8 — take this with you today #shorts | 2026-08-16 |
 | 732 | 69 | Stop scrolling — this one is for you. | 1 Peter 4:14-15 #shorts | 2026-08-05 |
-| 726 | 106 | Psalm 138:8 might be exactly what you need today #shorts | 2026-08-17 |
 | 700 | 79 | Psalm 139:7 — take this with you today #shorts | 2026-08-13 |
 | 694 | 118 | Heaven has a message for you today. | Isaiah 11:2 #shorts | 2026-08-07 |
 | 684 | 97 | Galatians 6:9-10 — Today's verse comes straight from the heart #shorts | 2026-08-14 |
