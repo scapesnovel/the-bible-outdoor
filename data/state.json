@@ -505,6 +505,26 @@
    ],
    "longform_id": null,
    "short_id": "dRN4-AKklac"
+  },
+  {
+   "date": "2026-08-20",
+   "day": 25,
+   "cycle": 1,
+   "episode": 25,
+   "theme": "Courage to Obey",
+   "mode": "shorts",
+   "short_ids": [
+    "CQMBd2p0dEw"
+   ],
+   "verse_refs": [
+    "Proverbs 3:1",
+    "Proverbs 3:2"
+   ],
+   "publish_times": [
+    "2026-08-20T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "CQMBd2p0dEw"
   }
  ]
 }
