@@ -1,15 +1,14 @@
 # 📊 The Bible Outdoor — Performance Report
-_Updated: 2026-08-19_
+_Updated: 2026-08-20_
 
 | Metric | Value |
 |---|---|
-| Subscribers | **222** |
-| Total views | **24239** |
-| Videos published | **48** |
-| 🎯 Monetization progress (subs) | 222/1000 (22.2%) |
-| Subs gained (24h) | +7 |
-| Views gained (24h) | +201 |
-| ETA to 1000 subs at current rate | ~111 days |
+| Subscribers | **221** |
+| Total views | **25588** |
+| Videos published | **50** |
+| 🎯 Monetization progress (subs) | 221/1000 (22.1%) |
+| Subs gained (24h) | +-1 |
+| Views gained (24h) | +1349 |
 
 ## Top videos
 | Views | Likes | Title | Published |
@@ -19,12 +18,12 @@ _Updated: 2026-08-19_
 | 881 | 90 | A word for today: Psalm 27:14 #shorts | 2026-08-09 |
 | 829 | 138 | God has a word for you when you wonder if you are truly loved. | Colos | 2026-07-27 |
 | 817 | 103 | Psalm 147:3 — Stop scrolling. This verse is for you #shorts | 2026-08-11 |
-| 776 | 92 | A word for today: Psalm 28:4 #shorts | 2026-08-17 |
+| 781 | 93 | A word for today: Psalm 28:4 #shorts | 2026-08-17 |
 | 763 | 80 | Your word is my command | Matthew 14:28 #shorts | 2026-08-03 |
 | 758 | 91 | Isaiah 57:18-19 — If your heart is heavy tonight, this is for you #sho | 2026-08-11 |
-| 745 | 107 | Psalm 138:8 might be exactly what you need today #shorts | 2026-08-17 |
+| 749 | 108 | Psalm 138:8 might be exactly what you need today #shorts | 2026-08-17 |
 | 741 | 69 | Before you check your phone, read this. | Psalm 9:2 #shorts | 2026-08-04 |
-| 735 | 95 | Deuteronomy 31:8 — take this with you today #shorts | 2026-08-16 |
+| 740 | 96 | Deuteronomy 31:8 — take this with you today #shorts | 2026-08-16 |
 | 732 | 69 | Stop scrolling — this one is for you. | 1 Peter 4:14-15 #shorts | 2026-08-05 |
 | 700 | 79 | Psalm 139:7 — take this with you today #shorts | 2026-08-13 |
 | 694 | 118 | Heaven has a message for you today. | Isaiah 11:2 #shorts | 2026-08-07 |
