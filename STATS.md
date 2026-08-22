@@ -1,19 +1,20 @@
 # 📊 The Bible Outdoor — Performance Report
-_Updated: 2026-08-21_
+_Updated: 2026-08-22_
 
 | Metric | Value |
 |---|---|
-| Subscribers | **223** |
-| Total views | **26188** |
-| Videos published | **52** |
-| 🎯 Monetization progress (subs) | 223/1000 (22.3%) |
-| Subs gained (24h) | +2 |
-| Views gained (24h) | +600 |
-| ETA to 1000 subs at current rate | ~388 days |
+| Subscribers | **237** |
+| Total views | **27544** |
+| Videos published | **54** |
+| 🎯 Monetization progress (subs) | 237/1000 (23.7%) |
+| Subs gained (24h) | +14 |
+| Views gained (24h) | +1356 |
+| ETA to 1000 subs at current rate | ~54 days |
 
 ## Top videos
 | Views | Likes | Title | Published |
 |---|---|---|---|
+| 1056 | 75 | Philippians 4:16 — Today's word is short — but it's strong #shorts | 2026-08-21 |
 | 943 | 157 | Did you know God sings over you? | Psalm 51:1 #shorts | 2026-07-27 |
 | 888 | 125 | Faith isn't a feeling. It's this. | Hebrews 11:6 #shorts | 2026-08-01 |
 | 881 | 90 | A word for today: Psalm 27:14 #shorts | 2026-08-09 |
@@ -28,4 +29,3 @@ _Updated: 2026-08-21_
 | 732 | 69 | Stop scrolling — this one is for you. | 1 Peter 4:14-15 #shorts | 2026-08-05 |
 | 700 | 79 | Psalm 139:7 — take this with you today #shorts | 2026-08-13 |
 | 694 | 118 | Heaven has a message for you today. | Isaiah 11:2 #shorts | 2026-08-07 |
-| 684 | 97 | Galatians 6:9-10 — Today's verse comes straight from the heart #shorts | 2026-08-14 |
