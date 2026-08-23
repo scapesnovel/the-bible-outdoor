@@ -566,6 +566,28 @@
    ],
    "longform_id": null,
    "short_id": "j8GroDM8yAY"
+  },
+  {
+   "date": "2026-08-23",
+   "day": 28,
+   "cycle": 1,
+   "episode": 28,
+   "theme": "Light in the Darkness",
+   "mode": "shorts",
+   "short_ids": [
+    "4Pkoswfz9bA",
+    "Z2UioF8GLkI"
+   ],
+   "verse_refs": [
+    "Psalms 112:4",
+    "2 Corinthians 4:6"
+   ],
+   "publish_times": [
+    "2026-08-23T13:00:00Z",
+    "2026-08-23T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "4Pkoswfz9bA"
   }
  ]
 }
