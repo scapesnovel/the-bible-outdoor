@@ -1,24 +1,24 @@
 # 📊 The Bible Outdoor — Performance Report
-_Updated: 2026-08-23_
+_Updated: 2026-08-24_
 
 | Metric | Value |
 |---|---|
-| Subscribers | **240** |
-| Total views | **28445** |
-| Videos published | **56** |
-| 🎯 Monetization progress (subs) | 240/1000 (24.0%) |
-| Subs gained (24h) | +3 |
-| Views gained (24h) | +901 |
-| ETA to 1000 subs at current rate | ~253 days |
+| Subscribers | **248** |
+| Total views | **28730** |
+| Videos published | **58** |
+| 🎯 Monetization progress (subs) | 248/1000 (24.8%) |
+| Subs gained (24h) | +8 |
+| Views gained (24h) | +285 |
+| ETA to 1000 subs at current rate | ~94 days |
 
 ## Top videos
 | Views | Likes | Title | Published |
 |---|---|---|---|
-| 1074 | 79 | Philippians 4:16 — Today's word is short — but it's strong #shorts | 2026-08-21 |
+| 1085 | 79 | Philippians 4:16 — Today's word is short — but it's strong #shorts | 2026-08-21 |
 | 943 | 157 | Did you know God sings over you? | Psalm 51:1 #shorts | 2026-07-27 |
+| 924 | 129 | A verse I chose for you today | Hebrews 13:16 #shorts | 2026-08-22 |
 | 888 | 125 | Faith isn't a feeling. It's this. | Hebrews 11:6 #shorts | 2026-08-01 |
 | 881 | 90 | A word for today: Psalm 27:14 #shorts | 2026-08-09 |
-| 829 | 108 | A verse I chose for you today | Hebrews 13:16 #shorts | 2026-08-22 |
 | 829 | 138 | God has a word for you when you wonder if you are truly loved. | Colos | 2026-07-27 |
 | 817 | 103 | Psalm 147:3 — Stop scrolling. This verse is for you #shorts | 2026-08-11 |
 | 781 | 93 | A word for today: Psalm 28:4 #shorts | 2026-08-17 |
