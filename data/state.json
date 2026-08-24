@@ -588,6 +588,29 @@
    ],
    "longform_id": null,
    "short_id": "4Pkoswfz9bA"
+  },
+  {
+   "date": "2026-08-24",
+   "day": 29,
+   "cycle": 1,
+   "episode": 29,
+   "theme": "Running Your Race with Endurance",
+   "mode": "shorts",
+   "short_ids": [
+    "-ktGIVLFnNI",
+    "3ORqmfXT634"
+   ],
+   "verse_refs": [
+    "Hebrews 12:1",
+    "Proverbs 27:23",
+    "Proverbs 27:24"
+   ],
+   "publish_times": [
+    "2026-08-24T13:00:00Z",
+    "2026-08-24T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "-ktGIVLFnNI"
   }
  ]
 }
