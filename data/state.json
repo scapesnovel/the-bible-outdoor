@@ -611,6 +611,26 @@
    ],
    "longform_id": null,
    "short_id": "-ktGIVLFnNI"
+  },
+  {
+   "date": "2026-08-25",
+   "day": 30,
+   "cycle": 1,
+   "episode": 30,
+   "theme": "The Cross and the Empty Tomb",
+   "mode": "shorts",
+   "short_ids": [
+    "09WjZ5FwBWk"
+   ],
+   "verse_refs": [
+    "Ephesians 1:13",
+    "Ephesians 1:14"
+   ],
+   "publish_times": [
+    "2026-08-25T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "09WjZ5FwBWk"
   }
  ]
 }
