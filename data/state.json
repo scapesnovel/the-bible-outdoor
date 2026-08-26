@@ -631,6 +631,28 @@
    ],
    "longform_id": null,
    "short_id": "09WjZ5FwBWk"
+  },
+  {
+   "date": "2026-08-26",
+   "day": 31,
+   "cycle": 1,
+   "episode": 31,
+   "theme": "Abiding in Christ Daily",
+   "mode": "shorts",
+   "short_ids": [
+    "edsYFnSbcKY",
+    "pKMpxGhWB98"
+   ],
+   "verse_refs": [
+    "John 15:4",
+    "Isaiah 65:21"
+   ],
+   "publish_times": [
+    "2026-08-26T13:00:00Z",
+    "2026-08-26T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "edsYFnSbcKY"
   }
  ]
 }
