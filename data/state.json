@@ -653,6 +653,28 @@
    ],
    "longform_id": null,
    "short_id": "edsYFnSbcKY"
+  },
+  {
+   "date": "2026-08-27",
+   "day": 1,
+   "cycle": 2,
+   "episode": 32,
+   "theme": "Peace in the Storm",
+   "mode": "shorts",
+   "short_ids": [
+    "QvrHAosA2VM",
+    "AkjnFAY0TAY"
+   ],
+   "verse_refs": [
+    "Isaiah 32:18",
+    "Isaiah 57:2"
+   ],
+   "publish_times": [
+    "2026-08-27T22:00:00Z",
+    "2026-08-28T02:05:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "QvrHAosA2VM"
   }
  ]
 }
