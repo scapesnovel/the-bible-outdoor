@@ -697,6 +697,28 @@
    ],
    "longform_id": null,
    "short_id": "O7ltWTiZYZU"
+  },
+  {
+   "date": "2026-08-29",
+   "day": 3,
+   "cycle": 2,
+   "episode": 34,
+   "theme": "Overcoming Fear",
+   "mode": "shorts",
+   "short_ids": [
+    "TxcsEIdtsvc",
+    "JWXPT5VS5Ek"
+   ],
+   "verse_refs": [
+    "Joshua 1:9",
+    "Isaiah 54:14"
+   ],
+   "publish_times": [
+    "2026-08-29T13:00:00Z",
+    "2026-08-29T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "TxcsEIdtsvc"
   }
  ]
 }
