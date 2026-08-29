@@ -1,22 +1,22 @@
 # 📊 The Bible Outdoor — Performance Report
-_Updated: 2026-08-28_
+_Updated: 2026-08-29_
 
 | Metric | Value |
 |---|---|
-| Subscribers | **274** |
-| Total views | **31489** |
-| Videos published | **64** |
-| 🎯 Monetization progress (subs) | 274/1000 (27.4%) |
-| Subs gained (24h) | +14 |
-| Views gained (24h) | +552 |
-| ETA to 1000 subs at current rate | ~51 days |
+| Subscribers | **283** |
+| Total views | **32749** |
+| Videos published | **66** |
+| 🎯 Monetization progress (subs) | 283/1000 (28.3%) |
+| Subs gained (24h) | +9 |
+| Views gained (24h) | +1260 |
+| ETA to 1000 subs at current rate | ~79 days |
 
 ## Top videos
 | Views | Likes | Title | Published |
 |---|---|---|---|
 | 1096 | 82 | Philippians 4:16 — Today's word is short — but it's strong #shorts | 2026-08-21 |
-| 998 | 112 | Proverbs 27:23-24 — take this with you today #shorts | 2026-08-24 |
-| 974 | 98 | Isaiah 65:21 | daily Scripture #shorts | 2026-08-26 |
+| 1019 | 106 | Isaiah 65:21 | daily Scripture #shorts | 2026-08-26 |
+| 1016 | 114 | Proverbs 27:23-24 — take this with you today #shorts | 2026-08-24 |
 | 964 | 132 | A verse I chose for you today | Hebrews 13:16 #shorts | 2026-08-22 |
 | 943 | 157 | Did you know God sings over you? | Psalm 51:1 #shorts | 2026-07-27 |
 | 888 | 125 | Faith isn't a feeling. It's this. | Hebrews 11:6 #shorts | 2026-08-01 |
