@@ -719,6 +719,28 @@
    ],
    "longform_id": null,
    "short_id": "TxcsEIdtsvc"
+  },
+  {
+   "date": "2026-08-30",
+   "day": 4,
+   "cycle": 2,
+   "episode": 35,
+   "theme": "Strength When You Are Weary",
+   "mode": "shorts",
+   "short_ids": [
+    "JjIcdQ-o-Hk",
+    "WfPeyVFcitU"
+   ],
+   "verse_refs": [
+    "Psalms 21:13",
+    "Psalms 68:35"
+   ],
+   "publish_times": [
+    "2026-08-30T16:00:00Z",
+    "2026-08-30T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "JjIcdQ-o-Hk"
   }
  ]
 }
