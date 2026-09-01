@@ -763,6 +763,28 @@
    ],
    "longform_id": null,
    "short_id": "3OOSp79bk9w"
+  },
+  {
+   "date": "2026-09-01",
+   "day": 6,
+   "cycle": 2,
+   "episode": 37,
+   "theme": "Hope in Hard Times",
+   "mode": "shorts",
+   "short_ids": [
+    "Wq-nJ8XyS8k",
+    "qqLNAA8Iisc"
+   ],
+   "verse_refs": [
+    "Isaiah 33:2",
+    "Isaiah 51:5"
+   ],
+   "publish_times": [
+    "2026-09-01T16:00:00Z",
+    "2026-09-01T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "Wq-nJ8XyS8k"
   }
  ]
 }
