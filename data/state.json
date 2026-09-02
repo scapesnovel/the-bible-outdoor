@@ -785,6 +785,28 @@
    ],
    "longform_id": null,
    "short_id": "Wq-nJ8XyS8k"
+  },
+  {
+   "date": "2026-09-02",
+   "day": 7,
+   "cycle": 2,
+   "episode": 38,
+   "theme": "Forgiveness and Grace",
+   "mode": "shorts",
+   "short_ids": [
+    "D-jVwY35pmY",
+    "LpVyGxIKQHc"
+   ],
+   "verse_refs": [
+    "Psalms 32:1",
+    "John 20:23"
+   ],
+   "publish_times": [
+    "2026-09-02T13:00:00Z",
+    "2026-09-02T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "D-jVwY35pmY"
   }
  ]
 }
