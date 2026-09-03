@@ -807,6 +807,29 @@
    ],
    "longform_id": null,
    "short_id": "D-jVwY35pmY"
+  },
+  {
+   "date": "2026-09-03",
+   "day": 8,
+   "cycle": 2,
+   "episode": 39,
+   "theme": "Walking in Faith",
+   "mode": "shorts",
+   "short_ids": [
+    "E5JBSDtpvOQ",
+    "wdi6tBfxTLA"
+   ],
+   "verse_refs": [
+    "Galatians 2:15",
+    "Galatians 2:16",
+    "John 2:11"
+   ],
+   "publish_times": [
+    "2026-09-03T13:00:00Z",
+    "2026-09-03T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "E5JBSDtpvOQ"
   }
  ]
 }
