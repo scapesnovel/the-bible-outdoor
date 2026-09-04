@@ -830,6 +830,28 @@
    ],
    "longform_id": null,
    "short_id": "E5JBSDtpvOQ"
+  },
+  {
+   "date": "2026-09-04",
+   "day": 9,
+   "cycle": 2,
+   "episode": 40,
+   "theme": "The Power of Prayer",
+   "mode": "shorts",
+   "short_ids": [
+    "Q9ev0erMBQ4",
+    "F7E7q1lllog"
+   ],
+   "verse_refs": [
+    "Psalms 143:1",
+    "Psalms 35:13"
+   ],
+   "publish_times": [
+    "2026-09-04T13:00:00Z",
+    "2026-09-04T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "Q9ev0erMBQ4"
   }
  ]
 }
