@@ -852,6 +852,28 @@
    ],
    "longform_id": null,
    "short_id": "Q9ev0erMBQ4"
+  },
+  {
+   "date": "2026-09-05",
+   "day": 10,
+   "cycle": 2,
+   "episode": 41,
+   "theme": "Gratitude and Thanksgiving",
+   "mode": "shorts",
+   "short_ids": [
+    "WDLGePWq3pU",
+    "SsM3hi4jKOo"
+   ],
+   "verse_refs": [
+    "Psalms 100:4",
+    "Psalms 68:4"
+   ],
+   "publish_times": [
+    "2026-09-05T13:00:00Z",
+    "2026-09-05T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "WDLGePWq3pU"
   }
  ]
 }
