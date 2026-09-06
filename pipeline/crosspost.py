@@ -10,7 +10,10 @@ Design rules (same philosophy as the rest of the engine):
     becomes a discovery funnel for the main channel.
 
 Secrets (GitHub Actions):
-  Facebook : FB_PAGE_ID, FB_PAGE_TOKEN          (long-lived Page token)
+  Facebook : FB_PAGE_ID, FB_APP_ID, FB_APP_SECRET  (never expire)
+             — the Page token itself lives in data/fb_token.json and is
+               auto-refreshed on every run (60-day tokens, renewed 2x/day,
+               so it never actually expires).
   Pinterest: PIN_APP_ID, PIN_APP_SECRET,
              PIN_REFRESH_TOKEN, PIN_BOARD_ID    (refresh flow like YouTube)
 """
@@ -20,6 +23,8 @@ import urllib.request, urllib.parse
 YT_CHANNEL_URL = "https://www.youtube.com/@thebibleoutdoor"
 GRAPH = "https://graph.facebook.com/v21.0"
 PIN_API = "https://api.pinterest.com/v5"
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+FB_TOKEN_FILE = ROOT / "data" / "fb_token.json"
 
 
 def _http(url, data=None, headers=None, method=None, raw=False):
@@ -35,9 +40,50 @@ def _http(url, data=None, headers=None, method=None, raw=False):
 # ---------------------------------------------------------------------------
 # Facebook Reels
 # ---------------------------------------------------------------------------
+def _fb_page_token():
+    """Return a valid Page token, self-refreshing it in data/fb_token.json.
+
+    Facebook long-lived Page tokens expire after ~60 days, but they can be
+    re-exchanged (fb_exchange_token) for a fresh 60-day token at any time
+    using the app id + secret (which never expire). Since the engine runs
+    twice a day, the token is perpetually renewed and never lapses.
+    """
+    # 1) explicit env token wins (also used for first bootstrap)
+    env_tok = os.environ.get("FB_PAGE_TOKEN")
+    app_id = os.environ.get("FB_APP_ID")
+    app_secret = os.environ.get("FB_APP_SECRET")
+    stored = {}
+    if FB_TOKEN_FILE.exists():
+        try:
+            stored = json.loads(FB_TOKEN_FILE.read_text())
+        except Exception:
+            stored = {}
+    token = stored.get("token") or env_tok
+    if not token:
+        return None
+    # 2) refresh if we have app credentials (extends expiry another 60 days)
+    if app_id and app_secret:
+        try:
+            j = _http(f"{GRAPH}/oauth/access_token?"
+                      + urllib.parse.urlencode({
+                          "grant_type": "fb_exchange_token",
+                          "client_id": app_id,
+                          "client_secret": app_secret,
+                          "fb_exchange_token": token}))
+            new_tok = j.get("access_token")
+            if new_tok:
+                token = new_tok
+                FB_TOKEN_FILE.parent.mkdir(parents=True, exist_ok=True)
+                FB_TOKEN_FILE.write_text(json.dumps({"token": token}))
+                print("  crosspost: Facebook token refreshed (+60 days)")
+        except Exception:
+            print("  crosspost: Facebook token refresh failed — using current token")
+    return token
+
+
 def post_facebook_reel(video_path, description):
     page_id = os.environ.get("FB_PAGE_ID")
-    token = os.environ.get("FB_PAGE_TOKEN")
+    token = _fb_page_token()
     if not (page_id and token):
         print("  crosspost: Facebook secrets not set — skipping")
         return None
