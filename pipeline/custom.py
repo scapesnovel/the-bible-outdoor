@@ -271,6 +271,12 @@ def main(do_upload=True):
                 import upload
                 vid = upload.upload(meta_path, None, publish_at_iso=item["publish_at"])
                 item["video_id"] = vid
+                try:  # cross-post (Facebook Reels + Pinterest) — never fatal
+                    import crosspost
+                    meta_d = json.loads(pathlib.Path(meta_path).read_text())
+                    crosspost.crosspost(meta_d["file"], meta_d, vid)
+                except Exception:
+                    traceback.print_exc()
             item["status"] = "scheduled" if do_upload else "rendered"
             changed = True
             print(f"SCHEDULED custom Short {item['id']} -> {item['publish_at']}")

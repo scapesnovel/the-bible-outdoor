@@ -109,12 +109,28 @@ def short_title(hook, ref_disp, seed, theme=""):
     return t[:100]
 
 
+def _links_block():
+    """Cross-platform links appended to every description (from data/links.json)."""
+    try:
+        import pathlib, json as _json
+        links = _json.loads((pathlib.Path(__file__).parent.parent
+                             / "data" / "links.json").read_text())
+        lines = []
+        if links.get("facebook"):
+            lines.append(f"📘 Facebook: {links['facebook']}")
+        if links.get("pinterest"):
+            lines.append(f"📌 Pinterest: {links['pinterest']}")
+        return ("\n" + "\n".join(lines)) if lines else ""
+    except Exception:
+        return ""
+
+
 def short_description(reflection, verse_text, ref_disp, seed, theme_key="custom",
                       keywords=None):
     rng = random.Random(seed * 613 + 7)
     intro = rng.choice(_DESC_INTRO).format(ref=ref_disp, ref_book=_ref_book(ref_disp))
     engage = rng.choice(_ENGAGE)
-    outro = rng.choice(_OUTRO_BLESS)
+    outro = rng.choice(_OUTRO_BLESS) + _links_block()
 
     # hashtags: 1-2 theme + 3 base sampled, order shuffled — never identical
     theme_tags = list(_TAG_THEME.get(theme_key, _TAG_THEME["custom"]))

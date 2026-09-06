@@ -260,6 +260,11 @@ def main(force_day=None, do_upload=True):
                 record["short_ids"].append(vid)
                 record["verse_refs"] += meta["verse_refs"]
                 record["publish_times"].append(iso)
+                try:  # cross-post (Facebook Reels + Pinterest) — never fatal
+                    import crosspost
+                    crosspost.crosspost(meta["file"], meta, vid)
+                except Exception:
+                    traceback.print_exc()
             except Exception:
                 failures += 1
                 traceback.print_exc()
