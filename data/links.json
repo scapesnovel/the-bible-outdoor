@@ -1,6 +1,6 @@
 {
-  "youtube": "https://www.youtube.com/@thebibleoutdoor",
-  "facebook": "https://web.facebook.com/profile.php?id=61594076885025",
-  "pinterest": "https://www.pinterest.com/TheBibleOutdoor/",
-  "_comment": "Shown in every YouTube description via metadata._links_block(). Cross-posts link back to YouTube."
+ "youtube": "https://www.youtube.com/@thebibleoutdoor",
+ "facebook": "https://web.facebook.com/TheBibleOutdoor/",
+ "pinterest": "https://www.pinterest.com/TheBibleOutdoor/",
+ "_comment": "Shown in every YouTube description via metadata._links_block(). Cross-posts link back to YouTube."
 }
