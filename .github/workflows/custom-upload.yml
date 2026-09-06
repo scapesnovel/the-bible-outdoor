@@ -46,6 +46,12 @@ jobs:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          PIN_APP_ID: ${{ secrets.PIN_APP_ID }}
+          PIN_APP_SECRET: ${{ secrets.PIN_APP_SECRET }}
+          PIN_REFRESH_TOKEN: ${{ secrets.PIN_REFRESH_TOKEN }}
+          PIN_BOARD_ID: ${{ secrets.PIN_BOARD_ID }}
         run: python3 pipeline/custom.py
 
       - name: Commit queue status updates
