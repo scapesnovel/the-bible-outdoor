@@ -48,6 +48,8 @@ jobs:
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          FB_APP_ID: ${{ secrets.FB_APP_ID }}
+          FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
           PIN_APP_ID: ${{ secrets.PIN_APP_ID }}
           PIN_APP_SECRET: ${{ secrets.PIN_APP_SECRET }}
           PIN_REFRESH_TOKEN: ${{ secrets.PIN_REFRESH_TOKEN }}
@@ -61,6 +63,7 @@ jobs:
           git config user.email "bot@users.noreply.github.com"
           git pull --rebase origin main || true
           git add data/custom_queue.json
+          git add data/fb_token.json 2>/dev/null || true
           git diff --cached --quiet || git commit -m "custom: queue status update [skip ci]"
           git push origin main || (git pull --rebase origin main && git push origin main)
 
