@@ -874,6 +874,28 @@
    ],
    "longform_id": null,
    "short_id": "WDLGePWq3pU"
+  },
+  {
+   "date": "2026-09-06",
+   "day": 11,
+   "cycle": 2,
+   "episode": 42,
+   "theme": "The Lord Is My Shepherd",
+   "mode": "shorts",
+   "short_ids": [
+    "nHFaM5S2tKE",
+    "cra_IiPJsKI"
+   ],
+   "verse_refs": [
+    "Proverbs 4:11",
+    "Psalms 27:11"
+   ],
+   "publish_times": [
+    "2026-09-06T13:00:00Z",
+    "2026-09-06T22:00:00Z"
+   ],
+   "longform_id": null,
+   "short_id": "nHFaM5S2tKE"
   }
  ]
 }
